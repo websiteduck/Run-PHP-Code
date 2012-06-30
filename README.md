@@ -3,6 +3,8 @@ Run PHP Code
 
 This script gives you the ability to quickly test snippets of PHP code locally.  
 
+![screenshot](https://github.com/websiteduck/Run-PHP-Code/raw/master/screenshot.png)  
+
 ### Run PHP Code utilizes the following projects:
 
 ---
