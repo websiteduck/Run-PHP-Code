@@ -27,15 +27,15 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 	<head>
 		<title>Run PHP Code</title>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<script type="text/javascript" src="codemirror.js"></script>
-		<script type="text/javascript" src="cm-mode/xml/xml.js"></script>
-		<script type="text/javascript" src="cm-mode/javascript/javascript.js"></script>
-		<script type="text/javascript" src="cm-mode/css/css.js"></script>
-		<script type="text/javascript" src="cm-mode/clike/clike.js"></script>
-		<script type="text/javascript" src="cm-mode/php/php.js"></script>
+		<script type="text/javascript" src="codemirror2/lib/codemirror.js"></script>
+		<script type="text/javascript" src="codemirror2/mode/xml/xml.js"></script>
+		<script type="text/javascript" src="codemirror2/mode/javascript/javascript.js"></script>
+		<script type="text/javascript" src="codemirror2/mode/css/css.js"></script>
+		<script type="text/javascript" src="codemirror2/mode/clike/clike.js"></script>
+		<script type="text/javascript" src="codemirror2/mode/php/php.js"></script>
 
-		<link rel="stylesheet" href="codemirror.css">
-		<link rel="stylesheet" href="theme/ambiance.css">
+		<link rel="stylesheet" href="codemirror2/lib/codemirror.css">
+		<link rel="stylesheet" href="codemirror2/theme/ambiance.css">
 
 		<script type="text/javascript">
 			var editor;
