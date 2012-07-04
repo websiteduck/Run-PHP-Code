@@ -61,7 +61,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 				<div id="button_container">
 					<button class="btn" type="button" id="reset">Reset</button>
 					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run</button>
-					<label><input type="checkbox" id="apply_css" checked="checked" /> Apply CSS</label>
+					<label><input type="checkbox" id="apply_css" checked="checked" /> Colorize</label>
 					<label>
 						Error Reporting
 						<select name="error_reporting">
