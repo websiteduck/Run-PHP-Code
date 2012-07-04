@@ -44,6 +44,7 @@ $(function() {
 	}).resize();
 	
 	$('#resize_ball').mousedown(function() { resizing = true; event.preventDefault(); }).mouseup(function(e) { resize_mouse_up(e.pageX) });
+	$('#resize_ball').bind("dragstart", function() { return false; });
 	
 	$(document).mousemove(function(e) {
 		if (resizing) {
@@ -54,7 +55,7 @@ $(function() {
 	});
 	
 	function bind_php_frame() {
-		$('#php_frame').contents().find('body').mousemove(function(e) {
+		$('#php_frame').contents().find('html').mousemove(function(e) {
 			if (resizing) {
 				var php_frame_position = $('#php_frame').position();
 				$('#resize_ball').css('left', e.pageX + php_frame_position.left - 32);
