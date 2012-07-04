@@ -12,6 +12,7 @@ if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) die('dead');
 
 if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') 
 {
+	header('X-XSS-Protection: 0');
 	ini_set('display_errors', 1);
 	switch ($_POST['error_reporting'])
 	{
