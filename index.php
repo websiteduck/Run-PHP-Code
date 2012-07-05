@@ -54,7 +54,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 	<body>
 		<img id="resize_ball" src="resize_ball.png" />
 		
-		<form method="POST" action="" target="run_php_code">
+		<form id="run_php_form" method="POST" action="" target="run_php_code">
 			<input type="hidden" name="phprun_action" value="run" />
 			
 			<div id="title_bar">
@@ -63,6 +63,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 					<button class="btn" type="button" id="reset">Reset</button>
 					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run</button>
 					<label><input type="checkbox" id="apply_css" checked="checked" /> Colorize</label>
+					<label><input type="checkbox" id="external_window" /> External Window</label>
 					<label>
 						Error Reporting
 						<select name="error_reporting">

@@ -18,6 +18,24 @@ $(function() {
 		if (answer) editor.setValue('');
 	});
 	
+	$('#external_window').click(function() {
+		if (this.checked) {
+			$('#php_frame').hide();
+			$('#resize_ball').hide();
+			$('#run_php_form').prop('target', 'run_php_external');
+			$('#apply_css').attr('disabled', true).parent().css('color', '#555');
+			divide_x = $(window).width();
+		} 
+		else {
+			$('#php_frame').show();
+			$('#resize_ball').show();
+			$('#run_php_form').prop('target', 'run_php_code');
+			$('#apply_css').removeAttr('disabled').parent().css('color', '#FFF');
+			divide_x = $(window).width() / 2;
+		}
+		$(window).resize();
+	});
+	
 	$('#php_frame').load(function() {
 		if ($('#apply_css').prop('checked')) {
 			$(this).contents().find('body').css({
