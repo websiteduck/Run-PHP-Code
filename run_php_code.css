@@ -9,7 +9,7 @@ form { padding: 0; margin: 0; }
 	color: #FFF; 
 	height: 55px;
 	width: 1024px;
-	padding-left: 20px;
+	padding-left: 15px;
 }
 #title { font-size: 20px; text-shadow: 0 0 10px #00aaff; margin-right: 15px; }
 
@@ -39,7 +39,7 @@ form { padding: 0; margin: 0; }
 	transition: all .1s ease;
 	cursor: pointer;
 	border: 1px solid black;
-	margin-left: 15px;
+	margin-left: 10px;
 }
 
 .btn:hover { background-color: #2A2A2A;	}
@@ -55,9 +55,9 @@ form { padding: 0; margin: 0; }
 .btn:active, #run:selected, #run:visited { outline: none;	}
 
 #button_container { text-align: center; display: inline; }
-#button_container label { margin-left: 20px; }
+#button_container label { margin-left: 15px; }
 
-#run { width: 150px; text-shadow: 0 0 10px #aaffaa; }
+#run { width: 100px; text-shadow: 0 0 10px #aaffaa; }
 #reset { text-shadow: 0 0 10px #d92915; }
 
 #title_bar select { background-color: #222; color: #FFF; border: 1px solid #555; }
