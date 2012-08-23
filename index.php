@@ -12,6 +12,11 @@ if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) die('dead');
 
 if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') 
 {
+	header("Expires: Mon, 16 Apr 2012 05:00:00 GMT");
+	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
+	header("Cache-Control: no-store, no-cache, must-revalidate"); 
+	header("Cache-Control: post-check=0, pre-check=0", false);
+	header("Pragma: no-cache");
 	header('X-XSS-Protection: 0');
 	ini_set('display_errors', 1);
 	switch ($_POST['error_reporting'])
