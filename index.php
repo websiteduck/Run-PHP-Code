@@ -21,7 +21,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 		case 'deprecated': error_reporting(E_ERROR | E_PARSE | E_COMPILE_ERROR | E_WARNING | E_DEPRECATED | E_USER_DEPRECATED); break;
 		case 'notice': error_reporting(E_ERROR | E_PARSE | E_COMPILE_ERROR | E_WARNING | E_DEPRECATED | E_USER_DEPRECATED | E_NOTICE); break;
 		case 'all': error_reporting(-1); break;
-		case 'none': default: error_reporting(0);	break;
+		case 'none': default: error_reporting(0); break;
 	}
 	$phprun_code = ltrim($_POST['phprun_code']);
 	if (substr($phprun_code,0,5) == '<?php') $phprun_code = substr($phprun_code, 5);
