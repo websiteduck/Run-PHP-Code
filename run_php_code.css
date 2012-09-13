@@ -3,9 +3,8 @@ body { background-color: #222; color: #555; font-family: arial; overflow: hidden
 form { padding: 0; margin: 0; }
 
 #title_bar { 
-	font-size: 14px; 
+	font-size: 13px; 
 	line-height: 55px; 
-	font-weight: bold;
 	color: #FFF; 
 	height: 55px;
 	width: 1024px;
@@ -57,7 +56,7 @@ form { padding: 0; margin: 0; }
 #button_container { text-align: center; display: inline; }
 #button_container label { margin-left: 15px; }
 
-#run { width: 100px; text-shadow: 0 0 10px #aaffaa; }
+#run { width: 90px; text-shadow: 0 0 10px #aaffaa; }
 #reset { text-shadow: 0 0 10px #d92915; }
 
 #title_bar select { background-color: #222; color: #FFF; border: 1px solid #555; }

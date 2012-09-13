@@ -10,6 +10,8 @@
  */
 if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) die('dead');
 
+define('NL', PHP_EOL);
+
 if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') 
 {
 	header("Expires: Mon, 16 Apr 2012 05:00:00 GMT");
@@ -33,6 +35,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 	ob_start();
 	eval($phprun_code);
 	$phprun_html = ob_get_clean();
+	if (isset($_POST['pre_wrap'])) $phprun_html = '<pre>' . $phprun_html . '</pre>';
 	echo $phprun_html;
 	die();
 }
@@ -69,6 +72,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run</button>
 					<label><input type="checkbox" id="apply_css" checked="checked" /> Colorize</label>
 					<label><input type="checkbox" id="external_window" /> External Window</label>
+					<label><input type="checkbox" name="pre_wrap" /> &lt;pre&gt;</label>
 					<label>
 						Error Reporting
 						<select name="error_reporting">
