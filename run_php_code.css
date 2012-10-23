@@ -3,63 +3,39 @@ body { background-color: #222; color: #555; font-family: arial; overflow: hidden
 form { padding: 0; margin: 0; }
 
 #title_bar { 
+	background-image: url(wooden_bar.png);
+	background-position: 0 -5px;
+	background-repeat: repeat-x;
 	font-size: 13px; 
-	line-height: 55px; 
-	color: #FFF; 
-	height: 55px;
-	width: 1024px;
-	padding-left: 15px;
+	line-height: 48px; 
+	color: #885f3d; 
+	height: 50px;
+	width: 100%;
 }
-#title { font-size: 20px; text-shadow: 0 0 10px #00aaff; margin-right: 15px; }
+#title { font-size: 20px; padding: 0 15px; color: #986f4d; float: left; height: 50px; line-height: 47px; border-right: 1px solid #cca380; }
 
 .CodeMirror { font-size: 13px; float: left; width: 50%; }
 
 .btn {
-	top: -3px;
-	position: relative;
-	color: #FFF;
-	background-color: #222;
-	font-size: 16px;
+	background-image: url(button_sprite.png);
+	width: 90px;
+	height: 30px;
+	border: 0;
+	background-color: transparent;
 	font-weight: bold;
-	/* display: block; */
-	padding: 4px 20px;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	-webkit-box-shadow: 0px 6px 0px #111, 0px 6px 15px rgba(0,0,0,.7);
-	-moz-box-shadow: 0px 6px 0px #111, 0px 6px 15px rgba(0,0,0,.7);
-	box-shadow: 0px 6px 0px #111, 0px 6px 15px rgba(0,0,0,.7);
-	text-align: center;
-
-	-webkit-transition: all .1s ease;
-	-moz-transition: all .1s ease;
-	-ms-transition: all .1s ease;
-	-o-transition: all .1s ease;
-	transition: all .1s ease;
 	cursor: pointer;
-	border: 1px solid black;
-	margin-left: 10px;
+	color: #885f3d; 
 }
-
-.btn:hover { background-color: #2A2A2A;	}
-
-.btn:active {
-		-webkit-box-shadow: 0px 2px 0px #111, 0px 2px 5px rgba(0,0,0,.9);
-		-moz-box-shadow: 0px 2px 0px #111, 0px 2px 5px rgba(0,0,0,.9);
-		box-shadow: 0px 2px 0px #111, 0px 2px 5px rgba(0,0,0,.9);
-		position: relative;
-		top: 3px;
-}
-
+.btn:hover { background-position: 0 -30px; }
+.btn:active { background-position: 0 -60px; }
 .btn:active, #run:selected, #run:visited { outline: none;	}
+.icon { vertical-align: text-top; }
+#reset { margin-left: 14px; }
 
 #button_container { text-align: center; display: inline; }
-#button_container label { margin-left: 15px; }
+#button_container label { margin-left: 14px; }
 
-#run { width: 90px; text-shadow: 0 0 10px #aaffaa; }
-#reset { text-shadow: 0 0 10px #d92915; }
-
-#title_bar select { background-color: #222; color: #FFF; border: 1px solid #555; }
+#title_bar select { background-color: #784f2d; color: #f8d9af; border: 1px solid #f8c99f; }
 
 #php_frame { border: none; background-color: #FFF; float: right; width: 50%; }
 

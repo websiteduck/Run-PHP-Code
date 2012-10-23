@@ -15,7 +15,10 @@ $(function() {
 	
 	$('#reset').click(function() {
 		var answer = confirm("Are you sure you want to clear the editor?");
-		if (answer) editor.setValue('');
+		if (answer) { 
+			editor.setValue('');
+			$('#run_php_form').submit();
+		}
 	});
 	
 	$('#external_window').click(function() {

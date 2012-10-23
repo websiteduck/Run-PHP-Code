@@ -67,10 +67,8 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 			<input type="hidden" name="phprun_action" value="run" />
 			
 			<div id="title_bar">
-				<span id="title">Run PHP Code</span>
+				<div id="title">Run PHP Code</div>
 				<div id="button_container">
-					<button class="btn" type="button" id="reset">Reset</button>
-					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run</button>
 					<label><input type="checkbox" name="colorize" checked="checked" /> Colorize</label>
 					<label><input type="checkbox" id="external_window" /> External Window</label>
 					<label><input type="checkbox" name="pre_wrap" /> &lt;pre&gt;</label>
@@ -85,6 +83,8 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 							<option value="all">All</option>
 						</select>
 					</label>
+					<button class="btn" type="button" id="reset"><img src="clear.png" class="icon" /> Clear</button>
+					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run <img src="run.png" class="icon" /></button>
 				</div>
 			</div>
 			
