@@ -3,28 +3,31 @@ body { background-color: #222; color: #555; font-family: arial; overflow: hidden
 form { padding: 0; margin: 0; }
 
 #title_bar { 
-	background-image: url(wooden_bar.png);
-	background-position: 0 -5px;
+	background-image: url(bar.png);
 	background-repeat: repeat-x;
 	font-size: 13px; 
-	line-height: 48px; 
-	color: #885f3d; 
-	height: 50px;
+	line-height: 40px; 
+	color: #eee;
+	text-shadow: 0 0 10px #0096ff;	
+	height: 40px;
 	width: 100%;
+	z-index: 9999;
 }
-#title { font-size: 20px; padding: 0 15px; color: #986f4d; float: left; height: 50px; line-height: 47px; border-right: 1px solid #cca380; }
+#title { font-size: 20px; padding: 0 15px; color: #eee; float: left; height: 40px; line-height: 39px; border-right: 1px solid #141414; text-shadow: 0 0 10px #0096ff; }
 
 .CodeMirror { font-size: 13px; float: left; width: 50%; }
 
 .btn {
 	background-image: url(button_sprite.png);
+	color: #eee;
+	text-shadow: 0 0 10px #0096ff;
+	box-shadow: 0px 0px 10px #000;
 	width: 90px;
 	height: 30px;
 	border: 0;
 	background-color: transparent;
 	font-weight: bold;
 	cursor: pointer;
-	color: #885f3d; 
 }
 .btn:hover { background-position: 0 -30px; }
 .btn:active { background-position: 0 -60px; }
@@ -35,8 +38,8 @@ form { padding: 0; margin: 0; }
 #button_container { text-align: center; display: inline; }
 #button_container label { margin-left: 14px; }
 
-#title_bar select { background-color: #784f2d; color: #f8d9af; border: 1px solid #f8c99f; }
+#title_bar select { background-color: #141414; color: #eee; border: 1px solid #444; }
 
-#php_frame { border: none; background-color: #FFF; float: right; width: 50%; }
+#php_frame { border: none; background-color: #fff; float: right; width: 50%; }
 
 #resize_ball { position: fixed; width: 32px; height: 32px; z-index: 9999; cursor: e-resize; }

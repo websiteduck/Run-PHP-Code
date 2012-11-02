@@ -45,13 +45,13 @@ $(function() {
 	
 	$(window).resize(function() {
 		var window_height = $(window).height();
-		var page_height = window_height - 55;
+		var page_height = window_height - 40;
 		var page_width = $(window).width();
 		$('.CodeMirror-scroll').height(page_height); editor.refresh();
 		$('.CodeMirror').width(divide_x);
 		$('#php_frame').height(page_height);
 		$('#php_frame').width(page_width - divide_x);
-		$('#resize_ball').css('top', 55 + page_height/2 - 32);
+		$('#resize_ball').css('top', 40 + page_height/2 - 32);
 		$('#resize_ball').css('left', divide_x - 32 );
 	}).resize();
 	

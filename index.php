@@ -56,6 +56,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 		<script type="text/javascript" src="codemirror2/mode/php/php.js"></script>
 		<script type="text/javascript" src="run_php_code.js"></script>
 
+		<link rel="shortcut icon" href="favicon.ico" >
 		<link rel="stylesheet" href="codemirror2/lib/codemirror.css">
 		<link rel="stylesheet" href="codemirror2/theme/ambiance.css">
 		<link rel="stylesheet" href="run_php_code.css">
