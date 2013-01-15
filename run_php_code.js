@@ -47,6 +47,7 @@ $(function() {
 		var window_height = $(window).height();
 		var page_height = window_height - 40;
 		var page_width = $(window).width();
+		$('.CodeMirror').height(page_height);
 		$('.CodeMirror-scroll').height(page_height); editor.refresh();
 		$('.CodeMirror').width(divide_x);
 		$('#php_frame').height(page_height);
