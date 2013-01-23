@@ -49,7 +49,8 @@ $(function() {
 		var page_width = $(window).width();
 		$('.CodeMirror').height(page_height);
 		$('.CodeMirror-scroll').height(page_height); editor.refresh();
-		$('.CodeMirror').width(divide_x);
+		if ($('#external_window').prop('checked')) $('.CodeMirror').width($(window).width());
+		else $('.CodeMirror').width(divide_x);
 		$('#php_frame').height(page_height);
 		$('#php_frame').width(page_width - divide_x);
 		$('#resize_ball').css('top', 40 + page_height/2 - 32);
