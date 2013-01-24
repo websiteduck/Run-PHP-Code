@@ -3,7 +3,7 @@ body { background-color: #222; color: #555; font-family: arial; overflow: hidden
 form { padding: 0; margin: 0; }
 
 #title_bar { 
-	background-image: url(bar.png);
+	background-image: url(../img/bar.png);
 	background-repeat: repeat-x;
 	font-size: 13px; 
 	line-height: 40px; 
@@ -18,7 +18,7 @@ form { padding: 0; margin: 0; }
 .CodeMirror { font-size: 13px; float: left; width: 50%; }
 
 .btn {
-	background-image: url(button_sprite.png);
+	background-image: url(../img/button_sprite.png);
 	color: #eee;
 	text-shadow: 0 1 0 #000000;
 	width: 90px;
@@ -44,3 +44,19 @@ form { padding: 0; margin: 0; }
 #php_frame { border: none; background-color: #fff; float: right; width: 50%; }
 
 #resize_ball { position: fixed; width: 32px; height: 32px; z-index: 9999; cursor: e-resize; }
+
+input[type="checkbox"] {
+    display: none;
+}
+input[type="checkbox"] + label  span {
+	display: inline-block;
+	vertical-align: middle;
+	width: 19px;
+    height: 19px;
+    margin: -4px 4px 0 0;
+    background: url(../img/check_radio_sprite.png) left top no-repeat;
+    cursor: pointer;
+}
+input[type="checkbox"]:checked + label span{
+    background: url(../img/check_radio_sprite.png) -19px top no-repeat;
+}

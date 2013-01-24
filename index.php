@@ -36,7 +36,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 	eval($phprun_code);
 	$phprun_html = ob_get_clean();
 	if (isset($_POST['pre_wrap'])) $phprun_html = '<pre>' . $phprun_html . '</pre>';
-	if (isset($_POST['colorize'])) $phprun_html = '<link rel="stylesheet" href="colorize.css">' . $phprun_html;
+	if (isset($_POST['colorize'])) $phprun_html = '<link rel="stylesheet" href="css/colorize.css">' . $phprun_html;
 	echo $phprun_html;
 	die();
 }
@@ -48,21 +48,21 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 	<head>
 		<title>Run PHP Code</title>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<script type="text/javascript" src="codemirror2/lib/codemirror.js"></script>
-		<script type="text/javascript" src="codemirror2/mode/xml/xml.js"></script>
-		<script type="text/javascript" src="codemirror2/mode/javascript/javascript.js"></script>
-		<script type="text/javascript" src="codemirror2/mode/css/css.js"></script>
-		<script type="text/javascript" src="codemirror2/mode/clike/clike.js"></script>
-		<script type="text/javascript" src="codemirror2/mode/php/php.js"></script>
-		<script type="text/javascript" src="run_php_code.js"></script>
+		<script type="text/javascript" src="js/codemirror2/lib/codemirror.js"></script>
+		<script type="text/javascript" src="js/codemirror2/mode/xml/xml.js"></script>
+		<script type="text/javascript" src="js/codemirror2/mode/javascript/javascript.js"></script>
+		<script type="text/javascript" src="js/codemirror2/mode/css/css.js"></script>
+		<script type="text/javascript" src="js/codemirror2/mode/clike/clike.js"></script>
+		<script type="text/javascript" src="js/codemirror2/mode/php/php.js"></script>
+		<script type="text/javascript" src="js/run_php_code.js"></script>
 
 		<link rel="shortcut icon" href="favicon.ico" >
-		<link rel="stylesheet" href="codemirror2/lib/codemirror.css">
-		<link rel="stylesheet" href="codemirror2/theme/ambiance.css">
-		<link rel="stylesheet" href="run_php_code.css">
+		<link rel="stylesheet" href="js/codemirror2/lib/codemirror.css">
+		<link rel="stylesheet" href="js/codemirror2/theme/ambiance.css">
+		<link rel="stylesheet" href="css/run_php_code.css">
 	</head>
 	<body>
-		<img id="resize_ball" src="resize_ball.png" />
+		<img id="resize_ball" src="img/resize_ball.png" />
 		
 		<form id="run_php_form" method="POST" action="" target="run_php_code">
 			<input type="hidden" name="phprun_action" value="run" />
@@ -70,9 +70,9 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 			<div id="title_bar">
 				<div id="title">Run PHP Code</div>
 				<div id="button_container">
-					<label><input type="checkbox" name="colorize" checked="checked" /> Colorize</label>
-					<label><input type="checkbox" id="external_window" /> External Window</label>
-					<label><input type="checkbox" name="pre_wrap" /> &lt;pre&gt;</label>
+					<input type="checkbox" id="colorize" name="colorize" checked="checked" /><label for="colorize"><span></span> Colorize</label>
+					<input type="checkbox" id="external_window" /><label for="external_window"><span></span> External Window</label>
+					<input type="checkbox" id="pre_wrap" name="pre_wrap" /><label for="pre_wrap"><span></span> &lt;pre&gt;</label>
 					<label>
 						Error Reporting
 						<select name="error_reporting">
@@ -84,8 +84,8 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 							<option value="all">All</option>
 						</select>
 					</label>
-					<button class="btn" type="button" id="reset"><img src="clear.png" class="icon" /> Clear</button>
-					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run <img src="run.png" class="icon" /></button>
+					<button class="btn" type="button" id="reset"><img src="img/clear.png" class="icon" /> Clear</button>
+					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run <img src="img/run.png" class="icon" /></button>
 				</div>
 			</div>
 			
