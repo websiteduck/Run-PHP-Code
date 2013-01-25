@@ -70,7 +70,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 			<div id="title_bar">
 				<div id="title">Run PHP Code</div>
 				
-				<div class="drop">Options
+				<div class="drop"><span>Options</span>
 					<div>
 						<input type="checkbox" id="colorize" name="colorize" checked="checked" /><label for="colorize"><span></span> Colorize</label><br />
 						<input type="checkbox" id="external_window" /><label for="external_window"><span></span> External Window</label><br />
