@@ -38,16 +38,20 @@ form { padding: 0; margin: 0; }
 
 #button_container { text-align: center; display: inline; }
 #button_container label { margin-left: 14px; }
+#button_container img { vertical-align: middle; }
+#help { margin: -5px 0 0 10px; cursor: pointer; }
+#help_window { display: none; border: 1px solid #141414; background-color: #282828; position: fixed; width: 270px; height: 200px; left: 50%; top: 50%; margin-left: -130px; margin-top: -100px; z-index: 9999; padding: 20px; }
+#help_window h2 { margin-top: 0; }
+#help_window a { color: #fff; }
 
 #title_bar select { background-color: #141414; color: #eee; border: 1px solid #444; }
 
 #php_frame { border: none; background-color: #fff; float: right; width: 50%; }
 
-#resize_ball { position: fixed; width: 32px; height: 32px; z-index: 9999; cursor: e-resize; }
+#resize_ball { position: fixed; width: 32px; height: 32px; z-index: 9995; cursor: e-resize; }
 
-input[type="checkbox"] {
-    display: none;
-}
+input[type="checkbox"] { display: none; }
+input[type="checkbox"] + label { cursor: pointer; }
 input[type="checkbox"] + label  span {
 	display: inline-block;
 	vertical-align: middle;
@@ -57,6 +61,10 @@ input[type="checkbox"] + label  span {
     background: url(../img/check_radio_sprite.png) left top no-repeat;
     cursor: pointer;
 }
-input[type="checkbox"]:checked + label span{
-    background: url(../img/check_radio_sprite.png) -19px top no-repeat;
-}
+input[type="checkbox"]:checked + label span { background: url(../img/check_radio_sprite.png) -19px top no-repeat; }
+
+/* Navigation Menu */
+.drop { position: relative; display: inline-block; padding: 0 25px 0 15px; border-right: 1px solid #141414; background-image: url(../img/drop.png); background-position: right center; background-repeat: no-repeat; cursor: pointer; }
+.drop div { display: none; position: absolute; z-index: 9997; width: 200px; background-color: #282828; line-height: 30px; padding: 5px 5px 5px 10px; left: 0; border: 1px solid #141414; box-shadow: 5px 5px 5px #111;
+	-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;user-select: none; }
+.drop:hover div { display: block; }

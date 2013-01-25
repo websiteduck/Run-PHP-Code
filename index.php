@@ -69,10 +69,16 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 			
 			<div id="title_bar">
 				<div id="title">Run PHP Code</div>
+				
+				<div class="drop">Options
+					<div>
+						<input type="checkbox" id="colorize" name="colorize" checked="checked" /><label for="colorize"><span></span> Colorize</label><br />
+						<input type="checkbox" id="external_window" /><label for="external_window"><span></span> External Window</label><br />
+						<input type="checkbox" id="pre_wrap" name="pre_wrap" /><label for="pre_wrap"><span></span> &lt;pre&gt;</label><br />
+					</div>
+				</div>
+					
 				<div id="button_container">
-					<input type="checkbox" id="colorize" name="colorize" checked="checked" /><label for="colorize"><span></span> Colorize</label>
-					<input type="checkbox" id="external_window" /><label for="external_window"><span></span> External Window</label>
-					<input type="checkbox" id="pre_wrap" name="pre_wrap" /><label for="pre_wrap"><span></span> &lt;pre&gt;</label>
 					<label>
 						Error Reporting
 						<select name="error_reporting">
@@ -86,6 +92,8 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 					</label>
 					<button class="btn" type="button" id="reset"><img src="img/clear.png" class="icon" /> Clear</button>
 					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run <img src="img/run.png" class="icon" /></button>
+					
+					<img id="help" src="img/help.png" style="" />
 				</div>
 			</div>
 			
@@ -94,6 +102,21 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 		
 		<iframe id="php_frame" name="run_php_code">
 		</iframe>
+		
+		<div id="help_window">
+			<h2>Run PHP Code</h2>
+			<ul>
+				<li>Ctrl-Enter to Run Code</li>
+				<li>Opening <b>&lt?php</b> tag is optional</li>
+			</ul>
+			
+			<div style="text-align: center;">
+				<br />
+				<a href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a>
+				<br /><br /><br />
+				<button class="btn" id="btn_close_help">Close</button>
+			</div>
+		</div>
 		
 	</body>
 </html>

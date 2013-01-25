@@ -13,6 +13,9 @@ $(function() {
 		extraKeys: { 'Ctrl-Enter': function() { $('#run_php_form').submit(); } }
 	});
 	
+	$('#help').click(function() { $('#help_window').show(); });
+	$('#btn_close_help').click(function() { $('#help_window').hide(); });
+	
 	$('#reset').click(function() {
 		var answer = confirm("Are you sure you want to clear the editor?");
 		if (answer) { 
