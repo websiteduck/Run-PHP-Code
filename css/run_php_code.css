@@ -39,7 +39,7 @@ form { padding: 0; margin: 0; }
 #button_container { text-align: center; display: inline; }
 #button_container label { margin-left: 14px; }
 #button_container > img { vertical-align: middle; }
-#help { margin: -5px 0 0 10px; cursor: pointer; }
+#help { margin: -2px 0 0 10px; cursor: pointer; }
 #help_window { display: none; border: 1px solid #141414; background-color: #282828; position: fixed; width: 270px; height: 200px; left: 50%; top: 50%; margin-left: -130px; margin-top: -100px; z-index: 9999; padding: 20px; }
 #help_window h2 { margin-top: 0; }
 #help_window a { color: #fff; }
