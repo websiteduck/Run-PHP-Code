@@ -10,5 +10,5 @@ This script gives you the ability to quickly test snippets of PHP code locally.
 ---
 
 <a href="http://ace.ajax.org">Ace</a>  
-Copyright (c) 2010, Ajax.org B.V. 
+Copyright (c) 2010, Ajax.org B.V.  
 Licensed under the <a href="http://www.opensource.org/licenses/bsd-license.php">BSD License</a>  
