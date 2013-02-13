@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ACE in Action</title>
+<style type="text/css" media="screen">
+    #php { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+</head>
+<body>
+
+<div id="php">function foo(items) {
+    var x = "All this is syntax highlighted";
+    return x;
+}</div>
+    
+<script src="js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	var editor = ace.edit("php");
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/php");
+</script>
+</body>
+</html>

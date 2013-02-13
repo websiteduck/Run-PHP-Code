@@ -12,8 +12,7 @@ if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) die('dead');
 
 define('NL', PHP_EOL);
 
-if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') 
-{
+if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 	header("Expires: Mon, 16 Apr 2012 05:00:00 GMT");
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
 	header("Cache-Control: no-store, no-cache, must-revalidate"); 
@@ -31,7 +30,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 		case 'none': default: error_reporting(0); break;
 	}
 	$phprun_code = ltrim($_POST['phprun_code']);
-	if (substr($phprun_code,0,5) == '<?php') $phprun_code = substr($phprun_code, 5);
+	if (substr($phprun_code,0,5) == '<?php') $phprun_code = substr($phprun_code, 5); else $phprun_code = '?>' . $phprun_code;
 	ob_start();
 	eval($phprun_code);
 	$phprun_html = ob_get_clean();
@@ -44,27 +43,20 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 ?>
 <?php if (!isset($_POST['action']) || $_POST['action'] != 'run'): ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<title>Run PHP Code</title>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<script type="text/javascript" src="js/codemirror2/lib/codemirror.js"></script>
-		<script type="text/javascript" src="js/codemirror2/mode/xml/xml.js"></script>
-		<script type="text/javascript" src="js/codemirror2/mode/javascript/javascript.js"></script>
-		<script type="text/javascript" src="js/codemirror2/mode/css/css.js"></script>
-		<script type="text/javascript" src="js/codemirror2/mode/clike/clike.js"></script>
-		<script type="text/javascript" src="js/codemirror2/mode/php/php.js"></script>
+		<script type="text/javascript" src="js/ace/ace.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/run_php_code.js"></script>
 
 		<link rel="shortcut icon" href="favicon.ico" >
-		<link rel="stylesheet" href="js/codemirror2/lib/codemirror.css">
-		<link rel="stylesheet" href="js/codemirror2/theme/ambiance.css">
 		<link rel="stylesheet" href="css/run_php_code.css">
 	</head>
 	<body>
 		<img id="resize_ball" src="img/resize_ball.png" />
 		
-		<form id="run_php_form" method="POST" action="" target="run_php_code">
+		<form id="run_php_form" method="POST" action="" target="run_php_code" onsubmit="run_php_form_submit()">
 			<input type="hidden" name="phprun_action" value="run" />
 			
 			<div id="title_bar">
@@ -97,7 +89,8 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 				</div>
 			</div>
 			
-			<textarea name="phprun_code" id="php"></textarea>
+			<div id="php"></div>
+			<input type="hidden" id="phprun_code" name="phprun_code" />
 		</form>
 		
 		<iframe id="php_frame" name="run_php_code">
@@ -107,13 +100,11 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run')
 			<h2>Run PHP Code</h2>
 			<ul>
 				<li>Ctrl-Enter to Run Code</li>
-				<li>Opening <b>&lt?php</b> tag is optional</li>
 			</ul>
 			
 			<div style="text-align: center;">
-				<br />
-				<a href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a>
-				<br /><br /><br />
+				<br /><br />
+				Website Duck LLC - <a href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a><br /><br /><br />
 				<button class="btn" id="btn_close_help">Close</button>
 			</div>
 		</div>
