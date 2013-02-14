@@ -7,6 +7,7 @@ $(function() {
 	editor = ace.edit("php");
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setMode("ace/mode/php");
+	editor.setShowPrintMargin(false);
 	editor.commands.addCommand({
 		name: 'runCode',
 		bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
@@ -61,7 +62,7 @@ $(function() {
 		$('#php_frame').height(page_height);
 		$('#php_frame').width(page_width - divide_x);
 		$('#resize_ball').css('top', 20 + page_height/2);
-		$('#resize_ball').css('left', divide_x );
+		$('#resize_ball').css('left', divide_x - 27);
 	}).resize();
 	
 	$('#resize_ball').mousedown(function() { resizing = true; event.preventDefault(); }).mouseup(function(e) { resize_mouse_up(e.pageX) });
