@@ -46,8 +46,6 @@ form { padding: 0; margin: 0; }
 
 #title_bar select { background-color: #141414; color: #eee; border: 1px solid #444; }
 
-.ace_sb { overflow-y: auto !important; }
-
 #php { position: absolute; }
 #php_frame { border: none; background-color: #fff; float: right; width: 50%; }
 

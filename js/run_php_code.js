@@ -101,6 +101,7 @@ $(function() {
 	}
 	
 	$('#run_php_form').submit();
+	editor.focus();
 
 });
 
