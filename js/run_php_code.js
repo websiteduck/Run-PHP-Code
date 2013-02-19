@@ -16,18 +16,20 @@ $(function() {
 		}
 	});
 	
-	editor.setValue("<?php\n\n");
-	editor.gotoLine(3);
-	
+
 	$('#help').click(function() { $('#help_window').show(); });
 	$('#btn_close_help').click(function() { $('#help_window').hide(); });
 	
+	function reset() {
+		editor.setValue("<?php\n\n");
+		editor.gotoLine(3);
+		$('#run_php_form').submit();
+		editor.focus();
+	}
+	
 	$('#reset').click(function() {
 		var answer = confirm("Are you sure you want to clear the editor?");
-		if (answer) { 
-			editor.setValue('');
-			$('#run_php_form').submit();
-		}
+		if (answer) reset();
 	});
 	
 	$('#external_window').click(function() {
@@ -100,8 +102,7 @@ $(function() {
 		}
 	}
 	
-	$('#run_php_form').submit();
-	editor.focus();
+	reset();
 
 });
 
