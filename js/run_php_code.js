@@ -16,10 +16,6 @@ $(function() {
 		}
 	});
 	
-
-	$('#help').click(function() { $('#help_window').show(); });
-	$('#btn_close_help').click(function() { $('#help_window').hide(); });
-	
 	function reset() {
 		editor.setValue("<?php\n\n");
 		editor.gotoLine(3);
@@ -101,6 +97,28 @@ $(function() {
 			$(window).resize();
 		}
 	}
+	
+	$('.drop').hover(function() {
+		$('> div', this).slideDown(100);
+	}, function() {
+		$('> div', this).slideUp(100);
+	});
+	
+	$('#btn_import_gist').click(function() {
+		var gist_id = prompt('Enter gist URL or ID');
+		if (gist_id === null || gist_id === '') return;
+		var gist_array = gist_id.split('/');
+		gist_id = gist_array[gist_array.length-1];
+		editor.setValue('Loading gist...');
+		
+		$.get('https://api.github.com/gists/' + gist_id, {}, function(data) {
+			var content = '';
+			for (var i in data.files) content += data.files[i].content + '\n';
+			editor.setValue(content);
+			editor.gotoLine(1);
+			editor.focus();
+		}, 'json');
+	});
 	
 	reset();
 

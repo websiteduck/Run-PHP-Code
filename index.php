@@ -62,6 +62,12 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 			<div id="title_bar">
 				<div id="title">Run PHP Code</div>
 				
+				<div class="drop"><span>File</span>
+					<div>
+						<button class="button" id="btn_import_gist" type="button">Import Gist...</button>
+					</div>
+				</div>
+				
 				<div class="drop"><span>Options</span>
 					<div>
 						<input type="checkbox" id="colorize" name="colorize" checked="checked" /><label for="colorize"><span></span> Colorize</label><br />
@@ -82,10 +88,20 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 							<option value="all">All</option>
 						</select>
 					</label>
-					<button class="btn" type="button" id="reset"><img src="img/clear.png" class="icon" /> Clear</button>
-					<button class="btn" type="submit" id="run" title="Run (Ctrl+Enter)">Run <img src="img/run.png" class="icon" /></button>
+					<button class="button" type="button" id="reset"><img src="img/clear.png" class="icon" /> Clear</button>
+					<button class="button" type="submit" id="run" title="Run (Ctrl+Enter)">Run <img src="img/run.png" class="icon" /></button>
 					
-					<img id="help" src="img/help.png" style="" />
+					<div class="drop">
+						<img id="help" src="img/help.png" style="" />
+						<div id="help_window">
+							<h2>Run PHP Code</h2>
+							<p>Ctrl-Enter to Run Code</p>
+							
+							<p>
+								Website Duck LLC - <a href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 			
@@ -95,19 +111,6 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 		
 		<iframe id="php_frame" name="run_php_code">
 		</iframe>
-		
-		<div id="help_window">
-			<h2>Run PHP Code</h2>
-			<ul>
-				<li>Ctrl-Enter to Run Code</li>
-			</ul>
-			
-			<div style="text-align: center;">
-				<br /><br />
-				Website Duck LLC - <a href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a><br /><br /><br />
-				<button class="btn" id="btn_close_help">Close</button>
-			</div>
-		</div>
 		
 	</body>
 </html>
