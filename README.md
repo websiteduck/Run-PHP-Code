@@ -2,8 +2,16 @@ Run PHP Code
 ============
 
 This script gives you the ability to quickly test snippets of PHP code locally.  
+A local apache server is required.  
 
 ![screenshot](https://github.com/websiteduck/Run-PHP-Code/raw/master/img/screenshot.png)  
+
+Features
+--------
+- Ace code editor
+- Import gists from GitHub
+- Run code in the same window or a second window
+
 
 ### Run PHP Code utilizes the following projects:
 
