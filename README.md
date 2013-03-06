@@ -11,7 +11,7 @@ Features
 - Ace code editor
 - Import gists from GitHub
 - Import pastes from PasteBin and Pastie
-- Run code in the same window or a second window
+- Run code in the same window or a separate window
 
 
 ### Run PHP Code utilizes the following projects:
