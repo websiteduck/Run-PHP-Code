@@ -69,25 +69,8 @@ form { padding: 0; margin: 0; }
 	top:1px;
 }
 
-
-.btn {
-	background-image: url(../img/button_sprite.png);
-	color: #eee;
-	text-shadow: 0 1 0 #000000;
-	width: 90px;
-	height: 30px;
-	border: 0;
-	background-color: transparent;
-	font-weight: bold;
-	cursor: pointer;
-}
-.btn:hover { background-position: 0 -30px; }
-.btn:active { background-position: 0 -60px; }
-.btn:active, #run:selected, #run:visited { outline: none;	}
 .icon { vertical-align: text-top; }
 #reset { margin-left: 14px; }
-
-#title_bar .btn { margin-top: 5px; line-height: 24px; }
 
 #button_container { text-align: center; display: inline; }
 #button_container label { margin-left: 14px; }
@@ -121,4 +104,4 @@ input[type="checkbox"]:checked + label span { background: url(../img/check_radio
 .drop > div { display: none; position: absolute; z-index: 9997; width: 200px; background-color: #282828; line-height: 30px; padding: 5px 5px 5px 10px; left: 0; border: 1px solid #141414; box-shadow: 5px 5px 5px #111;
 	-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;user-select: none; cursor: default; }
 .drop div label { cursor: pointer; }
-.drop .button { width: 180px; }
+.drop .button { width: 195px; }
