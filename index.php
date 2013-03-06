@@ -65,6 +65,8 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 				<div class="drop"><span>File</span>
 					<div>
 						<button class="button" id="btn_import_gist" type="button">Import Gist...</button>
+						<button class="button" id="btn_import_pastebin" type="button">Import PasteBin...</button>
+						<button class="button" id="btn_import_pastie" type="button">Import Pastie...</button>
 					</div>
 				</div>
 				
@@ -98,7 +100,9 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 							<p>Ctrl-Enter to Run Code</p>
 							
 							<p>
-								Website Duck LLC - <a href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a>
+								<img src="img/website_duck.png" alt="" style="width: 50px; height: 50px;" /><br />
+								Website Duck LLC<br />
+								<a class="button" href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a>
 							</p>
 						</div>
 					</div>

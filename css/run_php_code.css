@@ -68,6 +68,7 @@ form { padding: 0; margin: 0; }
 	position:relative;
 	top:1px;
 }
+a.button { padding: 0; }
 
 .icon { vertical-align: text-top; }
 #reset { margin-left: 14px; }

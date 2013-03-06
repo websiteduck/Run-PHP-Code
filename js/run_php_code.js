@@ -104,20 +104,56 @@ $(function() {
 		$('> div', this).slideUp(100);
 	});
 	
+	function get_id_from_url(url) {
+		var url_array = url.split('/');
+		return url_array[url_array.length-1];
+	}
+	
+	function set_editor_content(content) {
+		editor.setValue(content);
+		editor.gotoLine(1);
+		editor.focus();
+	}
+	
 	$('#btn_import_gist').click(function() {
 		var gist_id = prompt('Enter gist URL or ID');
 		if (gist_id === null || gist_id === '') return;
-		var gist_array = gist_id.split('/');
-		gist_id = gist_array[gist_array.length-1];
+		gist_id = get_id_from_url(gist_id);
 		editor.setValue('Loading gist...');
 		
-		$.get('https://api.github.com/gists/' + gist_id, {}, function(data) {
-			var content = '';
-			for (var i in data.files) content += data.files[i].content + '\n';
-			editor.setValue(content);
-			editor.gotoLine(1);
-			editor.focus();
-		}, 'json');
+		$.get('proxy.php?url=' + encodeURIComponent('https://api.github.com/gists/') + gist_id, {}, function(data) {
+			if (data.charAt(0) === '{') {
+				data = $.parseJSON(data);
+				var content = '';
+				for (var i in data.files) content += data.files[i].content + '\n';
+				set_editor_content(content);
+			}
+			else {
+				set_editor_content(data);
+			}
+		}, 'text');
+	});
+	
+	$('#btn_import_pastebin').click(function() {
+		var paste_id = prompt('Enter PasteBin URL or ID');
+		if (paste_id === null || paste_id === '') return;
+		paste_id = get_id_from_url(paste_id);
+		editor.setValue('Loading paste...');
+		
+		$.get('proxy.php?url=' + encodeURIComponent('http://pastebin.com/raw.php?i=') + paste_id, {}, function(data) {
+			set_editor_content(data);
+		}, 'text');
+	});
+	
+	$('#btn_import_pastie').click(function() {
+		var pastie_id = prompt('Enter Pastie URL or ID');
+		if (pastie_id === null || pastie_id === '') return;
+		pastie_id = get_id_from_url(pastie_id);
+		editor.setValue('Loading paste...');
+		
+		$.get('proxy.php?url=' + encodeURIComponent('http://pastie.org/pastes/') + pastie_id + '/download', {}, function(data) {
+			set_editor_content(data);
+		}, 'text');
 	});
 	
 	reset();
