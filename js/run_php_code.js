@@ -115,45 +115,35 @@ $(function() {
 		editor.focus();
 	}
 	
-	$('#btn_import_gist').click(function() {
-		var gist_id = prompt('Enter gist URL or ID');
-		if (gist_id === null || gist_id === '') return;
-		gist_id = get_id_from_url(gist_id);
-		editor.setValue('Loading gist...');
+	$('#btn_import').click(function() {
+		var code_url = prompt('Always make sure imported code is safe before running!!!\n\nSupported services: gist.GitHub.com, PasteBin.com, Pastie.org\n\nEnter URL:');
+		if (code_url === null || code_url === '') return;
+		code_id = get_id_from_url(code_url);
+		editor.setValue('Loading code...');
 		
-		$.get('proxy.php', {url: 'https://api.github.com/gists/' + gist_id}, function(data) {
-			if (data.charAt(0) === '{') {
-				data = $.parseJSON(data);
-				var content = '';
-				for (var i in data.files) content += data.files[i].content + '\n';
-				set_editor_content(content);
-			}
-			else {
+		if (code_url.indexOf('github.com') !== -1) {
+			$.get('proxy.php?url=' + encodeURIComponent('https://api.github.com/gists/') + code_id, {}, function(data) {
+				if (data.charAt(0) === '{') {
+					data = $.parseJSON(data);
+					var content = '';
+					for (var i in data.files) content += data.files[i].content + '\n';
+					set_editor_content(content);
+				}
+				else {
+					set_editor_content(data);
+				}
+			}, 'text');
+		}
+		else if (code_url.indexOf('pastebin.com') !== -1) {
+			$.get('proxy.php?url=' + encodeURIComponent('http://pastebin.com/raw.php?i=') + code_id, {}, function(data) {
 				set_editor_content(data);
-			}
-		}, 'text');
-	});
-	
-	$('#btn_import_pastebin').click(function() {
-		var paste_id = prompt('Enter PasteBin URL or ID');
-		if (paste_id === null || paste_id === '') return;
-		paste_id = get_id_from_url(paste_id);
-		editor.setValue('Loading paste...');
-		
-		$.get('proxy.php', {url: 'http://pastebin.com/raw.php?i=' + paste_id}, function(data) {
-			set_editor_content(data);
-		}, 'text');
-	});
-	
-	$('#btn_import_pastie').click(function() {
-		var pastie_id = prompt('Enter Pastie URL or ID');
-		if (pastie_id === null || pastie_id === '') return;
-		pastie_id = get_id_from_url(pastie_id);
-		editor.setValue('Loading paste...');
-		
-		$.get('proxy.php', {url: 'http://pastie.org/pastes/' + pastie_id + '/download'}, function(data) {
-			set_editor_content(data);
-		}, 'text');
+			}, 'text');
+		}
+		else if (code_url.indexOf('pastie.org') !== -1) {
+			$.get('proxy.php?url=' + encodeURIComponent('http://pastie.org/pastes/') + pastie_id + '/download', {}, function(data) {
+				set_editor_content(data);
+			}, 'text');
+		}
 	});
 	
 	reset();

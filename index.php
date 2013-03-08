@@ -64,9 +64,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 				
 				<div class="drop"><span>File</span>
 					<div>
-						<button class="button" id="btn_import_gist" type="button">Import Gist...</button>
-						<button class="button" id="btn_import_pastebin" type="button">Import PasteBin...</button>
-						<button class="button" id="btn_import_pastie" type="button">Import Pastie...</button>
+						<button class="button" id="btn_import" type="button">Import...</button>
 					</div>
 				</div>
 				
