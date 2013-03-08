@@ -121,8 +121,8 @@ $(function() {
 		code_id = get_id_from_url(code_url);
 		editor.setValue('Loading code...');
 		
-		if (code_url.indexOf('github.com') !== -1) {
-			$.get('proxy.php?url=' + encodeURIComponent('https://api.github.com/gists/') + code_id, {}, function(data) {
+		if (code_url.toLowerCase().indexOf('github.com') !== -1) {
+			$.get('proxy.php', {url: 'https://api.github.com/gists/' + code_id}, function(data) {
 				if (data.charAt(0) === '{') {
 					data = $.parseJSON(data);
 					var content = '';
@@ -134,13 +134,13 @@ $(function() {
 				}
 			}, 'text');
 		}
-		else if (code_url.indexOf('pastebin.com') !== -1) {
-			$.get('proxy.php?url=' + encodeURIComponent('http://pastebin.com/raw.php?i=') + code_id, {}, function(data) {
+		else if (code_url.toLowerCase().indexOf('pastebin.com') !== -1) {
+			$.get('proxy.php', {url: 'http://pastebin.com/raw.php?i=' + code_id}, function(data) {
 				set_editor_content(data);
 			}, 'text');
 		}
-		else if (code_url.indexOf('pastie.org') !== -1) {
-			$.get('proxy.php?url=' + encodeURIComponent('http://pastie.org/pastes/') + pastie_id + '/download', {}, function(data) {
+		else if (code_url.toLowerCase().indexOf('pastie.org') !== -1) {
+			$.get('proxy.php', {url: 'http://pastie.org/pastes/' + code_id + '/download'}, function(data) {
 				set_editor_content(data);
 			}, 'text');
 		}
