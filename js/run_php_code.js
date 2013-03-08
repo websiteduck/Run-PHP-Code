@@ -12,14 +12,14 @@ $(function() {
 		name: 'runCode',
 		bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
 		exec: function(editor) {
-			$('#run_php_form').submit();
+			run_code();
 		}
 	});
 	
 	function reset() {
 		editor.setValue("<?php\n\n");
 		editor.gotoLine(3);
-		$('#run_php_form').submit();
+		run_code();
 		editor.focus();
 	}
 	
@@ -146,9 +146,22 @@ $(function() {
 		}
 	});
 	
+	$('#btn_save').click(function() {
+		var filename = prompt('Filename:');
+		if (filename === null || filename === '') return;
+		$('input[name="phprun_action"]').val('download');
+		$('input[name="phprun_filename"]').val(filename);
+		$('#run_php_form').submit();
+	});
+	
 	reset();
 
 });
+
+function run_code() {
+	$('input[name="phprun_action"]').val('run');
+	$('#run_php_form').submit();
+}
 
 function run_php_form_submit() {
 	$('#phprun_code').val(editor.getValue());
