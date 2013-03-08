@@ -121,7 +121,7 @@ $(function() {
 		gist_id = get_id_from_url(gist_id);
 		editor.setValue('Loading gist...');
 		
-		$.get('proxy.php?url=' + encodeURIComponent('https://api.github.com/gists/') + gist_id, {}, function(data) {
+		$.get('proxy.php', {url: 'https://api.github.com/gists/' + gist_id}, function(data) {
 			if (data.charAt(0) === '{') {
 				data = $.parseJSON(data);
 				var content = '';
@@ -140,7 +140,7 @@ $(function() {
 		paste_id = get_id_from_url(paste_id);
 		editor.setValue('Loading paste...');
 		
-		$.get('proxy.php?url=' + encodeURIComponent('http://pastebin.com/raw.php?i=') + paste_id, {}, function(data) {
+		$.get('proxy.php', {url: 'http://pastebin.com/raw.php?i=' + paste_id}, function(data) {
 			set_editor_content(data);
 		}, 'text');
 	});
@@ -151,7 +151,7 @@ $(function() {
 		pastie_id = get_id_from_url(pastie_id);
 		editor.setValue('Loading paste...');
 		
-		$.get('proxy.php?url=' + encodeURIComponent('http://pastie.org/pastes/') + pastie_id + '/download', {}, function(data) {
+		$.get('proxy.php', {url: 'http://pastie.org/pastes/' + pastie_id + '/download'}, function(data) {
 			set_editor_content(data);
 		}, 'text');
 	});
