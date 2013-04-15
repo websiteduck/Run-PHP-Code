@@ -37,8 +37,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 		case 'all': error_reporting(-1); break;
 		case 'none': default: error_reporting(0); break;
 	}
-	$phprun_code = ltrim($_POST['phprun_code']);
-	if (substr($phprun_code,0,5) == '<?php') $phprun_code = substr($phprun_code, 5); else $phprun_code = '?>' . $phprun_code;
+	$phprun_code = '?>' . ltrim($_POST['phprun_code']);
 	ob_start();
 	eval($phprun_code);
 	$phprun_html = ob_get_clean();
@@ -49,7 +48,6 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 }
 
 ?>
-<?php if (!isset($_POST['action']) || $_POST['action'] != 'run'): ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -125,4 +123,3 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 		
 	</body>
 </html>
-<?php endif; ?>
