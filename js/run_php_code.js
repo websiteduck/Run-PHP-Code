@@ -1,6 +1,7 @@
 var editor;
 var resizing;
 var divide_x;
+window.onbeforeunload = null;
 
 $(function() {
 
@@ -16,11 +17,20 @@ $(function() {
 		}
 	});
 	
+	editor.on('change', function() {
+		if (window.onbeforeunload == null) {
+			window.onbeforeunload = function() {
+				return "You have made changes in your editor.";
+			}
+		}
+	});
+	
 	function reset() {
 		editor.setValue("<?php\n\n");
 		editor.gotoLine(3);
 		run_code();
 		editor.focus();
+		window.onbeforeunload = null;
 	}
 	
 	$('#reset').click(function() {
