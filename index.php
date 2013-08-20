@@ -8,7 +8,9 @@
  * @link       http://github.com/websiteduck/Run-PHP-Code Run PHP Code
  * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) die('dead');
+ 
+//This application is meant to be run locally and should not be made publicly accessible.
+if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) die();
 
 define('NL', PHP_EOL);
 
