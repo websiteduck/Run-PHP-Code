@@ -131,6 +131,13 @@ $(function() {
 		$('> div', this).stop().slideUp(100);
 	});
 	
+	$('.subdrop').hover(function() {
+		//Doing this instead of hide/show because of a bug in chrome that leaves part of the menu on the screen
+		$('> div', this).css('left', '200px');
+	}, function() {
+		$('> div', this).css('left', '-9999px');
+	});
+	
 	function get_id_from_url(url) {
 		var url_array = url.split('/');
 		return url_array[url_array.length-1];
