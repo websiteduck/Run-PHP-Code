@@ -46,7 +46,6 @@ $(function() {
 	function reset() {
 		editor.setValue("<?php\n\n");
 		editor.gotoLine(3);
-		run_code();
 		editor.focus();
 		window.onbeforeunload = null;
 	}
@@ -57,7 +56,7 @@ $(function() {
 	
 	$('#btn_reset').click(function() {
 		var answer = confirm("Are you sure you want to clear the editor?");
-		if (answer) reset();
+		if (answer) { reset(); run_code(); }
 	});
 	
 	$('#btn_run').click(run_code);
@@ -183,15 +182,9 @@ $(function() {
 	});
 	
 	reset();
-
+	if (settings.run_external === false) run_code();
 });
 
 function run_php_form_submit() {
 	$('#phprun_code').val(editor.getValue());
 }	
-
-if (document.documentElement.attachEvent) {
-	document.documentElement.attachEvent('onmousedown',function(){
-		event.srcElement.hideFocus = true;
-	});
-}
