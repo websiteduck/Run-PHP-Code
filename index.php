@@ -54,17 +54,16 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 <html lang="en">
 	<head>
 		<title>Run PHP Code</title>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="js/ace/ace.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/run_php_code.js"></script>
 
 		<link rel="shortcut icon" href="favicon.ico" >
+		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/run_php_code.css">
 	</head>
-	<body>
-		<img id="resize_ball" src="img/resize_ball.png" />
-		
-		<form id="run_php_form" method="POST" action="" target="run_php_code" onsubmit="run_php_form_submit()">
+	<body>		
+		<form id="run_php_form" method="POST" action="" target="result_frame" onsubmit="run_php_form_submit()">
 			<input type="hidden" name="phprun_action" value="run" />
 			<input type="hidden" name="phprun_filename" value="" />
 			<div id="title_bar">
@@ -75,13 +74,26 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 						<button class="button" id="btn_import" type="button">Remote Import...</button>
 						<button class="button" id="btn_save" type="button">Save...</button>
 					</div>
-				</div>
-				
-				<div class="drop"><span>Options</span>
+				</div
+				><div class="drop"><span>Options</span>
 					<div>
-						<input type="checkbox" id="colorize" name="colorize" checked="checked" /><label for="colorize"><span></span> Colorize</label><br />
-						<input type="checkbox" id="external_window" /><label for="external_window"><span></span> External Window</label><br />
-						<input type="checkbox" id="pre_wrap" name="pre_wrap" /><label for="pre_wrap"><span></span> &lt;pre&gt;</label><br />
+						<input type="checkbox" id="mnu_colorize" name="colorize" /><label for="mnu_colorize"><span></span> Colorize</label>
+						<input type="checkbox" id="mnu_external_window" /><label for="mnu_external_window"><span></span> External Window</label>
+						<input type="checkbox" id="mnu_pre_wrap" name="pre_wrap" /><label for="mnu_pre_wrap"><span></span> &lt;pre&gt;</label>
+					</div>
+				</div
+				><div class="drop">
+					<span><i class="icon-question"></i></span>
+					<div id="help_window">
+						<h2>Run PHP Code</h2>
+						<p>Ctrl-Enter to Run Code</p>
+						
+						<p>
+							<img src="img/website_duck.png" alt="" style="width: 50px; height: 50px;" /><br />
+							Website Duck LLC<br />
+						</p>
+						
+						<a class="button" href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a>
 					</div>
 				</div>
 					
@@ -97,31 +109,17 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 							<option value="all">All</option>
 						</select>
 					</label>
-					<button class="button" type="button" id="reset"><img src="img/clear.png" class="icon" /> Clear</button>
-					<button class="button" type="submit" id="run" title="Run (Ctrl+Enter)">Run <img src="img/run.png" class="icon" /></button>
-					
-					<div class="drop">
-						<img id="help" src="img/help.png" style="" />
-						<div id="help_window">
-							<h2>Run PHP Code</h2>
-							<p>Ctrl-Enter to Run Code</p>
-							
-							<p>
-								<img src="img/website_duck.png" alt="" style="width: 50px; height: 50px;" /><br />
-								Website Duck LLC<br />
-								<a class="button" href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a>
-							</p>
-						</div>
-					</div>
+					<button class="button" type="button" id="btn_reset"><i class="icon-eraser"></i> &nbsp; Clear</button>
+					<button class="button" type="button" id="btn_run" title="Run (Ctrl+Enter)">Run &nbsp; <i class="icon-play"></i></button>
 				</div>
 			</div>
 			
-			<div id="php"></div>
+			<div id="code_div"></div>
 			<input type="hidden" id="phprun_code" name="phprun_code" />
 		</form>
 		
-		<iframe id="php_frame" name="run_php_code">
-		</iframe>
+		<div id="result_div"><iframe id="result_frame" name="result_frame"></iframe></div>		
+		<div id="resize_bar"></div>
 		
 	</body>
 </html>
