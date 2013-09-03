@@ -127,9 +127,9 @@ $(function() {
 	});
 		
 	$('.drop').hover(function() {
-		$('> div', this).slideDown(100);
+		$('> div', this).stop().slideDown(100);
 	}, function() {
-		$('> div', this).slideUp(100);
+		$('> div', this).stop().slideUp(100);
 	});
 	
 	function get_id_from_url(url) {
