@@ -73,14 +73,14 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 				<div class="drop"><span>File</span>
 					<div>
 						<button class="button" id="btn_import" type="button">Remote Import...</button>
-						<button class="button" id="btn_save" type="button">Save...</button>
+						<button class="button" id="btn_download" type="button">Download...</button>
 					</div>
 				</div
 				><div class="drop"><span>Options</span>
 					<div>
 						<input type="checkbox" id="mnu_colorize" name="colorize" /><label for="mnu_colorize"><span></span> Colorize</label>
 						<input type="checkbox" id="mnu_external_window" /><label for="mnu_external_window"><span></span> External Window</label>
-						<input type="checkbox" id="mnu_pre_wrap" name="pre_wrap" /><label for="mnu_pre_wrap"><span></span> &lt;pre&gt;</label>
+						<input type="checkbox" id="mnu_pre_wrap" name="pre_wrap" /><label for="mnu_pre_wrap"><span></span> &lt;pre&gt; Wrap</label>
 						<div class="subdrop">
 							Error Reporting
 							<div>

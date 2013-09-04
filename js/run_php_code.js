@@ -192,7 +192,7 @@ $(function() {
 		}
 	});
 	
-	$('#btn_save').click(function() {
+	$('#btn_download').click(function() {
 		var filename = prompt('Filename:');
 		if (filename === null || filename === '') return;
 		$('input[name="phprun_action"]').val('download');
