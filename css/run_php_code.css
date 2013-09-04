@@ -108,7 +108,8 @@ input[type="checkbox"]:checked + label span, input[type="radio"]:checked + label
 
 .subdrop { position: relative; padding-left: 37px; cursor: pointer; background-image: url(../img/subdrop.png); background-position: 185px 0; background-repeat: no-repeat; }
 .subdrop:hover { background-color: #333; }
-.subdrop div { position: absolute; top: -5px; left: -9999px; background-color: #222; width: 200px; padding: 5px 0; }
+.subdrop div { position: absolute; top: -5px; left: -9999px; z-index: 9997; width: 200px; background-color: #222; padding: 5px 0; box-shadow: 5px 5px 5px #111; 
+	-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;user-select: none; cursor: default; }
 
 #help_window { text-align: center; padding: 10px; }
 #help_window .button { margin-left: 0; }
