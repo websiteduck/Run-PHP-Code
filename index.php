@@ -55,6 +55,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 	<head>
 		<title>Run PHP Code</title>
 		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 		<script type="text/javascript" src="js/ace/ace.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/run_php_code.js"></script>
 
@@ -80,6 +81,17 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 						<input type="checkbox" id="mnu_colorize" name="colorize" /><label for="mnu_colorize"><span></span> Colorize</label>
 						<input type="checkbox" id="mnu_external_window" /><label for="mnu_external_window"><span></span> External Window</label>
 						<input type="checkbox" id="mnu_pre_wrap" name="pre_wrap" /><label for="mnu_pre_wrap"><span></span> &lt;pre&gt;</label>
+						<div class="subdrop">
+							Error Reporting
+							<div>
+								<input type="radio" id="mnu_er_none" name="error_reporting" value="none" /><label for="mnu_er_none"><span></span> None</label>
+								<input type="radio" id="mnu_er_fatal" name="error_reporting" value="fatal" /><label for="mnu_er_fatal"><span></span> Fatal</label>
+								<input type="radio" id="mnu_er_warning" name="error_reporting" value="warning" /><label for="mnu_er_warning"><span></span> Warning</label>
+								<input type="radio" id="mnu_er_deprecated" name="error_reporting" value="deprecated" /><label for="mnu_er_deprecated"><span></span> Deprecated</label>
+								<input type="radio" id="mnu_er_notice" name="error_reporting" value="notice" /><label for="mnu_er_notice"><span></span> Notice</label>
+								<input type="radio" id="mnu_er_all" name="error_reporting" value="all" /><label for="mnu_er_all"><span></span> All</label>
+							</div>
+						</div>
 					</div>
 				</div
 				><div class="drop">
@@ -98,17 +110,6 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 				</div>
 					
 				<div id="button_container">
-					<label>
-						Error Reporting
-						<select name="error_reporting">
-							<option value="none">None</option>
-							<option value="fatal" selected="selected">Fatal</option>
-							<option value="warning">Warning</option>
-							<option value="deprecated">Deprecated</option>
-							<option value="notice">Notice</option>
-							<option value="all">All</option>
-						</select>
-					</label>
 					<button class="button" type="button" id="btn_reset"><i class="icon-eraser"></i> &nbsp; Clear</button>
 					<button class="button" type="button" id="btn_run" title="Run (Ctrl+Enter)">Run &nbsp; <i class="icon-play"></i></button>
 				</div>

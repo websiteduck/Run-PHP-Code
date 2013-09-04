@@ -1,6 +1,7 @@
 var editor;
 var resizing = false;
 var settings = {};
+var hide_menu_timeout = [];
 
 window.onbeforeunload = null;
 
@@ -13,10 +14,12 @@ $(function() {
 	if (settings.divide_x === undefined || settings.divide_x > $(window).width() - 10) settings.divide_x = $(window).width() / 2;
 	if (settings.colorize === undefined) settings.colorize = true;
 	if (settings.pre_wrap === undefined) settings.pre_wrap = false;
+	if (settings.error_reporting === undefined) settings.error_reporting = 'fatal';
 	
 	if (settings.run_external === true) $('#mnu_external_window').prop('checked', true);
 	if (settings.colorize === true) $('#mnu_colorize').prop('checked', true);
 	if (settings.pre_wrap === true) $('#mnu_pre_wrap').prop('checked', true);
+	$('input[name="error_reporting"][value="' + settings.error_reporting + '"]').prop('checked', true);
 	
 	editor = ace.edit("code_div");
     editor.setTheme("ace/theme/twilight");
@@ -74,21 +77,26 @@ $(function() {
 			$('#resize_bar').show();
 			$('#run_php_form').prop('target', 'result_frame');
 		}
-		save_settings();
 		$(window).resize();
+		save_settings();
 	}).change();
 	
 	$('#mnu_colorize').change(function() {
 		if (this.checked) settings.colorize = true;
 		else settings.colorize = false;
 		save_settings();
-	}).change();
+	});
 	
 	$('#mnu_pre_wrap').change(function() {
 		if (this.checked) settings.pre_wrap = true;
 		else settings.pre_wrap = false;
 		save_settings();
-	}).change();
+	});
+	
+	$('input[name="error_reporting"]').change(function() {
+		settings.error_reporting = $(this).val();
+		save_settings();
+	});
 	
 	$(window).resize(function() {
 		var page_width = $(window).width();		
@@ -126,16 +134,20 @@ $(function() {
 	});
 		
 	$('.drop').hover(function() {
+		clearTimeout(hide_menu_timeout[$(this).uniqueId().attr('id')]);
 		$('> div', this).stop().slideDown(100);
 	}, function() {
-		$('> div', this).stop().slideUp(100);
+		var self = this;
+		hide_menu_timeout[$(this).uniqueId().attr('id')] = setTimeout(function() { $('> div', self).stop().slideUp(100); }, 500);
 	});
 	
 	$('.subdrop').hover(function() {
+		clearTimeout(hide_menu_timeout[$(this).uniqueId().attr('id')]);
 		//Doing this instead of hide/show because of a bug in chrome that leaves part of the menu on the screen
 		$('> div', this).css('left', '200px');
 	}, function() {
-		$('> div', this).css('left', '-9999px');
+		var self = this;
+		hide_menu_timeout[$(this).uniqueId().attr('id')] = setTimeout(function() { $('> div', self).css('left', '-9999px'); }, 500);
 	});
 	
 	function get_id_from_url(url) {
@@ -187,6 +199,8 @@ $(function() {
 		$('input[name="phprun_filename"]').val(filename);
 		$('#run_php_form').submit();
 	});
+	
+	$('#title_bar').click(function() { editor.focus(); });
 	
 	reset();
 	if (settings.run_external === false) run_code();

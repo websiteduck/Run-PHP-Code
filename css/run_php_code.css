@@ -84,9 +84,9 @@ a.button { padding: 0; }
 #resize_bar { position: absolute; top: 40px; bottom: 0; width: 4px; background-color: #333; cursor: e-resize; }
 #resize_bar:hover { background-color: #444; }
 
-input[type="checkbox"] { display: none; }
-input[type="checkbox"] + label { cursor: pointer; }
-input[type="checkbox"] + label  span {
+input[type="checkbox"], input[type="radio"] { display: none; }
+input[type="checkbox"] + label, input[type="radio"] + label  { cursor: pointer; }
+input[type="checkbox"] + label  span, input[type="radio"] + label  span {
 	display: inline-block;
 	vertical-align: middle;
 	width: 19px;
@@ -95,7 +95,7 @@ input[type="checkbox"] + label  span {
     background: url(../img/check_radio_sprite.png) left top no-repeat;
     cursor: pointer;
 }
-input[type="checkbox"]:checked + label span { background: url(../img/check_radio_sprite.png) -19px top no-repeat; }
+input[type="checkbox"]:checked + label span, input[type="radio"]:checked + label span { background: url(../img/check_radio_sprite.png) -19px top no-repeat; }
 
 /* Navigation Menu */
 .drop { position: relative; display: inline-block; padding: 0 15px; cursor: pointer; }
@@ -106,7 +106,7 @@ input[type="checkbox"]:checked + label span { background: url(../img/check_radio
 .drop div label:hover { background-color: #333; }
 .drop .button { width: 180px; margin-left: 10px; }
 
-.subdrop { position: relative; padding-left: 37px; cursor: pointer; }
+.subdrop { position: relative; padding-left: 37px; cursor: pointer; background-image: url(../img/subdrop.png); background-position: 185px 0; background-repeat: no-repeat; }
 .subdrop:hover { background-color: #333; }
 .subdrop div { position: absolute; top: -5px; left: -9999px; background-color: #222; width: 200px; padding: 5px 0; }
 
