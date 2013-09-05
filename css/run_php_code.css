@@ -100,7 +100,7 @@ input[type="checkbox"]:checked + label span, input[type="radio"]:checked + label
 /* Navigation Menu */
 .drop { position: relative; display: inline-block; padding: 0 15px; cursor: pointer; }
 .drop:hover { background-color: #222; }
-.drop > div { display: none; position: absolute; z-index: 9997; width: 200px; background-color: #222; line-height: 30px; padding: 5px 0; left: 0; box-shadow: 5px 5px 5px #111;
+.drop > div { display: none; position: absolute; z-index: 9997; width: 200px; background-color: #222; line-height: 30px; padding: 5px 0; left: 0; box-shadow: 0 0 10px #111;
 	-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;user-select: none; cursor: default; }
 .drop div label { cursor: pointer; display: block; padding-left: 10px; }
 .drop div label:hover { background-color: #333; }

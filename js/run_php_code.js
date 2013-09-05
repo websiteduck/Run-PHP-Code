@@ -135,10 +135,11 @@ $(function() {
 		
 	$('.drop').hover(function() {
 		clearTimeout(hide_menu_timeout[$(this).uniqueId().attr('id')]);
-		$('> div', this).stop().slideDown(100);
+		$('.drop div').css('z-index', '9997');
+		$('> div', this).css('z-index', '9998').stop(true,true,true).slideDown(100);
 	}, function() {
 		var self = this;
-		hide_menu_timeout[$(this).uniqueId().attr('id')] = setTimeout(function() { $('> div', self).stop().slideUp(100); }, 500);
+		hide_menu_timeout[$(this).uniqueId().attr('id')] = setTimeout(function() { $('> div', self).stop(true,true,true).slideUp(100); }, 300);
 	});
 	
 	$('.subdrop').hover(function() {
@@ -147,7 +148,7 @@ $(function() {
 		$('> div', this).css('left', '200px');
 	}, function() {
 		var self = this;
-		hide_menu_timeout[$(this).uniqueId().attr('id')] = setTimeout(function() { $('> div', self).css('left', '-9999px'); }, 500);
+		hide_menu_timeout[$(this).uniqueId().attr('id')] = setTimeout(function() { $('> div', self).css('left', '-9999px'); }, 300);
 	});
 	
 	function get_id_from_url(url) {
