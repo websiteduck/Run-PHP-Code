@@ -79,6 +79,46 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 				><div class="drop"><span>Options</span>
 					<div>
 						<input type="checkbox" id="mnu_colorize" name="colorize" /><label for="mnu_colorize"><span></span> Colorize</label>
+						<div class="subdrop">
+							Theme (light)
+							<div>
+								<input type="radio" id="mnu_theme_chrome" name="theme" value="chrome" /><label for="mnu_theme_chrome"><span></span> Chrome</label>
+								<input type="radio" id="mnu_theme_clouds" name="theme" value="clouds" /><label for="mnu_theme_clouds"><span></span> Clouds</label>
+								<input type="radio" id="mnu_theme_crimson_editor" name="theme" value="crimson_editor" /><label for="mnu_theme_crimson_editor"><span></span> Crimson Editor</label>
+								<input type="radio" id="mnu_theme_dawn" name="theme" value="dawn" /><label for="mnu_theme_dawn"><span></span> Dawn</label>
+								<input type="radio" id="mnu_theme_dreamweaver" name="theme" value="dreamweaver" /><label for="mnu_theme_dreamweaver"><span></span> Dreamweaver</label>
+								<input type="radio" id="mnu_theme_eclipse" name="theme" value="eclipse" /><label for="mnu_theme_eclipse"><span></span> Eclipse</label>
+								<input type="radio" id="mnu_theme_github" name="theme" value="github" /><label for="mnu_theme_github"><span></span> GitHub</label>
+								<input type="radio" id="mnu_theme_solarized_light" name="theme" value="solarized_light" /><label for="mnu_theme_solarized_light"><span></span> Solarized Light</label>
+								<input type="radio" id="mnu_theme_textmate" name="theme" value="textmate" /><label for="mnu_theme_textmate"><span></span> TextMate</label>
+								<input type="radio" id="mnu_theme_tomorrow" name="theme" value="tomorrow" /><label for="mnu_theme_tomorrow"><span></span> Tomorrow</label>
+								<input type="radio" id="mnu_theme_xcode" name="theme" value="xcode" /><label for="mnu_theme_xcode"><span></span> XCode</label>
+							</div>
+						</div>
+						<div class="subdrop">
+							Theme (dark)
+							<div>
+								<input type="radio" id="mnu_theme_ambiance" name="theme" value="ambiance" /><label for="mnu_theme_ambiance"><span></span> Ambiance</label>
+								<input type="radio" id="mnu_theme_chaos" name="theme" value="chaos" /><label for="mnu_theme_chaos"><span></span> Chaos</label>
+								<input type="radio" id="mnu_theme_clouds_midnight" name="theme" value="clouds_midnight" /><label for="mnu_theme_clouds_midnight"><span></span> Clouds Midnight</label>
+								<input type="radio" id="mnu_theme_cobalt" name="theme" value="cobalt" /><label for="mnu_theme_cobalt"><span></span> Cobalt</label>
+								<input type="radio" id="mnu_theme_idle_fingers" name="theme" value="idle_fingers" /><label for="mnu_theme_idle_fingers"><span></span> Idle Fingers</label>
+								<input type="radio" id="mnu_theme_kr" name="theme" value="kr" /><label for="mnu_theme_kr"><span></span> krTheme</label>
+								<input type="radio" id="mnu_theme_merbivore" name="theme" value="merbivore" /><label for="mnu_theme_merbivore"><span></span> Merbivore</label>
+								<input type="radio" id="mnu_theme_merbivore_soft" name="theme" value="merbivore_soft" /><label for="mnu_theme_merbivore_soft"><span></span> Merbivore Soft</label>
+								<input type="radio" id="mnu_theme_monokai" name="theme" value="monokai" /><label for="mnu_theme_monokai"><span></span> Monokai</label>
+								<input type="radio" id="mnu_theme_mono_industrial" name="theme" value="mono_industrial" /><label for="mnu_theme_mono_industrial"><span></span> Mono Industrial</label>
+								<input type="radio" id="mnu_theme_pastel_on_dark" name="theme" value="pastel_on_dark" /><label for="mnu_theme_pastel_on_dark"><span></span> Pastel on dark</label>
+								<input type="radio" id="mnu_theme_solarized_dark" name="theme" value="solarized_dark" /><label for="mnu_theme_solarized_dark"><span></span> Solarized Dark</label>
+								<input type="radio" id="mnu_theme_terminal" name="theme" value="terminal" /><label for="mnu_theme_terminal"><span></span> Terminal</label>
+								<input type="radio" id="mnu_theme_tomorrow_night" name="theme" value="tomorrow_night" /><label for="mnu_theme_tomorrow_night"><span></span> Tomorrow Night</label>
+								<input type="radio" id="mnu_theme_tomorrow_night_blue" name="theme" value="tomorrow_night_blue" /><label for="mnu_theme_tomorrow_night_blue"><span></span> Tomorrow Night Blue</label>
+								<input type="radio" id="mnu_theme_tomorrow_night_bright" name="theme" value="tomorrow_night_bright" /><label for="mnu_theme_tomorrow_night_bright"><span></span> Tomorrow Night Bright</label>
+								<input type="radio" id="mnu_theme_tomorrow_night_eighties" name="theme" value="tomorrow_night_eighties" /><label for="mnu_theme_tomorrow_night_eighties"><span></span> Tomorrow Night 80s</label>
+								<input type="radio" id="mnu_theme_twilight" name="theme" value="twilight" /><label for="mnu_theme_twilight"><span></span> Twilight</label>
+								<input type="radio" id="mnu_theme_vibrant_ink" name="theme" value="vibrant_ink" /><label for="mnu_theme_vibrant_ink"><span></span> Vibrant Ink</label>
+							</div>
+						</div>
 						<input type="checkbox" id="mnu_external_window" /><label for="mnu_external_window"><span></span> External Window</label>
 						<input type="checkbox" id="mnu_pre_wrap" name="pre_wrap" /><label for="mnu_pre_wrap"><span></span> &lt;pre&gt; Wrap</label>
 						<div class="subdrop">

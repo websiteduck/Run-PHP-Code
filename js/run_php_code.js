@@ -13,16 +13,18 @@ $(function() {
 	if (settings.run_external === undefined) settings.run_external = false;
 	if (settings.divide_x === undefined || settings.divide_x > $(window).width() - 10) settings.divide_x = $(window).width() / 2;
 	if (settings.colorize === undefined) settings.colorize = true;
+	if (settings.theme === undefined) settings.theme = "twilight";
 	if (settings.pre_wrap === undefined) settings.pre_wrap = false;
 	if (settings.error_reporting === undefined) settings.error_reporting = 'fatal';
 	
 	if (settings.run_external === true) $('#mnu_external_window').prop('checked', true);
 	if (settings.colorize === true) $('#mnu_colorize').prop('checked', true);
+	$('input[name="theme"][value="' + settings.theme + '"]').prop('checked', true);
 	if (settings.pre_wrap === true) $('#mnu_pre_wrap').prop('checked', true);
 	$('input[name="error_reporting"][value="' + settings.error_reporting + '"]').prop('checked', true);
 	
 	editor = ace.edit("code_div");
-    editor.setTheme("ace/theme/twilight");
+    editor.setTheme("ace/theme/" + settings.theme);
     editor.getSession().setMode("ace/mode/php");
 	editor.setShowPrintMargin(false);
 	editor.commands.addCommand({
@@ -84,6 +86,12 @@ $(function() {
 	$('#mnu_colorize').change(function() {
 		if (this.checked) settings.colorize = true;
 		else settings.colorize = false;
+		save_settings();
+	});
+	
+	$('input[name="theme"]').change(function() {
+		settings.theme = $(this).val();
+		editor.setTheme("ace/theme/" + settings.theme);
 		save_settings();
 	});
 	
