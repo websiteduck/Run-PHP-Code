@@ -115,5 +115,3 @@ input[type="checkbox"]:checked + label span, input[type="radio"]:checked + label
 #help_window { text-align: center; padding: 10px; }
 #help_window .button { margin-left: 0; }
 #help_window h2 { margin-top: 0; }
-
-.ace_gutter-cell { color: #555; text-shadow: 1px 1px 0 #000; }
