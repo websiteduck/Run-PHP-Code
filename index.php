@@ -79,8 +79,25 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 				><div class="drop"><span>Options</span>
 					<div>
 						<input type="checkbox" id="mnu_colorize" name="colorize" /><label for="mnu_colorize"><span></span> Colorize</label>
+						<input type="checkbox" id="mnu_external_window" /><label for="mnu_external_window"><span></span> External Window</label>
+						<input type="checkbox" id="mnu_pre_wrap" name="pre_wrap" /><label for="mnu_pre_wrap"><span></span> &lt;pre&gt; Wrap</label>
 						<div class="subdrop">
-							Theme (light)
+							Error Reporting
+							<div>
+								<input type="radio" id="mnu_er_none" name="error_reporting" value="none" /><label for="mnu_er_none"><span></span> None</label>
+								<input type="radio" id="mnu_er_fatal" name="error_reporting" value="fatal" /><label for="mnu_er_fatal"><span></span> Fatal</label>
+								<input type="radio" id="mnu_er_warning" name="error_reporting" value="warning" /><label for="mnu_er_warning"><span></span> Warning</label>
+								<input type="radio" id="mnu_er_deprecated" name="error_reporting" value="deprecated" /><label for="mnu_er_deprecated"><span></span> Deprecated</label>
+								<input type="radio" id="mnu_er_notice" name="error_reporting" value="notice" /><label for="mnu_er_notice"><span></span> Notice</label>
+								<input type="radio" id="mnu_er_all" name="error_reporting" value="all" /><label for="mnu_er_all"><span></span> All</label>
+							</div>
+						</div>
+					</div>
+				</div
+				><div class="drop"><span>Themes</span>
+					<div>
+						<div class="subdrop">
+							Light
 							<div>
 								<input type="radio" id="mnu_theme_chrome" name="theme" value="chrome" /><label for="mnu_theme_chrome"><span></span> Chrome</label>
 								<input type="radio" id="mnu_theme_clouds" name="theme" value="clouds" /><label for="mnu_theme_clouds"><span></span> Clouds</label>
@@ -96,7 +113,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 							</div>
 						</div>
 						<div class="subdrop">
-							Theme (dark)
+							Dark
 							<div>
 								<input type="radio" id="mnu_theme_ambiance" name="theme" value="ambiance" /><label for="mnu_theme_ambiance"><span></span> Ambiance</label>
 								<input type="radio" id="mnu_theme_chaos" name="theme" value="chaos" /><label for="mnu_theme_chaos"><span></span> Chaos</label>
@@ -117,19 +134,6 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 								<input type="radio" id="mnu_theme_tomorrow_night_eighties" name="theme" value="tomorrow_night_eighties" /><label for="mnu_theme_tomorrow_night_eighties"><span></span> Tomorrow Night 80s</label>
 								<input type="radio" id="mnu_theme_twilight" name="theme" value="twilight" /><label for="mnu_theme_twilight"><span></span> Twilight</label>
 								<input type="radio" id="mnu_theme_vibrant_ink" name="theme" value="vibrant_ink" /><label for="mnu_theme_vibrant_ink"><span></span> Vibrant Ink</label>
-							</div>
-						</div>
-						<input type="checkbox" id="mnu_external_window" /><label for="mnu_external_window"><span></span> External Window</label>
-						<input type="checkbox" id="mnu_pre_wrap" name="pre_wrap" /><label for="mnu_pre_wrap"><span></span> &lt;pre&gt; Wrap</label>
-						<div class="subdrop">
-							Error Reporting
-							<div>
-								<input type="radio" id="mnu_er_none" name="error_reporting" value="none" /><label for="mnu_er_none"><span></span> None</label>
-								<input type="radio" id="mnu_er_fatal" name="error_reporting" value="fatal" /><label for="mnu_er_fatal"><span></span> Fatal</label>
-								<input type="radio" id="mnu_er_warning" name="error_reporting" value="warning" /><label for="mnu_er_warning"><span></span> Warning</label>
-								<input type="radio" id="mnu_er_deprecated" name="error_reporting" value="deprecated" /><label for="mnu_er_deprecated"><span></span> Deprecated</label>
-								<input type="radio" id="mnu_er_notice" name="error_reporting" value="notice" /><label for="mnu_er_notice"><span></span> Notice</label>
-								<input type="radio" id="mnu_er_all" name="error_reporting" value="all" /><label for="mnu_er_all"><span></span> All</label>
 							</div>
 						</div>
 					</div>
