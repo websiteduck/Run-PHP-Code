@@ -103,7 +103,8 @@ $(function() {
 			.css('color', color)
 			.css('box-shadow', '0 0 10px ' + shadeColor(bgcolor,-40) + ' inset');
 		$('.drop > div, .subdrop > div').css('box-shadow', '5px 5px 10px ' + shadeColor(bgcolor, -40));
-		$('.drop div, .subdrop, .drop label').css('backgroundColor', shadeColor(bgcolor,-5));
+		$('.drop div, .subdrop, .drop label').css('backgroundColor', bgcolor);
+		$('.subdrop > div').css('border-top', '1px solid ' + shadeColor(bgcolor, -20));
 		$('.drop')
 			.css('backgroundColor', bgcolor)
 			.css('box-shadow', '0 10px 10px -10px ' + shadeColor(bgcolor, -40) + ' inset, 0px -10px 10px -10px ' + shadeColor(bgcolor, -40) + ' inset');
@@ -114,8 +115,9 @@ $(function() {
 			.css('color', color);
 		$('#resize_bar').css('backgroundColor', shadeColor(bgcolor,-20));
 		if (settings.colorize) {
+			$('#result_frame').css('backgroundColor', shadeColor(bgcolor,-2));
 			$('#result_frame').contents().find('html')
-				.css('backgroundColor', shadeColor(bgcolor,-5))
+				.css('backgroundColor', shadeColor(bgcolor,-2))
 				.css('color', color);
 		}
 	});
