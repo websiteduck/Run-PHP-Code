@@ -120,6 +120,9 @@ $(function() {
 				.css('backgroundColor', shadeColor(bgcolor,-2))
 				.css('color', color);
 		}
+		$('.hovered').each(function() {
+			$(this).css('backgroundColor', shadeColor($(this).css('backgroundColor'),5));
+		});
 	});
 	$('#result_frame').load(function() { 
 		if (settings.colorize) {
@@ -199,8 +202,10 @@ $(function() {
 	});
 
 	$('.drop, .subdrop, .drop label, .button').hover(function() {
+		$(this).addClass('hovered');
 		$(this).css('backgroundColor', shadeColor($(this).css('backgroundColor'), 5));
 	}, function() {
+		$(this).removeClass('hovered');
 		$(this).css('backgroundColor', shadeColor($(this).css('backgroundColor'), -5));
 	});
 
