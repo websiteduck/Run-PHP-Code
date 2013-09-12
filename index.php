@@ -120,7 +120,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 								<input type="radio" id="mnu_theme_clouds_midnight" name="theme" value="clouds_midnight" /><label for="mnu_theme_clouds_midnight"><span></span> Clouds Midnight</label>
 								<input type="radio" id="mnu_theme_cobalt" name="theme" value="cobalt" /><label for="mnu_theme_cobalt"><span></span> Cobalt</label>
 								<input type="radio" id="mnu_theme_idle_fingers" name="theme" value="idle_fingers" /><label for="mnu_theme_idle_fingers"><span></span> Idle Fingers</label>
-								<input type="radio" id="mnu_theme_kr" name="theme" value="kr" /><label for="mnu_theme_kr"><span></span> krTheme</label>
+								<!-- <input type="radio" id="mnu_theme_kr" name="theme" value="kr" /><label for="mnu_theme_kr"><span></span> krTheme</label> -->
 								<input type="radio" id="mnu_theme_merbivore" name="theme" value="merbivore" /><label for="mnu_theme_merbivore"><span></span> Merbivore</label>
 								<input type="radio" id="mnu_theme_merbivore_soft" name="theme" value="merbivore_soft" /><label for="mnu_theme_merbivore_soft"><span></span> Merbivore Soft</label>
 								<input type="radio" id="mnu_theme_monokai" name="theme" value="monokai" /><label for="mnu_theme_monokai"><span></span> Monokai</label>
