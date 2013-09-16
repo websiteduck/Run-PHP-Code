@@ -16,11 +16,11 @@ var rpc = {
 		
 		//Default Settings
 		if (rpc.settings.runExternal === undefined) rpc.settings.runExternal = false;
-	  if (rpc.settings.divideX === undefined || rpc.settings.divideX > $(window).width() - 10) rpc.settings.divideX = $(window).width() / 2;
-	  if (rpc.settings.colorize === undefined) rpc.settings.colorize = true;
-	  if (rpc.settings.theme === undefined) rpc.settings.theme = "twilight";
-	  if (rpc.settings.preWrap === undefined) rpc.settings.preWrap = false;
-	  if (rpc.settings.errorReporting === undefined) rpc.settings.errorReporting = 'fatal';			
+		if (rpc.settings.divideX === undefined || rpc.settings.divideX > $(window).width() - 10) rpc.settings.divideX = $(window).width() / 2;
+		if (rpc.settings.colorize === undefined) rpc.settings.colorize = true;
+		if (rpc.settings.theme === undefined) rpc.settings.theme = "twilight";
+		if (rpc.settings.preWrap === undefined) rpc.settings.preWrap = false;
+		if (rpc.settings.errorReporting === undefined) rpc.settings.errorReporting = 'fatal';			
 	},
 
 	saveSettings: function() {
@@ -29,40 +29,40 @@ var rpc = {
 
 	menu: {
 
-		runExternal: function(runExternal, saveSettings = true) {
+		runExternal: function(runExternal, saveSettings) {
 	    if (runExternal) {
-	      rpc.settings.runExternal = true;
-	      $('#result_div').hide();
-  	    $('#resize_bar').hide();
-    	  $('#run_php_form').prop('target', 'result_external');
-	    } 
-  	  else {
-    	  rpc.settings.runExternal = false;
-	      $('#result_div').show();
-  	    $('#resize_bar').show();
-    	  $('#run_php_form').prop('target', 'result_frame');
-	    }
-  	  $(window).resize();
+				rpc.settings.runExternal = true;
+				$('#result_div').hide();
+				$('#resize_bar').hide();
+				$('#run_php_form').prop('target', 'result_external');
+			}
+			else {
+				rpc.settings.runExternal = false;
+				$('#result_div').show();
+				$('#resize_bar').show();
+				$('#run_php_form').prop('target', 'result_frame');
+			}
+			$(window).resize();
 			if (saveSettings) rpc.saveSettings();			
 		},
 
-		colorize: function(colorize, saveSettings = true) {
+		colorize: function(colorize, saveSettings) {
 			rpc.settings.colorize = colorize;
 			if (saveSettings) rpc.saveSettings();
 		},
 
-		theme: function(theme, saveSettings = true) {
+		theme: function(theme, saveSettings) {
 			rpc.settings.theme = theme;
 			rpc.editor.setTheme("ace/theme/" + rpc.settings.theme);
 			if (saveSettings) rpc.saveSettings();			
 		},
 
-		preWrap: function(preWrap, saveSettings = true) {
+		preWrap: function(preWrap, saveSettings) {
 			rpc.settings.preWrap = preWrap;
 			if (saveSettings) rpc.saveSettings();
 		},
 
-		errorReporting: function(errorReporting, saveSettings = true) {
+		errorReporting: function(errorReporting, saveSettings) {
 			rpc.settings.errorReporting = errorReporting;
 			if (saveSettings) rpc.saveSettings();
 		}
@@ -83,16 +83,16 @@ var rpc = {
 
 	resetEditor: function() {
 		rpc.editor.setValue("<?php\n\n");
-    rpc.editor.gotoLine(3);
-    rpc.editor.focus();
-    window.onbeforeunload = null;
+		rpc.editor.gotoLine(3);
+		rpc.editor.focus();
+		window.onbeforeunload = null;
 	},
 
 	setEditorContent: function(content) {
 		rpc.editor.setValue(content);
 		rpc.editor.gotoLine(1);
 		rpc.editor.focus();
-  },
+	},
 
 	runCode: function() {
 		$('input[name="phprun_action"]').val('run');
@@ -135,19 +135,19 @@ $(function() {
 	var $mnuErrorReporting = $('input[name="error_reporting"]'); 
 	var $mnuErrorReportingSelected = $mnuErrorReporting.filter(':checked');
 
-	$mnuExternalWindow.change(function() { rpc.menu.runExternal(this.checked); });
+	$mnuExternalWindow.change(function() { rpc.menu.runExternal(this.checked, true); });
 	rpc.menu.runExternal($mnuExternalWindow.get(0).checked, false);
 
-	$mnuColorize.change(function() { rpc.menu.colorize(this.checked); });
+	$mnuColorize.change(function() { rpc.menu.colorize(this.checked, true); });
 	rpc.menu.colorize($mnuColorize.get(0).checked, false);
 
-	$mnuTheme.change(function() { rpc.menu.theme(this.value); });
+	$mnuTheme.change(function() { rpc.menu.theme(this.value, true); });
 	rpc.menu.theme($mnuThemeSelected.get(0).value, false);
 
-	$mnuPreWrap.change(function() { rpc.menu.preWrap(this.checked); });
+	$mnuPreWrap.change(function() { rpc.menu.preWrap(this.checked, true); });
 	rpc.menu.preWrap($mnuPreWrap.get(0).checked, false);
 
-	$mnuErrorReporting.change(function() { rpc.menu.errorReporting(this.value); });
+	$mnuErrorReporting.change(function() { rpc.menu.errorReporting(this.value, true); });
 	rpc.menu.errorReporting($mnuErrorReportingSelected.get(0).value, false);
 
 	rpc.editor.on('change', function() {
@@ -197,12 +197,12 @@ $(function() {
 	$('#result_frame').load(function() { 
 		if (rpc.settings.colorize) {
 			var bgcolor = $('.ace_gutter').css('backgroundColor'); //base a lot of colors off this one
-  	  var color = $('#code_div').css('color');
+			var color = $('#code_div').css('color');
 
 			$('#result_frame').contents().find('html')
 				.css('backgroundColor', shadeColor(bgcolor,-2))
 				.css('color', color);
-		}
+			}
 	});
 	
 	$(window).resize(function() { rpc.resizeWindow($(this).width(), $(this).height()); }).resize();
@@ -242,8 +242,8 @@ $(function() {
 	
 	$('.subdrop').hover(function() {
 		clearTimeout(hide_menu_timeout[$(this).uniqueId().attr('id')]);
-    $('.subdrop').css('z-index', '9990');
-    $(this).css('z-index', '9991');
+		$('.subdrop').css('z-index', '9990');
+		$(this).css('z-index', '9991');
 		//Doing this instead of hide/show because of a bug in chrome that leaves part of the menu on the screen
 		$('> div', this).css('left', '200px');
 	}, function() {
