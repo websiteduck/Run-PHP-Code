@@ -314,7 +314,7 @@ $(function() {
 				for (var i = 0; i < data.length; i++) {
 					$('#contributors').append(
 						'<li>' + 
-							'<label><a href="' + data[i].url + '">' +
+							'<label><a href="' + data[i].html_url + '">' +
 								'<img src="' + data[i].avatar_url + '&s=24" /> ' + data[i].login + 
 							'</a></label>' + 
 						'</li>'
