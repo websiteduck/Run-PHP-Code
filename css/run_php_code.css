@@ -87,3 +87,7 @@ input[type="checkbox"]:checked + label span, input[type="radio"]:checked + label
 #help_window { text-align: center; padding: 10px; }
 #help_window .button { margin-left: 0; }
 #help_window h2 { margin-top: 0; }
+#help_window ul#contributors { margin: 0; padding: 0; list-style-type: none; }
+#help_window ul#contributors li { line-height: 32px; text-align: left; }
+#help_window ul#contributors li img { vertical-align: middle; }
+#help_window ul#contributors li a { text-decoration: none; color: inherit; }

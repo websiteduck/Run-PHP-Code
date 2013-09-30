@@ -138,18 +138,23 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 						</div>
 					</div>
 				</div
-				><div class="drop">
+				><div class="drop drop_help_window">
 					<span><i class="icon-question"></i></span>
 					<div id="help_window">
 						<h2>Run PHP Code</h2>
-						<p>Ctrl-Enter to Run Code</p>
-						
+
 						<p>
-							<img src="img/website_duck.png" alt="" style="width: 50px; height: 50px;" /><br />
-							Website Duck LLC<br />
+							<img src="img/website_duck.png" alt="" style="width: 40px; height: 40px;" /><br />
+							&copy; Website Duck LLC<br />
 						</p>
+
+						<a class="button" href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a><br />
+
+						<div style="margin-top: 10px;">
+							<b>Contributors</b>
+							<ul id="contributors"></ul>
+						</div>
 						
-						<a class="button" href="https://github.com/websiteduck/Run-PHP-Code">GitHub Repo</a>
 					</div>
 				</div>
 					

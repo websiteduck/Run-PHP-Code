@@ -307,6 +307,23 @@ $(function() {
 	
 	rpc.resetEditor();
 	if (rpc.settings.runExternal === false) rpc.runCode(); //If running externally we don't want a new tab to open right away
+
+	$('.drop_help_window').hover(function() {
+		if ($('#contributors').html() == '') {
+			$.get('https://api.github.com/repos/websiteduck/Run-PHP-Code/contributors', function(data) {
+				for (var i = 0; i < data.length; i++) {
+					$('#contributors').append(
+						'<li>' + 
+							'<label><a href="' + data[i].url + '">' +
+								'<img src="' + data[i].avatar_url + '&s=24" /> ' + data[i].login + 
+							'</a></label>' + 
+						'</li>'
+					);
+				}
+			}, 'json');
+		}
+	});
+	
 });
 
 function run_php_form_submit() {
