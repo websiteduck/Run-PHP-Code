@@ -308,8 +308,10 @@ $(function() {
 	rpc.resetEditor();
 	if (rpc.settings.runExternal === false) rpc.runCode(); //If running externally we don't want a new tab to open right away
 
+	var contributors_loaded = false;
 	$('.drop_help_window').hover(function() {
-		if ($('#contributors').html() == '') {
+		if (contributors_loaded === false) {
+			contributors_loaded = true;
 			$.get('https://api.github.com/repos/websiteduck/Run-PHP-Code/contributors', function(data) {
 				for (var i = 0; i < data.length; i++) {
 					$('#contributors').append(
