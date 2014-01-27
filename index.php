@@ -106,6 +106,8 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 								<input type="radio" id="mnu_theme_dreamweaver" name="theme" value="dreamweaver" /><label for="mnu_theme_dreamweaver"><span></span> Dreamweaver</label>
 								<input type="radio" id="mnu_theme_eclipse" name="theme" value="eclipse" /><label for="mnu_theme_eclipse"><span></span> Eclipse</label>
 								<input type="radio" id="mnu_theme_github" name="theme" value="github" /><label for="mnu_theme_github"><span></span> GitHub</label>
+								<input type="radio" id="mnu_theme_katzenmilch" name="theme" value="katzenmilch" /><label for="mnu_theme_katzenmilch"><span></span> Katzenmilch</label>
+								<input type="radio" id="mnu_theme_kuroir" name="theme" value="kuroir" /><label for="mnu_theme_kuroir"><span></span> Kuroir</label>
 								<input type="radio" id="mnu_theme_solarized_light" name="theme" value="solarized_light" /><label for="mnu_theme_solarized_light"><span></span> Solarized Light</label>
 								<input type="radio" id="mnu_theme_textmate" name="theme" value="textmate" /><label for="mnu_theme_textmate"><span></span> TextMate</label>
 								<input type="radio" id="mnu_theme_tomorrow" name="theme" value="tomorrow" /><label for="mnu_theme_tomorrow"><span></span> Tomorrow</label>
