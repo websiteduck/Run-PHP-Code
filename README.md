@@ -20,6 +20,11 @@ Features
 - Import pastes from PasteBin and Pastie
 - Run code in the same window or a separate window
 
+Tips
+----
+- Pressing Ctrl-Enter will run your code.
+- Ace supports multiple cursors, just hold ctrl and click where you want your cursors.
+- This app comes with Font Awesome, so you can use the icons in your code. Simply include the css file: `<link rel="stylesheet" href="css/font-awesome.min.css">`
 
 ### Run PHP Code utilizes the following projects:
 
