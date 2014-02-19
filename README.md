@@ -8,6 +8,7 @@ This script gives you the ability to quickly test snippets of PHP code locally. 
 - Create a folder called <b>php</b> or similar in your www folder. 
 - Extract the Run PHP Code files into it. 
 - Bookmark the URL for easy access.
+- Bonus points for cloning the repository instead and pulling once in a while.
 
 <b>This application is meant to be run locally and should not be made publicly accessible.</b>
 
