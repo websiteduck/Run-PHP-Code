@@ -161,8 +161,8 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 				</div>
 					
 				<div id="button_container">
-					<button class="button" type="button" id="btn_reset"><i class="icon-eraser"></i> &nbsp; Clear</button>
-					<button class="button" type="button" id="btn_run" title="Run (Ctrl+Enter)">Run &nbsp; <i class="icon-play"></i></button>
+					<button class="button" type="button" id="btn_reset"><i class="fa fa-eraser"></i> &nbsp; Clear</button>
+					<button class="button" type="button" id="btn_run" title="Run (Ctrl+Enter)">Run &nbsp; <i class="fa fa-play"></i></button>
 				</div>
 			</div>
 			
