@@ -141,7 +141,7 @@ if (isset($_POST['phprun_action']) && $_POST['phprun_action'] == 'run') {
 					</div>
 				</div
 				><div class="drop drop_help_window">
-					<span><i class="icon-question"></i></span>
+					<span><i class="fa fa-question"></i></span>
 					<div id="help_window">
 						<h2>Run PHP Code</h2>
 
