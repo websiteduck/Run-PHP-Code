@@ -303,7 +303,7 @@ $(function() {
 		$('#run_php_form').submit();
 	});
 	
-	$('#title_bar').click(function() { rpc.editor.focus(); });
+	$('#title_bar').click(function() { setTimeout(function() {rpc.editor.focus();}, 50); });
 	
 	rpc.resetEditor();
 	if (rpc.settings.runExternal === false) rpc.runCode(); //If running externally we don't want a new tab to open right away
