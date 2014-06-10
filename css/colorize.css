@@ -1,5 +1,7 @@
 html {
 	width: 100%;
+	background-color: #141414;
+	color: #CCC;
 }
 .xdebug-error th { background-color: #222; font-weight: normal; font-family: sans-serif; }
 .xdebug-error td { color: #000; }

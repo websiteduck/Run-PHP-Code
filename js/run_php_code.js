@@ -190,6 +190,9 @@ $(function() {
 				.css('backgroundColor', shadeColor(bgcolor,-2))
 				.css('color', color);
 		}
+		else {
+			$('#result_frame').css('backgroundColor', '#fff');
+		}
 		$('.hovered').each(function() {
 			$(this).css('backgroundColor', shadeColor($(this).css('backgroundColor'),5));
 		});
@@ -202,7 +205,10 @@ $(function() {
 			$('#result_frame').contents().find('html')
 				.css('backgroundColor', shadeColor(bgcolor,-2))
 				.css('color', color);
-			}
+		}
+		else {
+			$('#result_frame').css('backgroundColor', '#fff');
+		}
 	});
 	
 	$(window).resize(function() { rpc.resizeWindow($(this).width(), $(this).height()); }).resize();
