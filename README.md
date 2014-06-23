@@ -37,6 +37,13 @@ Licensed under the <a href="http://www.opensource.org/licenses/bsd-license.php">
 
 <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>  
 Font Awesome by Dave Gandy  
-Code Licensed under the <a href="http://opensource.org/licenses/mit-license.html">MIT License</a>  
+Code Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>  
 Fonts Licensed under the <a href="http://scripts.sil.org/OFL">SIL OFL 1.1 License</a>
 
+<a href="http://knockoutjs.com/">Knockout</a>  
+Copyright (c) Steven Sanderson, the Knockout.js team, and other contributors  
+Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
+
+<a href="http://jquery.com/">jQuery</a>  
+Copyright 2014 jQuery Foundation and other contributors  
+Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
