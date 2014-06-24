@@ -100,6 +100,19 @@ var View_Model = function() {
 		if (answer) { self.reset_editor(); self.run(); }
 	};
 
+	self.php_info = function() {
+		$('input[name="runphp_data"]').val(
+			JSON.stringify({
+				'code': '<' + '?php phpinfo();',
+				'action': 'run',
+				'settings': ko.toJS(self.settings),
+				'bgcolor': $('.ace_gutter').css('backgroundColor'),
+				'color': $('#code_div').css('color')
+			})
+		);
+		$('#runphp_form').submit();
+	};
+
 	self.download_file = function() {
 		var filename = prompt('Filename:');
 		if (filename === null || filename === '') return;

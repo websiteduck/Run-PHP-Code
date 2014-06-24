@@ -87,8 +87,9 @@ if (isset($_POST['runphp_data'])) {
 				
 			<div class="drop"><span>File</span>
 				<div>
-					<button class="button" type="button" data-bind="click: remote_import">Remote Import...</button>
-					<button class="button" type="button" data-bind="click: download_file">Download...</button>
+					<div class="clickable"><a data-bind="click: php_info">phpinfo()</a></div>
+					<div class="clickable"><a data-bind="click: remote_import">Remote Import...</a></div>
+					<div class="clickable"><a data-bind="click: download_file">Download...</a></div>
 				</div>
 			</div
 			><div class="drop"><span>Options</span>
