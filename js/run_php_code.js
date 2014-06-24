@@ -196,7 +196,7 @@ var View_Model = function() {
 			.css('background-color', bgcolor)
 			.css('color', color);
 			//.css('box-shadow', '0 0 10px ' + shadeColor(bgcolor,-40) + ' inset');
-		$('.drop > div, .subdrop > div').css('box-shadow', '5px 5px 10px ' + shadeColor(bgcolor, -40));
+		$('.drop > div, .subdrop > div, #php_search_drop').css('box-shadow', '5px 5px 10px ' + shadeColor(bgcolor, -40));
 		$('.drop div, .subdrop, .drop label').css('backgroundColor', bgcolor);
 		$('.subdrop > div').css('border-top', '1px solid ' + shadeColor(bgcolor, -20));
 		/*$('.drop').css('backgroundColor', bgcolor);*/

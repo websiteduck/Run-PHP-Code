@@ -50,7 +50,7 @@ a.button { padding: 6px 0; }
 
 /* Navigation Menu */
 .drop { position: relative; display: inline-block; padding: 0 15px; cursor: pointer; font-size: 14px; }
-.drop > div { display: none; position: absolute; z-index: 9997; width: 200px; background-color: #222; line-height: 30px; padding: 5px 0; left: 0; box-shadow: 5px 5px 10px #111;
+.drop > div { display: none; position: absolute; z-index: 9997; width: 200px; background-color: #222; line-height: 30px; padding: 5px 0; left: 0; 
 	-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;user-select: none; cursor: default; }
 .drop div label { cursor: pointer; display: block; padding-left: 10px; }
 .drop .button { width: 180px; margin-left: 10px; }
@@ -59,7 +59,7 @@ a.button { padding: 6px 0; }
 
 .subdrop { position: relative; padding-left: 32px; cursor: pointer; background-image: url(../img/subdrop.png); background-position: 185px 0; background-repeat: no-repeat; }
 .subdrop.with_icon { padding-left: 10px; }
-.subdrop > div { position: absolute; top: -5px; left: -9999px; z-index: 9997; width: 200px; background-color: #222; padding: 5px 0; box-shadow: 5px 5px 10px #111; 
+.subdrop > div { position: absolute; top: -5px; left: -9999px; z-index: 9997; width: 200px; background-color: #222; padding: 5px 0; 
 	-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;user-select: none; cursor: default; }
 
 .php_logo { display: inline-block; background-color: #8892bf; color: #000; font-style: italic; font-weight: bold; padding: 0 5px; font-size: 14px; height: 22px; line-height: 22px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; }
