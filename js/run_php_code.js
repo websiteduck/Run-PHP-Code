@@ -205,8 +205,15 @@ var View_Model = function() {
 			.css('border-color', shadeColor(bgcolor,-20))
 			.css('box-shadow', '0px 1px 0px 0px ' + shadeColor(bgcolor,20) + ' inset')
 			.css('color', color);
-		if (self.light_theme())	$('#resize_bar').css('backgroundColor', shadeColor(bgcolor,-20));
-		else $('#resize_bar').css('backgroundColor', shadeColor(bgcolor,20));
+		$('#php_search').css('color', color);
+		if (self.light_theme())	{
+			$('#resize_bar').css('backgroundColor', shadeColor(bgcolor,-20));
+			$('#php_search').css('border-color', shadeColor(bgcolor,-20)).css('backgroundColor', shadeColor(bgcolor,20));
+		}
+		else {
+			$('#resize_bar').css('backgroundColor', shadeColor(bgcolor,20));
+			$('#php_search').css('border-color', shadeColor(bgcolor,20)).css('backgroundColor', shadeColor(bgcolor,-20));
+		}
 		if (self.settings.colorize()) {
 			$('#result_frame').css('backgroundColor', shadeColor(bgcolor,-2));
 			$('#result_frame').contents().find('html')
@@ -265,6 +272,7 @@ var View_Model = function() {
 	});
 
 	$(window).resize(function() { self.resize_window($(this).width(), $(this).height()); }).resize();
+	$('#php_search').search({language: 'en', limit: 30});
 };
 
 var vm;
@@ -363,7 +371,7 @@ $(function() {
 		}
 	});
 
-	$('#title_bar').click(function() { setTimeout(function() {vm.editor.focus();}, 50); });
+	$('#title_bar .drop, #title_bar button').click(function() { setTimeout(function() {vm.editor.focus();}, 50); });
 });
 
 //http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color

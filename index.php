@@ -69,6 +69,7 @@ if (isset($_POST['runphp_data'])) {
 		<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 		<script type="text/javascript" src="js/ace/ace.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/knockout-3.1.0.js"></script>
+		<script type="text/javascript" src="js/php_search.js"></script>
 		<script type="text/javascript" src="js/run_php_code.js"></script>
 
 		<link rel="shortcut icon" href="favicon.ico" >
@@ -135,7 +136,7 @@ if (isset($_POST['runphp_data'])) {
 						<h2>Run PHP Code</h2>
 
 						<p>
-							<img src="img/website_duck.png" alt="" style="width: 40px; height: 40px;" /><br>
+							<img src="img/website_duck.png" alt="" style="width: 40px; height: 40px;"><br>
 							&copy; Website Duck LLC<br />
 						</p>
 
@@ -170,6 +171,11 @@ if (isset($_POST['runphp_data'])) {
 			<div id="button_container">
 				<button class="button" type="button" data-bind="click: clear"><i class="fa fa-eraser"></i> &nbsp; Clear</button>
 				<button class="button" type="button" title="Run (Ctrl+Enter)" data-bind="click: run">Run &nbsp; <i class="fa fa-play"></i></button>
+			</div>
+
+			<div style="position: relative; display: inline-block; margin-left: 10px;">
+				<span class="php_logo">php</span><input type="text" id="php_search">
+				<div id="php_search_drop"></div>
 			</div>
 		</div>
 		
