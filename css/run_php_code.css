@@ -55,6 +55,7 @@ a.button { padding: 6px 0; }
 .drop div label { cursor: pointer; display: block; padding-left: 10px; }
 .drop .button { width: 180px; margin-left: 10px; }
 .drop .checkbox, .drop .radio, .drop .clickable { padding-left: 10px; cursor: pointer; }
+.clickable a { display: block; }
 .drop .checkbox i, .drop .radio i, .drop .subdrop i { width: 15px; }
 
 .subdrop { position: relative; padding-left: 32px; cursor: pointer; background-image: url(../img/subdrop.png); background-position: 185px 0; background-repeat: no-repeat; }
