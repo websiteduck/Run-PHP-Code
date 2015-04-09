@@ -9,6 +9,7 @@ This script gives you the ability to quickly test snippets of PHP code locally. 
 - Extract the Run PHP Code files into it. 
 - Bookmark the URL for easy access.
 - Bonus points for cloning the repository instead and pulling once in a while.
+- <b>If you get a blank screen</b> you are probably not accessing Run PHP Code from 127.0.0.1.  This is a security feature.  Add your IP address to line 13 of index.php.
 
 <b>This application is meant to be run locally and should not be made publicly accessible.</b>
 
