@@ -69,10 +69,10 @@ else {
 <html lang="en">
 	<head>
 		<title>Run PHP Code</title>
-		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 		<script type="text/javascript" src="js/ace/ace.js" charset="utf-8"></script>
-		<script type="text/javascript" src="js/knockout-3.1.0.js"></script>
+		<script type="text/javascript" src="js/knockout-3.4.0.js"></script>
 		<script type="text/javascript" src="js/php_search.js"></script>
 		<script type="text/javascript" src="js/run_php_code.js"></script>
 
