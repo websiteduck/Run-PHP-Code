@@ -72,7 +72,7 @@ else {
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 		<script type="text/javascript" src="js/ace/ace.js" charset="utf-8"></script>
-		<script type="text/javascript" src="js/knockout-3.4.0.js"></script>
+		<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
 		<script type="text/javascript" src="js/php_search.js"></script>
 		<script type="text/javascript" src="js/run_php_code.js"></script>
 
