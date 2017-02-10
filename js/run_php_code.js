@@ -9,76 +9,137 @@
  */
 var themes = {
 	light: [
-		{title: 'Chrome', theme: 'chrome'},
-		{title: 'Clouds', theme: 'clouds'},
-		{title: 'Crimson Editor', theme: 'crimson_editor'},
-		{title: 'Dawn', theme: 'dawn'},
-		{title: 'Dreamweaver', theme: 'dreamweaver'},
-		{title: 'Eclipse', theme: 'eclipse'},
-		{title: 'GitHub', theme: 'github'},
-		{title: 'IPlastic', theme: 'iplastic'},
-		{title: 'Katzenmilch', theme: 'katzenmilch'},
-		{title: 'Kuroir', theme: 'kuroir'},
-		{title: 'Solarized Light', theme: 'solarized_light'},
-		{title: 'SQL Server', theme: 'sqlserver'},
-		{title: 'TextMate', theme: 'textmate'},
-		{title: 'Tomorrow', theme: 'tomorrow'},
-		{title: 'XCode', theme: 'xcode'}
+		{title: 'Chrome',                theme: 'chrome'},
+		{title: 'Clouds',                theme: 'clouds'},
+		{title: 'Crimson Editor',        theme: 'crimson_editor'},
+		{title: 'Dawn',                  theme: 'dawn'},
+		{title: 'Dreamweaver',           theme: 'dreamweaver'},
+		{title: 'Eclipse',               theme: 'eclipse'},
+		{title: 'GitHub',                theme: 'github'},
+		{title: 'IPlastic',              theme: 'iplastic'},
+		{title: 'Katzenmilch',           theme: 'katzenmilch'},
+		{title: 'Kuroir',                theme: 'kuroir'},
+		{title: 'Solarized Light',       theme: 'solarized_light'},
+		{title: 'SQL Server',            theme: 'sqlserver'},
+		{title: 'TextMate',              theme: 'textmate'},
+		{title: 'Tomorrow',              theme: 'tomorrow'},
+		{title: 'XCode',                 theme: 'xcode'}
 	],
 	dark: [
-		{title: 'Ambiance', theme: 'ambiance'},
-		{title: 'Chaos', theme: 'chaos'},
-		{title: 'Clouds Midnight', theme: 'clouds_midnight'},
-		{title: 'Cobalt', theme: 'cobalt'},
-		{title: 'Idle Fingers', theme: 'idle_fingers'},
-		{title: 'krTheme', theme: 'kr_theme'},
-		{title: 'Merbivore', theme: 'merbivore'},
-		{title: 'Merbivore Soft', theme: 'merbivore_soft'},
-		{title: 'Monokai', theme: 'monokai'},
-		{title: 'Mono Industrial', theme: 'mono_industrial'},
-		{title: 'Pastel on dark', theme: 'pastel_on_dark'},
-		{title: 'Solarized Dark', theme: 'solarized_dark'},
-		{title: 'Terminal', theme: 'terminal'},
-		{title: 'Tomorrow Night', theme: 'tomorrow_night'},
-		{title: 'Tomorrow Night Blue', theme: 'tomorrow_night_blue'},
+		{title: 'Ambiance',              theme: 'ambiance'},
+		{title: 'Chaos',                 theme: 'chaos'},
+		{title: 'Clouds Midnight',       theme: 'clouds_midnight'},
+		{title: 'Cobalt',                theme: 'cobalt'},
+		{title: 'Idle Fingers',          theme: 'idle_fingers'},
+		{title: 'krTheme',               theme: 'kr_theme'},
+		{title: 'Merbivore',             theme: 'merbivore'},
+		{title: 'Merbivore Soft',        theme: 'merbivore_soft'},
+		{title: 'Monokai',               theme: 'monokai'},
+		{title: 'Mono Industrial',       theme: 'mono_industrial'},
+		{title: 'Pastel on dark',        theme: 'pastel_on_dark'},
+		{title: 'Solarized Dark',        theme: 'solarized_dark'},
+		{title: 'Terminal',              theme: 'terminal'},
+		{title: 'Tomorrow Night',        theme: 'tomorrow_night'},
+		{title: 'Tomorrow Night Blue',   theme: 'tomorrow_night_blue'},
 		{title: 'Tomorrow Night Bright', theme: 'tomorrow_night_bright'},
-		{title: 'Tomorrow Night 80s', theme: 'tomorrow_night_eighties'},
-		{title: 'Twilight', theme: 'twilight'},
-		{title: 'Vibrant Ink', theme: 'vibrant_ink'}
+		{title: 'Tomorrow Night 80s',    theme: 'tomorrow_night_eighties'},
+		{title: 'Twilight',              theme: 'twilight'},
+		{title: 'Vibrant Ink',           theme: 'vibrant_ink'}
 	]
 };
+
+ko.bindingHandlers.my_checkbox = {
+	init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+		var observable = valueAccessor();
+		$(element).click(function() {
+			observable(!observable());
+		});
+	},
+	update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+		var observable = valueAccessor();
+		var value = ko.unwrap(observable);
+		var icon = 'fa-square-o';
+		if (value) icon = 'fa-check-square-o';
+		$(element).html('<i class="fa ' + icon + '"></i> ' + $('<div/>').text($(element).data('label')).html());
+	}
+};
+
+ko.bindingHandlers.my_radio = {
+	init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+		var observable = valueAccessor();
+		$(element).click(function() {
+			observable($(element).data('value'));
+		});
+	},
+	update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+		var observable = valueAccessor();
+		var value = ko.unwrap(observable);
+		var icon = 'fa-circle-o';
+		if (value === $(element).data('value')) icon = 'fa-circle';
+		$(element).html('<i class="fa ' + icon + '"></i> ' + $('<div/>').text($(element).data('label')).html());
+	}
+};
+
+//http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color
+function shadeColor(color, percent) {   
+	color = color.replace(/#/,'');
+	var num = parseInt(color,16),
+	amt = Math.round(2.55 * percent),
+	R = (num >> 16) + amt,
+	B = (num >> 8 & 0x00FF) + amt,
+	G = (num & 0x0000FF) + amt;
+	return '#' + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
+}
+
+$.cssHooks.backgroundColor = {
+	get: function(elem) {
+		if (elem.currentStyle)
+			var bg = elem.currentStyle["backgroundColor"];
+		else if (window.getComputedStyle)
+				var bg = document.defaultView.getComputedStyle(elem, null).getPropertyValue("background-color");
+
+		if (bg.search("rgb") == -1)
+			return bg;
+		else {
+			bg = bg.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+			function hex(x) { return ("0" + parseInt(x).toString(16)).slice(-2); }
+			return "#" + hex(bg[1]) + hex(bg[2]) + hex(bg[3]);
+		}
+	}
+}
 
 var View_Model = function() {
 	var self = this;
 
 	self.settings = {};
-	self.settings.run_external = ko.observable(false);
-	self.settings.divide_x = ko.observable($(window).width()/2);
-	self.settings.colorize = ko.observable(true);
-	self.settings.theme = ko.observable('twilight');
-	self.settings.pre_wrap = ko.observable(false);
+	self.settings.run_external    = ko.observable(false);
+	self.settings.divide_x        = ko.observable($(window).width()/2);
+	self.settings.colorize        = ko.observable(true);
+	self.settings.theme           = ko.observable('twilight');
+	self.settings.pre_wrap        = ko.observable(false);
 	self.settings.error_reporting = ko.observable('fatal');
 
 	self.themes = themes;
-	self.light_theme = ko.observable(true);
-	self.resizing = ko.observable(false);
-	self.window_width = ko.observable(0);
+	self.light_theme         = ko.observable(true);
+	self.resizing            = ko.observable(false);
+	self.window_width        = ko.observable(0);
+	self.result_width        = ko.observable(0);
+	self.contributors_loaded = false;
+	self.contributors        = ko.observableArray([]);
+
 	self.code_width = ko.computed(function() {
 		if (self.settings.run_external()) return self.window_width();
 		else return self.settings.divide_x();
 	});
-	self.result_width = ko.observable(0);
-	self.contributors_loaded = false;
-	self.contributors = ko.observableArray([]);
 
 	self.run = function() {
 		$('input[name="runphp_data"]').val(
 			JSON.stringify({
-				'code': self.editor.getValue(),
-				'action': 'run',
+				'code':     self.editor.getValue(),
+				'action':   'run',
 				'settings': ko.toJS(self.settings),
-				'bgcolor': $('.ace_gutter').css('backgroundColor'),
-				'color': $('#code_div').css('color')
+				'bgcolor':  $('.ace_gutter').css('backgroundColor'),
+				'color':    $('#code_div').css('color')
 			})
 		);
 		$('#runphp_form').submit();
@@ -293,38 +354,6 @@ var View_Model = function() {
 
 var vm;
 
-ko.bindingHandlers.my_checkbox = {
-	init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-		var observable = valueAccessor();
-		$(element).click(function() {
-			observable(!observable());
-		});
-	},
-	update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-		var observable = valueAccessor();
-		var value = ko.unwrap(observable);
-		var icon = 'fa-square-o';
-		if (value) icon = 'fa-check-square-o';
-		$(element).html('<i class="fa ' + icon + '"></i> ' + $('<div/>').text($(element).data('label')).html());
-	}
-};
-
-ko.bindingHandlers.my_radio = {
-	init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-		var observable = valueAccessor();
-		$(element).click(function() {
-			observable($(element).data('value'));
-		});
-	},
-	update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-		var observable = valueAccessor();
-		var value = ko.unwrap(observable);
-		var icon = 'fa-circle-o';
-		if (value === $(element).data('value')) icon = 'fa-circle';
-		$(element).html('<i class="fa ' + icon + '"></i> ' + $('<div/>').text($(element).data('label')).html());
-	}
-};
-
 $(function() {
 	vm = new View_Model();
 	ko.applyBindings(vm);
@@ -389,31 +418,3 @@ $(function() {
 
 	$('#title_bar .drop, #title_bar button').click(function() { setTimeout(function() {vm.editor.focus();}, 50); });
 });
-
-//http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color
-function shadeColor(color, percent) {   
-	color = color.replace(/#/,'');
-	var num = parseInt(color,16),
-	amt = Math.round(2.55 * percent),
-	R = (num >> 16) + amt,
-	B = (num >> 8 & 0x00FF) + amt,
-	G = (num & 0x0000FF) + amt;
-	return '#' + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
-}
-
-$.cssHooks.backgroundColor = {
-    get: function(elem) {
-        if (elem.currentStyle)
-            var bg = elem.currentStyle["backgroundColor"];
-        else if (window.getComputedStyle)
-            var bg = document.defaultView.getComputedStyle(elem, null).getPropertyValue("background-color");
-
-        if (bg.search("rgb") == -1)
-            return bg;
-        else {
-            bg = bg.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-            function hex(x) { return ("0" + parseInt(x).toString(16)).slice(-2); }
-            return "#" + hex(bg[1]) + hex(bg[2]) + hex(bg[3]);
-        }
-    }
-}
