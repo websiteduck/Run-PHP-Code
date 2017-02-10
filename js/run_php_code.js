@@ -215,7 +215,7 @@ var View_Model = function() {
 			}, 'text');
 		}
 		else if (code_url.toLowerCase().indexOf('pastebin.com') !== -1) {
-			$.get('proxy.php', {url: 'http://pastebin.com/raw.php?i=' + code_id}, function(data) {
+			$.get('proxy.php', {url: 'http://pastebin.com/raw/' + code_id}, function(data) {
 				self.set_editor_content(data);
 			}, 'text');
 		}
