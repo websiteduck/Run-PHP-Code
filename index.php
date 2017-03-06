@@ -4,7 +4,7 @@
  * 
  * This script gives you the ability to quickly test snippets of PHP code locally.
  *
- * @copyright  Copyright 2011-2014, Website Duck LLC (http://www.websiteduck.com)
+ * @copyright  Copyright 2011-2017, Website Duck LLC (http://www.websiteduck.com)
  * @link       http://github.com/websiteduck/Run-PHP-Code Run PHP Code
  * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
@@ -69,19 +69,23 @@ else {
 <html lang="en">
 	<head>
 		<title>Run PHP Code</title>
-		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
-		<script type="text/javascript" src="js/ace/ace.js" charset="utf-8"></script>
-		<script type="text/javascript" src="js/knockout-3.4.1.js"></script>
-		<script type="text/javascript" src="js/php_search.js"></script>
-		<script type="text/javascript" src="js/run_php_code.js"></script>
+		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="js/ace/ace.js" charset="utf-8"></script>
+		<script src="js/knockout-3.4.1.js"></script>
+		<script src="js/php_search.js"></script>
+		
 
 		<link rel="shortcut icon" href="favicon.ico" >
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/run_php_code.css">
 	</head>
 	<body>		
-		
+		<div id="app"></div>
+		<script src="dist/bundle.js"></script>
+	</body>
+</html>
+<!--
 		<form id="runphp_form" method="POST" action="" target="result_frame" data-bind="attr: { target: settings.run_external() ? 'result_external' : 'result_frame' }">
 			<input type="hidden" name="runphp_data" value="" />
 		</form>
@@ -119,17 +123,17 @@ else {
 					<div class="subdrop">
 						Light
 						<div>
-							<!-- ko foreach: themes.light -->
+							ko foreach: themes.light 
 								<div class="checkbox" data-bind="attr: { 'data-value': theme, 'data-label': title }, my_radio: $parent.settings.theme, click: $parent.change_setting"></div>	
-							<!-- /ko -->
+							 /ko 
 						</div>
 					</div>
 					<div class="subdrop">
 						Dark
 						<div>
-							<!-- ko foreach: themes.dark -->
+							ko foreach: themes.dark 
 								<div class="checkbox" data-bind="attr: { 'data-value': theme, 'data-label': title }, my_radio: $parent.settings.theme, click: $parent.change_setting"></div>	
-							<!-- /ko -->
+							ko 
 						</div>
 					</div>
 				</div>
@@ -190,3 +194,4 @@ else {
 		
 	</body>
 </html>
+-->

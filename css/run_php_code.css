@@ -2,20 +2,6 @@ html, body { padding: 0; margin: 0; }
 body { background-color: #222; color: #555; font-family: Verdana, sans-serif; overflow: hidden; }
 form { padding: 0; margin: 0; }
 
-#title_bar { 
-	background-color: #333;
-	background-repeat: repeat-x;
-	font-size: 13px; 
-	line-height: 40px; 
-	color: #ccc;
-	height: 40px;
-	width: 100%;
-	z-index: 9999;
-	box-shadow: 0 -10px 10px -10px #000 inset;
-}
-#title { font-size: 18px; padding: 0 15px; float: left; height: 40px; line-height: 39px; border-right: 1px solid #141414; }
-
-
 .button {
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
@@ -40,7 +26,7 @@ a.button { padding: 6px 0; }
 #button_container label { margin-left: 14px; }
 #button_container > img { vertical-align: middle; }
 
-#title_bar select { background-color: #141414; color: #eee; border: 1px solid #444; }
+#title-bar select { background-color: #141414; color: #eee; border: 1px solid #444; }
 
 #code_div { position: absolute; top: 40px; left: 0; bottom: 0; }
 #result_div { position: absolute; top: 40px; right: 0; bottom: 0; }
@@ -50,7 +36,7 @@ a.button { padding: 6px 0; }
 
 /* Navigation Menu */
 .drop { position: relative; display: inline-block; padding: 0 15px; cursor: pointer; font-size: 14px; }
-.drop > div { display: none; position: absolute; z-index: 9997; width: 200px; background-color: #222; line-height: 30px; padding: 5px 0; left: 0; 
+.drop > div { position: absolute; z-index: 9997; width: 200px; background-color: #222; line-height: 30px; padding: 5px 0; left: 0; 
 	-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;user-select: none; cursor: default; }
 .drop div label { cursor: pointer; display: block; padding-left: 10px; }
 .drop .button { width: 180px; margin-left: 10px; }
