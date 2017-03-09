@@ -7,55 +7,19 @@
  * @link       http://github.com/websiteduck/Run-PHP-Code Run PHP Code
  * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 import Vue from 'vue';
 import App from './app.vue';
+import Settings from './settings.js';
 
 new Vue({
 	el: '#app',
-	render: h => h(App)
+	render: h => h(App),
+	data: function() {
+		return {
+			settings: Settings.fetch()
+		};
+	}
 });
-
-// var themes = {
-// 	light: [
-// 		{title: 'Chrome',                theme: 'chrome'},
-// 		{title: 'Clouds',                theme: 'clouds'},
-// 		{title: 'Crimson Editor',        theme: 'crimson_editor'},
-// 		{title: 'Dawn',                  theme: 'dawn'},
-// 		{title: 'Dreamweaver',           theme: 'dreamweaver'},
-// 		{title: 'Eclipse',               theme: 'eclipse'},
-// 		{title: 'GitHub',                theme: 'github'},
-// 		{title: 'IPlastic',              theme: 'iplastic'},
-// 		{title: 'Katzenmilch',           theme: 'katzenmilch'},
-// 		{title: 'Kuroir',                theme: 'kuroir'},
-// 		{title: 'Solarized Light',       theme: 'solarized_light'},
-// 		{title: 'SQL Server',            theme: 'sqlserver'},
-// 		{title: 'TextMate',              theme: 'textmate'},
-// 		{title: 'Tomorrow',              theme: 'tomorrow'},
-// 		{title: 'XCode',                 theme: 'xcode'}
-// 	],
-// 	dark: [
-// 		{title: 'Ambiance',              theme: 'ambiance'},
-// 		{title: 'Chaos',                 theme: 'chaos'},
-// 		{title: 'Clouds Midnight',       theme: 'clouds_midnight'},
-// 		{title: 'Cobalt',                theme: 'cobalt'},
-// 		{title: 'Idle Fingers',          theme: 'idle_fingers'},
-// 		{title: 'krTheme',               theme: 'kr_theme'},
-// 		{title: 'Merbivore',             theme: 'merbivore'},
-// 		{title: 'Merbivore Soft',        theme: 'merbivore_soft'},
-// 		{title: 'Monokai',               theme: 'monokai'},
-// 		{title: 'Mono Industrial',       theme: 'mono_industrial'},
-// 		{title: 'Pastel on dark',        theme: 'pastel_on_dark'},
-// 		{title: 'Solarized Dark',        theme: 'solarized_dark'},
-// 		{title: 'Terminal',              theme: 'terminal'},
-// 		{title: 'Tomorrow Night',        theme: 'tomorrow_night'},
-// 		{title: 'Tomorrow Night Blue',   theme: 'tomorrow_night_blue'},
-// 		{title: 'Tomorrow Night Bright', theme: 'tomorrow_night_bright'},
-// 		{title: 'Tomorrow Night 80s',    theme: 'tomorrow_night_eighties'},
-// 		{title: 'Twilight',              theme: 'twilight'},
-// 		{title: 'Vibrant Ink',           theme: 'vibrant_ink'}
-// 	]
-// };
 
 // ko.bindingHandlers.my_checkbox = {
 // 	init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -89,16 +53,7 @@ new Vue({
 // 	}
 // };
 
-// //http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color
-// function shadeColor(color, percent) {   
-// 	color = color.replace(/#/,'');
-// 	var num = parseInt(color,16),
-// 	amt = Math.round(2.55 * percent),
-// 	R = (num >> 16) + amt,
-// 	B = (num >> 8 & 0x00FF) + amt,
-// 	G = (num & 0x0000FF) + amt;
-// 	return '#' + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
-// }
+
 
 // $.cssHooks.backgroundColor = {
 // 	get: function(elem) {

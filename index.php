@@ -75,7 +75,6 @@ else {
 		<script src="js/knockout-3.4.1.js"></script>
 		<script src="js/php_search.js"></script>
 		
-
 		<link rel="shortcut icon" href="favicon.ico" >
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/run_php_code.css">
@@ -177,11 +176,6 @@ else {
 				</div>
 			</div>
 					
-			<div id="button_container">
-				<button class="button" type="button" data-bind="click: clear"><i class="fa fa-eraser"></i> &nbsp; Clear</button>
-				<button class="button" type="button" title="Run (Ctrl+Enter)" data-bind="click: run">Run &nbsp; <i class="fa fa-play"></i></button>
-			</div>
-
 			<div style="position: relative; display: inline-block; margin-left: 10px;">
 				<span class="php_logo">php</span><input type="text" id="php_search">
 				<div id="php_search_drop"></div>

@@ -1,12 +1,17 @@
 <template>
 	<div id="title-bar">
 		<div id="title">{{appName}}</div>
-		<dropdown-menu v-for="item in menu" :item="item"></dropdown-menu>
+		<dropdown-menu v-for="item in menu" :item="item" :key="item.key" :active-key="activeChildKey" @selectKey="selectKey" :is-submenu="false"></dropdown-menu>
+		<div id="button_container">
+			<button class="button" type="button" data-bind="click: clear"><i class="fa fa-eraser"></i> &nbsp; Clear</button>
+			<button class="button" type="button" title="Run (Ctrl+Enter)" data-bind="click: run">Run &nbsp; <i class="fa fa-play"></i></button>
+		</div>
 	</div>
 </template>
 
 <script>
 import DropdownMenu from './dropdown-menu.vue';
+import {themes} from './themes.js';
 
 export default {
 	name: 'title-bar',
@@ -14,30 +19,39 @@ export default {
 	components: {
 		dropdownMenu: DropdownMenu
 	},
-	data() {
+	data: () => {
 		return {
+			activeChildKey: '',
 			menu: [
 				{
 					title: 'File',
+					key: 'file',
 					submenu: [
-						{ title: 'phpinfo()' },
-						{ title: 'Remote Import...' },
-						{ title: 'Download...' }
+						{ title: 'phpinfo()', key: 'phpinfo' },
+						{ title: 'Remote Import...', key: 'remote_import' },
+						{ title: 'Download...', key: 'download' }
 					]
 				},
 				{
 					title: 'Options',
+					key: 'options',
 					submenu: [
-						{ title: 'Colorize' },
-						{ title: 'External Window' },
-						{ title: '<pre> Wrap' },
+						{ title: 'Colorize', key: 'colorize' },
+						{ title: 'External Window', key: 'external_window' },
+						{ title: '<pre> Wrap', key: 'pre_wrap' },
 					]
 				},
 				{
 					title: 'Themes',
-					submenu: []
+					key: 'themes',
+					submenu: themes
 				}
 			]
+		};
+	},
+	methods: {
+		selectKey: function(key) {
+			this.activeChildKey = key;
 		}
 	}
 }
