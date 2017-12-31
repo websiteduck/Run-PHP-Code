@@ -68,20 +68,14 @@ else {
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Run PHP Code</title>
-		<script src="js/jquery-3.1.1.min.js"></script>
-		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-		<script src="js/ace/ace.js" charset="utf-8"></script>
-		<script src="js/knockout-3.4.1.js"></script>
-		<script src="js/php_search.js"></script>
-		
+		<title>Run PHP Code</title>	
 		<link rel="shortcut icon" href="favicon.ico" >
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/run_php_code.css">
 	</head>
 	<body>		
 		<div id="app"></div>
-		<script src="dist/bundle.js"></script>
+		<script src="js/run-php-code.js" type="module"></script>
 	</body>
 </html>
 <!--

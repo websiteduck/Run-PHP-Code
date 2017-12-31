@@ -3,32 +3,26 @@
   "version": "1.0.0",
   "description": "Run PHP Code\r ============",
   "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "css-loader": "^0.27.3",
+    "vue-loader": "^11.1.4",
+    "vue-template-compiler": "^2.2.4",
+    "webpack": "^2.2.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack"
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/websiteduck/Run-PHP-Code.git"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/websiteduck/Run-PHP-Code/issues"
   },
-  "homepage": "https://github.com/websiteduck/Run-PHP-Code#readme",
-  "devDependencies": {
-    "babel-core": "^6.23.1",
-    "babel-loader": "^6.3.2",
-    "babili-webpack-plugin": "0.0.11",
-    "css-loader": "^0.26.2",
-    "file-loader": "^0.10.1",
-    "lodash": "^4.17.4",
-    "url-loader": "^0.5.8",
-    "vue": "^2.2.1",
-    "vue-loader": "^11.1.4",
-    "vue-template-compiler": "^2.2.1",
-    "webpack": "^2.2.1"
-  }
+  "homepage": "https://github.com/websiteduck/Run-PHP-Code#readme"
 }

@@ -7,16 +7,21 @@
  * @link       http://github.com/websiteduck/Run-PHP-Code Run PHP Code
  * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-import Vue from 'vue';
-import App from './app.vue';
-import Settings from './settings.js';
+
+import Vue from './lib/vue.esm.browser.js';
+import App from './app/app.js';
+import Settings from './app/settings.js';
+import store from './app/store.js';
+
+Vue.prototype.$consoleLog = function () { console.log(...arguments) };
 
 new Vue({
 	el: '#app',
+	store,
 	render: h => h(App),
 	data: function() {
 		return {
-			settings: Settings.fetch()
+			settings: Settings.fetch(),
 		};
 	}
 });
