@@ -1,0 +1,8 @@
+<svg id="svg-save" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+	<path d="M1,1L4,1L4,6L11,6L11,1L14,1L14,14L1,14Z" transform="translate(0.5,0.5)" fill="none" stroke="currentColor" stroke-width="1"/>
+	<path d="M6,1L6,4L7,4L7,1Z" transform="translate(0.5,0.5)" fill="none" stroke="currentColor" stroke-width="1"/>
+	<path d="M4,1L11,1" transform="translate(0.5,0.5)" fill="none" stroke="currentColor" stroke-width="1"/>
+	<rect width="9" height="6" x="3" y="8" transform="translate(0.5,0.5)" fill="none" stroke="currentColor" stroke-width="1"/>
+	<path d="M4,10L11,10" stroke-dasharray="1,2" transform="translate(0.5,0.5)" fill="none" stroke="currentColor" stroke-width="0.5"/>
+	<path d="M4,12L11,12" stroke-dasharray="1,1" transform="translate(0.5,0.5)" fill="none" stroke="currentColor" stroke-width="0.5"/>
+</svg>

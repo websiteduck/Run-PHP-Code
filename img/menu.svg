@@ -1,0 +1,5 @@
+<svg id="svg-menu" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+	<rect fill="currentColor" width="44" height="4" transform="translate(10 12)" stroke-width="0"/>
+	<rect fill="currentColor" width="44" height="4" transform="translate(10 30)" stroke-width="0"/>
+	<rect fill="currentColor" width="44" height="4" transform="translate(10 48)" stroke-width="0"/>
+</svg>
