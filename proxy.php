@@ -6,6 +6,11 @@ if (!isset($_GET['url'])) {
 
 $url = urldecode($_GET['url']);
 
+if (strpos($url, '/..') !== false) {
+  header('HTTP/1.0 403 Forbidden');
+  die();
+}
+
 if (
   strpos($url, 'http://', 0) !== 0 && 
   strpos($url, 'https://', 0) !== 0 &&
