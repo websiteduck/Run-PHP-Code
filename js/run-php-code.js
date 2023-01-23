@@ -56,6 +56,10 @@ Vue.createApp({
     },
 
     async open() {
+      if (!this.checkSecureContext()) {
+        return;
+      }
+
       let fileHandle;
 
       try {
@@ -86,6 +90,10 @@ Vue.createApp({
     },
 
     async save() {
+      if (!this.checkSecureContext()) {
+        return;
+      }
+
       try {
         let fileHandle = await window.showSaveFilePicker();
         let writeStream = await fileHandle.createWritable();
@@ -97,6 +105,15 @@ Vue.createApp({
         } else {
           throw e;
         }
+      }
+    },
+
+    checkSecureContext() {
+      if (window.isSecureContext) {
+        return true;
+      } else {
+        alert('This feature is only available in a secure context (https)');
+        return false;
       }
     },
 
