@@ -16,6 +16,17 @@ import Result from './components/Result.js';
 import TopBar from './components/TopBar.js';
 import { useStore } from './store.js';
 
+const utf8Decoder = new TextDecoder('utf-8');
+
+const errorReportingValues = {
+  fatal: 'E_ERROR | E_PARSE | E_COMPILE_ERROR',
+  warning: 'E_ERROR | E_PARSE | E_COMPILE_ERROR | E_WARNING',
+  deprecated: 'E_ERROR | E_PARSE | E_COMPILE_ERROR | E_WARNING | E_DEPRECATED | E_USER_DEPRECATED',
+  notice: 'E_ERROR | E_PARSE | E_COMPILE_ERROR | E_WARNING | E_DEPRECATED | E_USER_DEPRECATED | E_NOTICE',
+  all: '-1',
+  none: '0',
+};
+
 Vue.createApp({
   components: {
     Code,
@@ -31,6 +42,51 @@ Vue.createApp({
   },
 
   methods: {
+    runPhpWasm(code) {
+      if (!PHPLoader.loaded) {
+        throw new Error('PHP WebAssembly is still loading.');
+      }
+
+      PHPLoader.ccall('wasm_set_php_code', null, ['string'], [code]);
+      PHPLoader.ccall('wasm_sapi_handle_request', 'number', [], []);
+      return utf8Decoder.decode(PHPLoader.FS.readFile('/tmp/stdout'));
+    },
+
+    buildResultHtml(html, settings) {
+      let outputMode = settings.outputMode || 'html';
+
+      if (outputMode === 'console') {
+        let escaped = html
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+
+        html = '<style id="runphpcode-console-style">'
+          + 'html { margin: 0; }'
+          + 'body { margin: 0; padding: 8px; overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.4; white-space: pre-wrap; }'
+          + '</style>'
+          + escaped;
+      }
+
+      if (settings.colorize) {
+        let color = this.store.uiColors.color || '#000000';
+        let background = this.store.uiColors.backgroundColor || '#ffffff';
+
+        html += `
+      <style id="runphpcode-style" media="all">
+      html, body { background-color: ${background}; color: ${color}; }
+      </style>
+    `;
+      }
+
+      if (!html.startsWith('<!DOCTYPE')) {
+        html = '<!DOCTYPE html>' + html;
+      }
+
+      return { html, outputMode };
+    },
+
     async run(codeOverride = null, settingsOverride = null) {
       let token = ++this.store.runToken;
       let settings = settingsOverride || this.store.settings;
@@ -47,51 +103,38 @@ Vue.createApp({
       this.store.runFatalError = null;
       this.store.showingPhpInfo = !!settingsOverride;
 
-      let payload = {
-        code: codeOverride != null ? codeOverride : this.$refs.code.editor.getValue(),
-        action: 'run',
-        settings,
-        color: this.store.uiColors.color,
-        background_color: this.store.uiColors.backgroundColor,
-      };
-
       try {
-        let response = await axios.post(
-          'run.php',
-          new URLSearchParams({ runphp_data: JSON.stringify(payload) }),
-          {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          },
-        );
+        let userCode = codeOverride != null ? codeOverride : this.$refs.code.editor.getValue();
+        let reporting = errorReportingValues[settings.errorReporting] ?? errorReportingValues.none;
+        let code = 'error_reporting(' + reporting + '); ?>' + userCode;
+        let start = performance.now();
+        let rawHtml = this.runPhpWasm(code);
+        let durationMs = performance.now() - start;
 
         if (token !== this.store.runToken) {
           return;
         }
 
-        let data = response.data;
+        let { html, outputMode } = this.buildResultHtml(rawHtml, settings);
 
-        if (typeof data !== 'object' || data === null) {
-          throw new Error('Invalid response from run.php');
-        }
-
-        this.store.runDurationMs = data.duration_ms;
-        this.store.runMemoryBytes = data.memory_bytes;
-        this.store.runPhpVersion = data.php_version || null;
-        this.store.runOutputMode = data.output_mode || null;
+        this.store.runDurationMs = Math.round(durationMs * 1000) / 1000;
+        this.store.runMemoryBytes = null;
+        this.store.runPhpVersion = '8.2 (WASM)';
+        this.store.runOutputMode = outputMode;
         this.store.runAt = new Date();
-        this.store.runFatalError = data.fatal_error || null;
-        this.store.runStatus = data.fatal_error ? 'failed' : 'done';
+        this.store.runFatalError = null;
+        this.store.runStatus = 'done';
 
         if (this.store.settings.runExternal) {
           let external = window.open('', 'result-external');
 
           if (external) {
             external.document.open();
-            external.document.write(data.html || '');
+            external.document.write(html || '');
             external.document.close();
           }
         } else if (this.$refs.result) {
-          this.$refs.result.setHtml(data.html || '');
+          this.$refs.result.setHtml(html || '');
         }
       } catch (e) {
         if (token !== this.store.runToken) {
@@ -242,9 +285,6 @@ Vue.createApp({
         case 'php_info':
           this.phpInfo();
           break;
-        case 'remote_import':
-          this.remoteImport();
-          break;
         case 'load_sample':
           this.loadSample(props[0]);
           break;
@@ -286,80 +326,18 @@ Vue.createApp({
       this.run('<' + '?php phpinfo();', cloneSettings);
     },
 
-    async remoteImport() {  
-      let codeUrl = prompt(`
-        Always make sure imported code is safe before running!!!\n
-        Supported services: gist.GitHub.com, PasteBin.com, Pastie.org\n
-        Enter URL:
-      `);
-
-      if (codeUrl === null || codeUrl === '') {
-        return;
-      }
-
-      this.$refs.code.reset();
-      this.run();
-
-      let codeId = codeUrl.split('/').pop();
-      let content = '';
-      let urlLower = codeUrl.toLowerCase();
-      this.$refs.code.editor.setValue('Loading Code...');
-
-      try {
-        if (urlLower.indexOf('github.com') !== -1) {
-          let response = await axios.get('proxy.php', { params: { url: 'https://api.github.com/gists/' + codeId } });
-
-          if (typeof response.data !== 'object' || response.data === null || !response.data.files) {
-            throw new Error('Import failed.');
-          }
-
-          Object.values(response.data.files).forEach((file) => {
-            content += file.content + '\n';
-          });
-        }
-        else if (urlLower.indexOf('pastebin.com') !== -1) {
-          let response = await axios.get('proxy.php', { params: { url: 'https://pastebin.com/raw/' + codeId } });
-
-          if (typeof response.data !== 'string' || response.data === 'Import failed.') {
-            throw new Error('Import failed.');
-          }
-
-          content = response.data;
-        }
-        else if (urlLower.indexOf('pastie.org') !== -1) {
-          let response = await axios.get('proxy.php', { params: { url: 'https://pastie.org/p/' + codeId + '/raw' } });
-
-          if (typeof response.data !== 'string' || response.data === 'Import failed.') {
-            throw new Error('Import failed.');
-          }
-
-          content = response.data;
-        }
-        else {
-          this.$refs.code.editor.setValue('');
-          alert('Unsupported URL. Use a GitHub Gist, PasteBin, or Pastie link.');
-          return;
-        }
-      } catch (e) {
-        this.$refs.code.editor.setValue('');
-        alert('Import failed.');
-        return;
-      }
-
-      this.$refs.code.editor.setValue(content);
-    },
-
     async loadSample(filename) {
       if (!filename) {
         return;
       }
 
       try {
-        let response = await axios.get('proxy.php', {
-          params: { url: `./samples/${filename}.php` },
+        let response = await axios.get(`./samples/${filename}.php`, {
+          responseType: 'text',
+          transformResponse: [(data) => data],
         });
 
-        if (typeof response.data !== 'string' || response.data === 'Import failed.') {
+        if (typeof response.data !== 'string') {
           throw new Error('Import failed.');
         }
 

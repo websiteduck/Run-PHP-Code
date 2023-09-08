@@ -1,6 +1,7 @@
 // https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color
 // https://stackoverflow.com/questions/1740700/how-to-get-hex-color-value-rather-than-rgb-value
 export function adjustColor(color, percent) {
+	if (color == null) return null;
 	if (/^#[0-9A-F]{6}$/i.test(color) === false) {
 		let match = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+\.{0,1}\d*))?\)$/);
 		

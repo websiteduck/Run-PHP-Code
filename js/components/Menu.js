@@ -37,7 +37,6 @@ export default {
       >
         <div class="menu__section">
           <MenuItem label="phpinfo()" @click="$emit('menu', 'php_info'); closeMenu();" />
-          <MenuItem label="Remote Import..." @click="$emit('menu', 'remote_import'); closeMenu();" />
         </div>
         <div class="menu__header">
           Settings
