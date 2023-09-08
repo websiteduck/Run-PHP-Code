@@ -43,10 +43,12 @@ export default {
           if (this.store.settings.colorize && !this.store.showingPhpInfo) {
             htmlElement.style.color = this.store.uiColors.color;
             htmlElement.style.backgroundColor = this.store.uiColors.backgroundColor;
-            htmlElement.animate([
-              { backgroundColor: adjustColor(this.store.uiColors.backgroundColor, 10) },
-              { backgroundColor: this.store.uiColors.backgroundColor },
-            ], 250);
+            if (this.store.uiColors.backgroundColor !== null) {
+              htmlElement.animate([
+                { backgroundColor: adjustColor(this.store.uiColors.backgroundColor, 10) },
+                { backgroundColor: this.store.uiColors.backgroundColor },
+              ], 250);
+            }
           } else {
             htmlElement.style.color = null;
             htmlElement.style.backgroundColor = null;
@@ -64,6 +66,18 @@ export default {
         }
       }
     },
+
+    setHtml(html) {
+      if (this.$refs.iframe) {
+        let iframe = this.$refs.iframe;
+
+        if (this.store.settings.preWrap && !this.store.showingPhpInfo) {
+          html = '<pre>' + html + '</pre>';
+        }
+
+        iframe.srcdoc = html;
+      }
+    }
   },
 
   template: `

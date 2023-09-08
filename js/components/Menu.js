@@ -41,7 +41,6 @@ export default {
       >
         <div class="menu__section">
           <MenuItem label="phpinfo()" @click="$emit('menu', 'php_info'); closeMenu();" />
-          <MenuItem label="Remote Import..." @click="$emit('menu', 'remote_import'); closeMenu();" />
         </div>
         <div class="menu__header">
           Settings
@@ -52,12 +51,6 @@ export default {
             :selected="store.settings.colorize"
             label="Colorize"
             @click="store.settings.colorize = !store.settings.colorize" 
-          />
-          <MenuItem
-            type="checkbox"
-            :selected="store.settings.runExternal"
-            label="External Window"
-            @click="store.settings.runExternal = !store.settings.runExternal" 
           />
           <MenuItem
             type="checkbox"

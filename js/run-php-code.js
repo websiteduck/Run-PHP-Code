@@ -43,7 +43,26 @@ Vue.createApp({
 
       this.store.showingPhpInfo = false;
 
-      form.submit();
+      if (PHPLoader.loaded) {
+        let code = '';
+        let errorReportingValues = {};
+        errorReportingValues.fatal = 'E_ERROR | E_PARSE | E_COMPILE_ERROR';
+        errorReportingValues.warning = errorReportingValues.fatal + ' | E_WARNING';
+        errorReportingValues.deprecated = errorReportingValues.warning + ' | E_DEPRECATED | E_USER_DEPRECATED';
+        errorReportingValues.notice = errorReportingValues.deprecated + ' | E_NOTICE';
+        errorReportingValues.all = '-1';
+        errorReportingValues.none = '0';
+
+        code += 'error_reporting(' + errorReportingValues[this.store.settings.errorReporting] + '); ?>';
+        code += this.$refs.code.editor.getValue();
+
+        PHPLoader.ccall('wasm_set_php_code', null, ['string'], [code]);
+        PHPLoader.ccall('wasm_sapi_handle_request', 'number', [], []);
+        let html = UTF8Decoder.decode(PHPLoader.FS.readFile('/tmp/stdout'));
+        this.$refs.result.setHtml(html);
+      }
+
+      //form.submit();
     },
 
     clear() {
@@ -172,7 +191,14 @@ Vue.createApp({
 
       this.store.showingPhpInfo = true;
 
-      form.submit();
+      if (PHPLoader.loaded) {
+        PHPLoader.ccall('wasm_set_php_code', null, ['string'], ['phpinfo();']);
+        PHPLoader.ccall('wasm_sapi_handle_request', 'number', [], []);
+        let html = UTF8Decoder.decode(PHPLoader.FS.readFile('/tmp/stdout'));
+        this.$refs.result.setHtml(html);
+      }
+
+      //form.submit();
     },
 
     async remoteImport() {  
@@ -245,7 +271,7 @@ Vue.createApp({
       @run="run"
     />
     <ResizeBar />
-    <Result />
+    <Result ref="result" />
     <Menu @menu="menu" />
     <form 
       ref="form" 

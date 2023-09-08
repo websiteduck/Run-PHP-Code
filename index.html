@@ -1,0 +1,44 @@
+<?php
+/**
+ * Run PHP Code
+ * 
+ * This script gives you the ability to quickly test snippets of PHP code locally.
+ *
+ * @copyright  Copyright 2011-2022, Website Duck LLC (http://www.websiteduck.com)
+ * @link       http://github.com/websiteduck/Run-PHP-Code Run PHP Code
+ * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Run PHP Code</title>
+    <script src="lib/ace/ace.js" charset="utf-8"></script>
+    <script src="lib/vue.global.prod.js"></script>
+    <script src="lib/vue-demi.iife.js"></script>
+    <script src="lib/vue-use-shared.iife.js"></script>
+    <script src="lib/vue-use-core.iife.js"></script>
+    <script src="lib/pinia.iife.js"></script>
+    <script src="lib/axios.min.js"></script>
+    <script src="lib/svg-loader.min.js"></script>
+    <script src="lib/php_8_2.js"></script>
+    <link rel="shortcut icon" href="favicon.ico" >
+    <link rel="stylesheet" href="css/run-php-code.css">
+  </head>
+  <body>
+    <div style="display: none;">
+      <svg id="svg-check" data-src="img/check.svg"></svg>
+      <svg id="svg-check-selected" data-src="img/check-selected.svg"></svg>
+      <svg id="svg-eraser" data-src="img/eraser.svg"></svg>
+      <svg id="svg-github-octicon" data-src="img/github-octicon.svg"></svg>
+      <svg id="svg-menu" data-src="img/menu.svg"></svg>
+      <svg id="svg-open" data-src="img/open.svg"></svg>
+      <svg id="svg-play" data-src="img/play.svg"></svg>
+      <svg id="svg-radio" data-src="img/radio.svg"></svg>
+      <svg id="svg-radio-selected" data-src="img/radio-selected.svg"></svg>
+      <svg id="svg-save" data-src="img/save.svg"></svg>
+    </div>
+    <div id="app"></div>
+  </body>
+  <script type="module" src="js/run-php-code.js"></script>
+</html>
