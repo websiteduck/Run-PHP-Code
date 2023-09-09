@@ -3,6 +3,10 @@ Run PHP Code
 
 <a href="https://github.com/websiteduck/Run-PHP-Code/archive/master.zip"><b>Download Run PHP Code</b></a>
 
+or
+
+<a href="https://websiteduck.github.io/Run-PHP-Code/"><b>Try the In-Browser WebAssembly Version</b></a>
+
 This script gives you the ability to quickly test snippets of PHP code locally. A local web server is required.
 
 - Create a folder called <b>php</b> or similar in your www folder. 
