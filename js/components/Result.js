@@ -57,7 +57,6 @@ export default {
             // horizontal scrollbar when the result window is too narrow
             let css = iframeDocument.createTextNode('table { width: 100%; max-width: 934px; }');
             let style = iframeDocument.createElement('style');
-            style.type = 'text/css';
             style.appendChild(css);
             htmlElement.appendChild(style);
           }

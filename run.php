@@ -36,7 +36,6 @@ if ($runPhp->action == 'run') {
   header('Cache-Control: post-check=0, pre-check=0', false);
   header('Content-Type: text/html; charset=utf-8');
   header('Pragma: no-cache');
-  header('X-XSS-Protection: 0');
   ini_set('display_errors', 1);
 
   $fatal = E_ERROR | E_PARSE | E_COMPILE_ERROR;

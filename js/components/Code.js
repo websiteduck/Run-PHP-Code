@@ -19,7 +19,6 @@ export default {
     this.editor = ace.edit(this.$refs.codeDiv);
     this.editor.getSession().setMode('ace/mode/php');
     this.editor.setShowPrintMargin(false);
-    this.editor.$blockScrolling = Infinity;
     this.editor.commands.addCommand({
       name: 'runCode',
       bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
