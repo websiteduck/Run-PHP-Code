@@ -1,5 +1,8 @@
 <?php
 
+// This application is meant to be run locally and should not be made publicly accessible.
+if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1', '::ffff:127.0.0.1'))) die();
+
 if (!isset($_GET['url'])) {
   die();	
 }
