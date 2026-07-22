@@ -55,6 +55,12 @@ export default {
           />
           <MenuItem
             type="checkbox"
+            :selected="store.settings.autosave"
+            label="Autosave"
+            @click="store.settings.autosave = !store.settings.autosave" 
+          />
+          <MenuItem
+            type="checkbox"
             :selected="store.settings.runExternal"
             label="External Window"
             @click="store.settings.runExternal = !store.settings.runExternal" 

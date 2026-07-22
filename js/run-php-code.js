@@ -50,7 +50,8 @@ Vue.createApp({
       let answer = confirm('Are you sure you want to clear the editor?');
 
       if (answer) { 
-        this.$refs.code.reset();
+        this.$refs.code.reset({ persist: true });
+        this.$refs.code.dismissAutosaveNotice();
         this.run();
       }
     },
@@ -296,6 +297,7 @@ Vue.createApp({
     window.addEventListener('mousemove', this.mouseMove);
     window.addEventListener('resize', this.windowResize);
     this.$refs.code.reset();
+    this.$refs.code.offerAutosaveRestore();
     this.run();
   },
 

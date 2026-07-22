@@ -11,6 +11,7 @@ export const useStore = Pinia.defineStore('store', {
         theme: 'twilight',
         preWrap: false,
         errorReporting: 'fatal',
+        autosave: true,
       }
     ),
 
