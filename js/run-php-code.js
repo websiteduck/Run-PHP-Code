@@ -81,7 +81,7 @@ Vue.createApp({
         let fileContents = await fileData.text();
         this.$refs.code.editor.setValue(fileContents);
       } catch (e) {
-        if (e instanceof DOMException && e.code === DOMException.ABORT_ERR) {
+        if (e instanceof DOMException && e.name === 'AbortError') {
           //
         } else {
           throw e;
@@ -100,7 +100,7 @@ Vue.createApp({
         await writeStream.write(this.$refs.code.editor.getValue());
         await writeStream.close();
       } catch (e) {
-        if (e instanceof DOMException && e.code === DOMException.ABORT_ERR) {
+        if (e instanceof DOMException && e.name === 'AbortError') {
           //
         } else {
           throw e;
