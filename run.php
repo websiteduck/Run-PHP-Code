@@ -14,7 +14,15 @@ if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) die();
 
 define('NL', PHP_EOL);
 
+if (!isset($_POST['runphp_data'])) {
+  die();
+}
+
 $runPhp = json_decode($_POST['runphp_data']);
+
+if (!is_object($runPhp) || !isset($runPhp->action)) {
+  die();
+}
 
 if ($runPhp->action == 'run') {
   header('Expires: Mon, 16 Apr 2012 05:00:00 GMT');

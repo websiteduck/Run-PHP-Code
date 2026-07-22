@@ -191,22 +191,48 @@ Vue.createApp({
 
       let codeId = codeUrl.split('/').pop();
       let content = '';
-      let response;
+      let urlLower = codeUrl.toLowerCase();
       this.$refs.code.editor.setValue('Loading Code...');
-      
-      if (codeUrl.toLowerCase().indexOf('github.com') !== -1) {
-        response = await axios.get('proxy.php', { params: { url: 'https://api.github.com/gists/' + codeId } });
-        Object.values(response.data.files).forEach((file) => {
-          content += file.content + '\n';
-        });
-      }
-      else if (codeUrl.toLowerCase().indexOf('pastebin.com') !== -1) {
-        response = await axios.get('proxy.php', { params: { url: 'http://pastebin.com/raw/' + codeId } });
-        content = response.data;
-      }
-      else if (codeUrl.toLowerCase().indexOf('pastie.org') !== -1) {
-        response = await axios.get('proxy.php', { params: { url: 'http://pastie.org/p/' + codeId + '/raw' } });
-        content = response.data;
+
+      try {
+        if (urlLower.indexOf('github.com') !== -1) {
+          let response = await axios.get('proxy.php', { params: { url: 'https://api.github.com/gists/' + codeId } });
+
+          if (typeof response.data !== 'object' || response.data === null || !response.data.files) {
+            throw new Error('Import failed.');
+          }
+
+          Object.values(response.data.files).forEach((file) => {
+            content += file.content + '\n';
+          });
+        }
+        else if (urlLower.indexOf('pastebin.com') !== -1) {
+          let response = await axios.get('proxy.php', { params: { url: 'http://pastebin.com/raw/' + codeId } });
+
+          if (typeof response.data !== 'string' || response.data === 'Import failed.') {
+            throw new Error('Import failed.');
+          }
+
+          content = response.data;
+        }
+        else if (urlLower.indexOf('pastie.org') !== -1) {
+          let response = await axios.get('proxy.php', { params: { url: 'http://pastie.org/p/' + codeId + '/raw' } });
+
+          if (typeof response.data !== 'string' || response.data === 'Import failed.') {
+            throw new Error('Import failed.');
+          }
+          
+          content = response.data;
+        }
+        else {
+          this.$refs.code.editor.setValue('');
+          alert('Unsupported URL. Use a GitHub Gist, PasteBin, or Pastie link.');
+          return;
+        }
+      } catch (e) {
+        this.$refs.code.editor.setValue('');
+        alert('Import failed.');
+        return;
       }
 
       this.$refs.code.editor.setValue(content);
