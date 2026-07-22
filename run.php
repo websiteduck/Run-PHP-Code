@@ -63,13 +63,17 @@ if ($runPhp->action == 'run') {
     $runPhp->html = '<pre>' . $runPhp->html . '</pre>';
   }
 
-  if ($runPhp->settings->colorize) { 
+  if ($runPhp->settings->colorize) {
+    $colorPattern = '/^(#[0-9A-Fa-f]{3,8}|rgba?\([\d\s.,%]+\))$/';
+    $color = (isset($runPhp->color) && preg_match($colorPattern, $runPhp->color)) ? $runPhp->color : '#000000';
+    $background = (isset($runPhp->background_color) && preg_match($colorPattern, $runPhp->background_color)) ? $runPhp->background_color : '#ffffff';
+
     $runPhp->html = $runPhp->html . '
       <style id="runphpcode-style" media="all">
-      html { width: 100%; background-color: ' . $runPhp->background_color . '; color: ' . $runPhp->color . '; }
-      .xdebug-error th { background-color: #' . $runPhp->background_color . '; font-weight: normal; font-family: sans-serif; }
-      .xdebug-error td { color: ' . $runPhp->color . '; }
-      .xdebug-error th span { background-color: ' . $runPhp->background_color . ' !important; }
+      html { width: 100%; background-color: ' . $background . '; color: ' . $color . '; }
+      .xdebug-error th { background-color: ' . $background . '; font-weight: normal; font-family: sans-serif; }
+      .xdebug-error td { color: ' . $color . '; }
+      .xdebug-error th span { background-color: ' . $background . ' !important; }
       </style>
     ';
   }
