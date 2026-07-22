@@ -12,10 +12,10 @@
 // This application is meant to be run locally and should not be made publicly accessible.
 if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1', '::ffff:127.0.0.1'))) die();
 
-$parts = parse_url($_SERVER['HTTP_ORIGIN'] ?? $_SERVER['HTTP_REFERER'] ?? '') ?: [];
-$host = strtolower($parts['host'] ?? '');
-if (!empty($parts['port'])) $host .= ':' . $parts['port'];
-if ($host === '' || $host !== strtolower($_SERVER['HTTP_HOST'] ?? '')) die();
+$originUrl = parse_url($_SERVER['HTTP_ORIGIN'] ?? $_SERVER['HTTP_REFERER'] ?? '') ?: [];
+$originHost = strtolower($originUrl['host'] ?? '');
+if (!empty($originUrl['port'])) $originHost .= ':' . $originUrl['port'];
+if ($originHost === '' || $originHost !== strtolower($_SERVER['HTTP_HOST'] ?? '')) die();
 
 define('NL', PHP_EOL);
 
