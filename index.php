@@ -17,9 +17,6 @@ header('Content-Type: text/html; charset=utf-8');
     <title>Run PHP Code</title>
     <script src="lib/ace/ace.js" charset="utf-8"></script>
     <script src="lib/vue.global.prod.js"></script>
-    <script src="lib/vue-demi.iife.js"></script>
-    <script src="lib/vue-use-shared.iife.js"></script>
-    <script src="lib/vue-use-core.iife.js"></script>
     <script src="lib/pinia.iife.js"></script>
     <script src="lib/axios.min.js"></script>
     <link rel="shortcut icon" href="favicon.ico" >

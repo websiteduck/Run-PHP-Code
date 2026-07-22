@@ -1,8 +1,8 @@
-import { adjustColor } from './utilities.js';
+import { adjustColor, useLocalStorage } from './utilities.js';
 
 export const useStore = Pinia.defineStore('store', {
   state: () => ({
-    settings: VueUse.useLocalStorage(
+    settings: useLocalStorage(
       'runphpcode_settings', 
       {
         colorize: true,
