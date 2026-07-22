@@ -34,7 +34,7 @@ if ($runPhp->action == 'run') {
   header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); 
   header('Cache-Control: no-store, no-cache, must-revalidate'); 
   header('Cache-Control: post-check=0, pre-check=0', false);
-  header('Content-Type: text/html; charset=utf-8');
+  header('Content-Type: application/json; charset=utf-8');
   header('Pragma: no-cache');
   ini_set('display_errors', 1);
 
@@ -54,20 +54,28 @@ if ($runPhp->action == 'run') {
   }
 
   $runPhp->code = '?>' . ltrim($runPhp->code);
-  ob_start();
-  eval($runPhp->code);
-  $runPhp->html = ob_get_clean();
-  
-  if ($runPhp->settings->preWrap) {
-    $runPhp->html = '<pre>' . $runPhp->html . '</pre>';
-  }
 
-  if ($runPhp->settings->colorize) {
-    $colorPattern = '/^(#[0-9A-Fa-f]{3,8}|rgba?\([\d\s.,%]+\))$/';
-    $color = (isset($runPhp->color) && preg_match($colorPattern, $runPhp->color)) ? $runPhp->color : '#000000';
-    $background = (isset($runPhp->background_color) && preg_match($colorPattern, $runPhp->background_color)) ? $runPhp->background_color : '#ffffff';
+  $ctx = [
+    'sent' => false,
+    'start' => hrtime(true),
+    'settings' => $runPhp->settings,
+    'color' => $runPhp->color ?? null,
+    'background_color' => $runPhp->background_color ?? null,
+  ];
 
-    $runPhp->html = $runPhp->html . '
+  $buildHtml = function ($html) use ($ctx) {
+    $settings = $ctx['settings'];
+
+    if (!empty($settings->preWrap)) {
+      $html = '<pre>' . $html . '</pre>';
+    }
+
+    if (!empty($settings->colorize)) {
+      $colorPattern = '/^(#[0-9A-Fa-f]{3,8}|rgba?\([\d\s.,%]+\))$/';
+      $color = (isset($ctx['color']) && preg_match($colorPattern, $ctx['color'])) ? $ctx['color'] : '#000000';
+      $background = (isset($ctx['background_color']) && preg_match($colorPattern, $ctx['background_color'])) ? $ctx['background_color'] : '#ffffff';
+
+      $html = $html . '
       <style id="runphpcode-style" media="all">
       html { width: 100%; background-color: ' . $background . '; color: ' . $color . '; }
       .xdebug-error th { background-color: ' . $background . '; font-weight: normal; font-family: sans-serif; }
@@ -75,12 +83,69 @@ if ($runPhp->action == 'run') {
       .xdebug-error th span { background-color: ' . $background . ' !important; }
       </style>
     ';
+    }
+
+    if (strncmp($html, '<!DOCTYPE', 9) !== 0) {
+      $html = '<!DOCTYPE html>' . $html;
+    }
+
+    return $html;
+  };
+
+  $sendResponse = function ($html, $fatalError = null) use (&$ctx, $buildHtml) {
+    if ($ctx['sent']) {
+      return;
+    }
+
+    $ctx['sent'] = true;
+    $durationMs = (hrtime(true) - $ctx['start']) / 1e6;
+
+    echo json_encode([
+      'html' => $buildHtml($html),
+      'duration_ms' => round($durationMs, 3),
+      'memory_bytes' => memory_get_peak_usage(true),
+      'php_version' => PHP_VERSION,
+      'fatal_error' => $fatalError,
+    ], JSON_INVALID_UTF8_SUBSTITUTE);
+  };
+
+  register_shutdown_function(function () use (&$ctx, $sendResponse) {
+    if ($ctx['sent']) {
+      return;
+    }
+
+    $error = error_get_last();
+    $fatalTypes = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR];
+    $fatalError = null;
+    $html = ob_get_level() > 0 ? ob_get_clean() : '';
+
+    if ($error && in_array($error['type'], $fatalTypes, true)) {
+      $fatalError = $error['message'];
+      if (!empty($error['file'])) {
+        $fatalError .= ' in ' . $error['file'];
+      }
+      if (!empty($error['line'])) {
+        $fatalError .= ' on line ' . $error['line'];
+      }
+    }
+
+    $sendResponse($html === false ? '' : $html, $fatalError);
+  });
+
+  ob_start();
+  $fatalError = null;
+
+  try {
+    eval($runPhp->code);
+  } catch (Throwable $e) {
+    $fatalError = $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
   }
 
-  if (strncmp($runPhp->html, '<!DOCTYPE', 9) !== 0) {
-    $runPhp->html = '<!DOCTYPE html>' . $runPhp->html;
+  $html = ob_get_clean();
+  if ($html === false) {
+    $html = '';
   }
 
-  echo $runPhp->html;
+  $sendResponse($html, $fatalError);
   die();
 }

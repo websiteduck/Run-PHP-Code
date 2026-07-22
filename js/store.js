@@ -23,6 +23,13 @@ export const useStore = Pinia.defineStore('store', {
     divideX: visualViewport.width / 2,
     screenWidth: visualViewport.width,
     menuOpen: false,
+    runStatus: 'idle',
+    runDurationMs: null,
+    runMemoryBytes: null,
+    runPhpVersion: null,
+    runAt: null,
+    runFatalError: null,
+    runToken: 0,
 
     uiColors: {
       color: null,

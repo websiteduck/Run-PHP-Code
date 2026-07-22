@@ -29,21 +29,75 @@ Vue.createApp({
   },
 
   methods: {
-    run() {
-      let form = this.$refs.form;
-      let input = form.querySelector('[name="runphp_data"]');
-      
-      input.value = JSON.stringify({
-        code: this.$refs.code.editor.getValue(),
+    async run(codeOverride = null, settingsOverride = null) {
+      let token = ++this.store.runToken;
+      let settings = settingsOverride || this.store.settings;
+
+      if (this.$refs.code) {
+        this.$refs.code.dismissAutosaveNotice();
+      }
+
+      this.store.runStatus = 'running';
+      this.store.runDurationMs = null;
+      this.store.runMemoryBytes = null;
+      this.store.runAt = null;
+      this.store.runFatalError = null;
+      this.store.showingPhpInfo = !!settingsOverride;
+
+      let payload = {
+        code: codeOverride != null ? codeOverride : this.$refs.code.editor.getValue(),
         action: 'run',
-        settings: this.store.settings,
+        settings,
         color: this.store.uiColors.color,
         background_color: this.store.uiColors.backgroundColor,
-      });
+      };
 
-      this.store.showingPhpInfo = false;
+      try {
+        let response = await axios.post(
+          'run.php',
+          new URLSearchParams({ runphp_data: JSON.stringify(payload) }),
+          {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          },
+        );
 
-      form.submit();
+        if (token !== this.store.runToken) {
+          return;
+        }
+
+        let data = response.data;
+
+        if (typeof data !== 'object' || data === null) {
+          throw new Error('Invalid response from run.php');
+        }
+
+        this.store.runDurationMs = data.duration_ms;
+        this.store.runMemoryBytes = data.memory_bytes;
+        this.store.runPhpVersion = data.php_version || null;
+        this.store.runAt = new Date();
+        this.store.runFatalError = data.fatal_error || null;
+        this.store.runStatus = data.fatal_error ? 'failed' : 'done';
+
+        if (this.store.settings.runExternal) {
+          let external = window.open('', 'result-external');
+
+          if (external) {
+            external.document.open();
+            external.document.write(data.html || '');
+            external.document.close();
+          }
+        } else if (this.$refs.result) {
+          this.$refs.result.setHtml(data.html || '');
+        }
+      } catch (e) {
+        if (token !== this.store.runToken) {
+          return;
+        }
+
+        this.store.runStatus = 'failed';
+        this.store.runAt = new Date();
+        this.store.runFatalError = e.message || 'Run failed.';
+      }
     },
 
     clear() {
@@ -52,7 +106,22 @@ Vue.createApp({
       if (answer) { 
         this.$refs.code.reset({ persist: true });
         this.$refs.code.dismissAutosaveNotice();
-        this.run();
+        this.resetRunStatus();
+      }
+    },
+
+    resetRunStatus() {
+      this.store.runToken++;
+      this.store.runStatus = 'idle';
+      this.store.runDurationMs = null;
+      this.store.runMemoryBytes = null;
+      this.store.runPhpVersion = null;
+      this.store.runAt = null;
+      this.store.runFatalError = null;
+      this.store.showingPhpInfo = false;
+
+      if (this.$refs.result) {
+        this.$refs.result.setHtml('');
       }
     },
 
@@ -205,20 +274,10 @@ Vue.createApp({
     },
 
     phpInfo() {
-      let form = this.$refs.form;
-      let input = form.querySelector('[name="runphp_data"]');
       let cloneSettings = { ...this.store.settings };
       cloneSettings.colorize = false;
-
-      input.value = JSON.stringify({
-        code: '<' + '?php phpinfo();',
-        action: 'run',
-        settings: cloneSettings,
-      });
-
       this.store.showingPhpInfo = true;
-
-      form.submit();
+      this.run('<' + '?php phpinfo();', cloneSettings);
     },
 
     async remoteImport() {  
@@ -298,7 +357,6 @@ Vue.createApp({
     window.addEventListener('resize', this.windowResize);
     this.$refs.code.reset();
     this.$refs.code.offerAutosaveRestore();
-    this.run();
   },
 
   unmounted() {
@@ -318,16 +376,8 @@ Vue.createApp({
       @run="run"
     />
     <ResizeBar />
-    <Result />
+    <Result ref="result" />
     <Menu @menu="menu" />
-    <form 
-      ref="form" 
-      method="POST" 
-      action="run.php"
-      :target="(store.settings.runExternal ? 'result-external' : 'result-frame')"
-    >
-      <input type="hidden" name="runphp_data" value="" />
-    </form>
   `
 })
   .use(Pinia.createPinia())

@@ -76,7 +76,9 @@ export default {
       name: 'runCode',
       bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
       exec: (editor) => {
-        this.$emit('run');
+        if (this.store.runStatus !== 'running') {
+          this.$emit('run');
+        }
       }
     });
     this.editor.on('change', () => {
@@ -217,7 +219,6 @@ export default {
       this.autosaveSavedAtLabel = null;
       this.$nextTick(() => {
         this.suppressAutosave = false;
-        this.$emit('run');
       });
     },
 

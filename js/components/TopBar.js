@@ -66,6 +66,7 @@ export default {
         <Button 
           class="top-bar__button top-bar__button_icon-right"
           title="Run (Ctrl+Enter)"
+          :disabled="store.runStatus === 'running'"
           @click="$emit('run')"
         >
           Run

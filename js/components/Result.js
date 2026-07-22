@@ -1,6 +1,45 @@
 import { useStore } from '../store.js';
 import { adjustColor } from '../utilities.js';
 
+function formatDuration(ms) {
+  if (ms == null || Number.isNaN(ms)) {
+    return null;
+  }
+
+  if (ms >= 1000) {
+    return (ms / 1000).toFixed(2) + ' s';
+  }
+
+  return ms.toFixed(2) + ' ms';
+}
+
+function formatBytes(bytes) {
+  if (bytes == null || Number.isNaN(bytes)) {
+    return null;
+  }
+
+  if (bytes >= 1048576) {
+    return (bytes / 1048576).toFixed(2) + ' MB';
+  }
+
+  if (bytes >= 1024) {
+    return (bytes / 1024).toFixed(1) + ' KB';
+  }
+
+  return bytes + ' B';
+}
+
+function formatRunAt(date) {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  return date.toLocaleString(undefined, {
+    dateStyle: 'medium',
+    timeStyle: 'medium',
+  });
+}
+
 export default {
   props: {
     color: String,
@@ -9,6 +48,39 @@ export default {
 
   setup() {
     return { store: useStore() }
+  },
+
+  computed: {
+    statusLabel() {
+      switch (this.store.runStatus) {
+        case 'running':
+          return 'Running…';
+        case 'failed':
+          return 'Failed';
+        case 'done':
+          return 'Done';
+        default:
+          return 'Idle';
+      }
+    },
+
+    durationLabel() {
+      return formatDuration(this.store.runDurationMs);
+    },
+
+    memoryLabel() {
+      let value = formatBytes(this.store.runMemoryBytes);
+      return value ? 'Mem ' + value : null;
+    },
+
+    phpVersionLabel() {
+      return this.store.runPhpVersion ? 'PHP ' + this.store.runPhpVersion : null;
+    },
+
+    runAtLabel() {
+      let value = formatRunAt(this.store.runAt);
+      return value ? 'Ran ' + value : null;
+    },
   },
 
   mounted() {
@@ -24,6 +96,16 @@ export default {
   },
 
   methods: {
+    setHtml(html) {
+      let iframe = this.$refs.iframe;
+
+      if (!iframe) {
+        return;
+      }
+
+      iframe.srcdoc = html;
+    },
+
     applyColors(firstRun) {
       if (this.$refs.iframe) {
         let iframe = this.$refs.iframe;
@@ -70,11 +152,18 @@ export default {
       class="result"
       :style="{ 
         left: (store.divideX + 4).toString() + 'px',
-        display: (store.settings.runExternal ? 'none' : 'block'),
+        display: (store.settings.runExternal ? 'none' : 'flex'),
         width: (store.screenWidth - store.divideX - 4).toString() + 'px',
         pointerEvents: store.resizing ? 'none' : 'auto',
       }"
     >
+      <div
+        v-if="store.runFatalError"
+        class="result__error"
+        role="alert"
+      >
+        {{ store.runFatalError }}
+      </div>
       <iframe
         ref="iframe"
         class="result__frame"
@@ -82,6 +171,20 @@ export default {
         @load="applyColors(true)"
       >
       </iframe>
+      <div
+        class="result__status"
+        :style="{
+          color: store.uiColors.color,
+          backgroundColor: store.uiColors.menu.backgroundColor,
+          borderTopColor: store.uiColors.topBar.borderColor,
+        }"
+      >
+        <span class="result__status-state">{{ statusLabel }}</span>
+        <span v-if="durationLabel" class="result__status-meta">{{ durationLabel }}</span>
+        <span v-if="memoryLabel" class="result__status-meta">{{ memoryLabel }}</span>
+        <span v-if="phpVersionLabel" class="result__status-meta">{{ phpVersionLabel }}</span>
+        <span v-if="runAtLabel" class="result__status-meta result__status-meta_end">{{ runAtLabel }}</span>
+      </div>
     </div>
   `,
 };
