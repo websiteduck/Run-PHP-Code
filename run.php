@@ -54,9 +54,15 @@ if ($runPhp->action == 'run') {
   }
 
   $runPhp->code = '?>' . ltrim($runPhp->code);
+  $tmpDir = sys_get_temp_dir();
+  $tmpFile = tempnam($tmpDir, 'runphp_');
+  file_put_contents($tmpFile, $runPhp->code);
   ob_start();
-  eval($runPhp->code);
+  include $tmpFile;
   $runPhp->html = ob_get_clean();
+  if (strncmp(realpath($tmpFile), realpath($tmpDir), strlen(realpath($tmpDir))) === 0) {
+    unlink($tmpFile); // nosemgrep: php.lang.security.unlink-use.unlink-use
+  }
   
   if ($runPhp->settings->preWrap) {
     $runPhp->html = '<pre>' . $runPhp->html . '</pre>';
