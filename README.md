@@ -13,7 +13,8 @@ This script gives you the ability to quickly test snippets of PHP code locally. 
 - Extract the Run PHP Code files into it. 
 - Bookmark the URL for easy access.
 - Or clone the repository instead and do a git pull every once in a while.
-- <b>If you get a blank screen</b> you are probably not accessing Run PHP Code from 127.0.0.1.  This is a security feature.  Add your IP address to line 13 of run.php.
+- Access it from <b>127.0.0.1</b> or <b>localhost</b> only. <code>run.php</code> and <code>proxy.php</code> refuse other client IPs (loopback allowlist near the top of each file).
+- <b>If you get a blank screen</b>, you are probably not connecting from loopback. Add your client IP to the allowlist in <code>run.php</code> and <code>proxy.php</code> only if you must; prefer binding the server to localhost instead.
 
 <b>This application is meant to be run locally and should not be made publicly accessible.</b>
 
