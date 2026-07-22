@@ -56,6 +56,11 @@ Vue.createApp({
     },
 
     async open() {
+      if (typeof window.showOpenFilePicker !== 'function') {
+        await this.openWithFileInput();
+        return;
+      }
+
       if (!this.checkSecureContext()) {
         return;
       }
@@ -89,7 +94,37 @@ Vue.createApp({
       }
     },
 
+    openWithFileInput() {
+      return new Promise((resolve) => {
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.php,.html,.js,.txt';
+
+        input.addEventListener('change', async () => {
+          let file = input.files?.[0];
+
+          if (file) {
+            let fileContents = await file.text();
+            this.$refs.code.editor.setValue(fileContents);
+          }
+
+          resolve();
+        });
+
+        input.addEventListener('cancel', () => {
+          resolve();
+        });
+
+        input.click();
+      });
+    },
+
     async save() {
+      if (typeof window.showSaveFilePicker !== 'function') {
+        this.saveWithDownload();
+        return;
+      }
+
       if (!this.checkSecureContext()) {
         return;
       }
@@ -106,6 +141,16 @@ Vue.createApp({
           throw e;
         }
       }
+    },
+
+    saveWithDownload() {
+      let blob = new Blob([this.$refs.code.editor.getValue()], { type: 'text/plain' });
+      let url = URL.createObjectURL(blob);
+      let link = document.createElement('a');
+      link.href = url;
+      link.download = 'code.php';
+      link.click();
+      URL.revokeObjectURL(url);
     },
 
     checkSecureContext() {
