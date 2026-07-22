@@ -139,8 +139,8 @@ Vue.createApp({
           x = 100;
         }
 
-        if (x > (this.screenWidth - 100)) {
-          x = this.screenWidth - 100;
+        if (x > (this.store.screenWidth - 100)) {
+          x = this.store.screenWidth - 100;
         }
 
         this.store.divideX = x;
