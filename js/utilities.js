@@ -2,7 +2,13 @@
 // https://stackoverflow.com/questions/1740700/how-to-get-hex-color-value-rather-than-rgb-value
 export function adjustColor(color, percent) {
 	if (/^#[0-9A-F]{6}$/i.test(color) === false) {
-		color = `#${color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+\.{0,1}\d*))?\)$/).slice(1).map((n, i) => (i === 3 ? Math.round(parseFloat(n) * 255) : parseFloat(n)).toString(16).padStart(2, '0').replace('NaN', '')).join('')}`
+		let match = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+\.{0,1}\d*))?\)$/);
+		
+		if (!match) {
+			return color;
+		}
+		
+		color = `#${match.slice(1).map((n, i) => (i === 3 ? Math.round(parseFloat(n) * 255) : parseFloat(n)).toString(16).padStart(2, '0').replace('NaN', '')).join('')}`
 	}
 
 	color = color.replace(/#/, '');
