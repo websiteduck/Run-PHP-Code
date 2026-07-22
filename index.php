@@ -4,9 +4,9 @@
  * 
  * This script gives you the ability to quickly test snippets of PHP code locally.
  *
- * @copyright  Copyright 2011-2022, Website Duck LLC (http://www.websiteduck.com)
- * @link       http://github.com/websiteduck/Run-PHP-Code Run PHP Code
- * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright  Copyright 2011-2022, Website Duck LLC (https://www.websiteduck.com)
+ * @link       https://github.com/websiteduck/Run-PHP-Code Run PHP Code
+ * @license    MIT License (https://www.opensource.org/licenses/mit-license.php)
  */
  
 header('Content-Type: text/html; charset=utf-8');

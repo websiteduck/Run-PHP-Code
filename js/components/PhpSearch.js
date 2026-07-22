@@ -61,7 +61,7 @@ export default {
     },
 
     openResult(key) {
-      window.open('http://www.php.net/manual/en/' + key + '.php');
+      window.open('https://www.php.net/manual/en/' + key + '.php');
     },
 
     clickOutside(event) {

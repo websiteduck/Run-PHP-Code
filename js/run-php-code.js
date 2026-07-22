@@ -3,9 +3,9 @@
  * 
  * This script gives you the ability to quickly test snippets of PHP code locally.
  *
- * @copyright  Copyright 2011-2022, Website Duck LLC (http://www.websiteduck.com)
- * @link       http://github.com/websiteduck/Run-PHP-Code Run PHP Code
- * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright  Copyright 2011-2022, Website Duck LLC (https://www.websiteduck.com)
+ * @link       https://github.com/websiteduck/Run-PHP-Code Run PHP Code
+ * @license    MIT License (https://www.opensource.org/licenses/mit-license.php)
  */
 
 import Code from './components/Code.js';
@@ -207,7 +207,7 @@ Vue.createApp({
           });
         }
         else if (urlLower.indexOf('pastebin.com') !== -1) {
-          let response = await axios.get('proxy.php', { params: { url: 'http://pastebin.com/raw/' + codeId } });
+          let response = await axios.get('proxy.php', { params: { url: 'https://pastebin.com/raw/' + codeId } });
 
           if (typeof response.data !== 'string' || response.data === 'Import failed.') {
             throw new Error('Import failed.');
@@ -216,12 +216,12 @@ Vue.createApp({
           content = response.data;
         }
         else if (urlLower.indexOf('pastie.org') !== -1) {
-          let response = await axios.get('proxy.php', { params: { url: 'http://pastie.org/p/' + codeId + '/raw' } });
+          let response = await axios.get('proxy.php', { params: { url: 'https://pastie.org/p/' + codeId + '/raw' } });
 
           if (typeof response.data !== 'string' || response.data === 'Import failed.') {
             throw new Error('Import failed.');
           }
-          
+
           content = response.data;
         }
         else {

@@ -38,18 +38,18 @@ Tips
 
 ---
 
-<a href="http://ace.c9.io">Ace</a>  
+<a href="https://ace.c9.io">Ace</a>  
 Copyright (c) 2010, Ajax.org B.V.  
-Licensed under the <a href="http://www.opensource.org/licenses/bsd-license.php">BSD License</a>
+Licensed under the <a href="https://www.opensource.org/licenses/bsd-license.php">BSD License</a>
 
 <a href="https://vuejs.org">Vue.js</a>  
 Copyright (c) 2018-present, Yuxi (Evan) You
-Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
+Licensed under the <a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>
 
 <a href="https://pinia.vuejs.org">Pinia</a>  
 Copyright (c) 2019-present Eduardo San Martin Morote
-Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
+Licensed under the <a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>
 
 <a href="https://axios-http.com">Axios</a>  
 Copyright (c) 2014-present Matt Zabriskie & Collaborators
-Licensed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
+Licensed under the <a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>

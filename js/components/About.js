@@ -25,16 +25,18 @@ export default {
             class="about__contributor"
             v-for="contributor in store.contributors"
             :href="contributor.url"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <img :src="contributor.avatar_url + '&s=24'" />{{ contributor.login }}
           </a>
         </div>
         <div class="about__header">Attributions</div>
         <div class="about__section">
-          <a class="about__attribution" href="http://ace.c9.io">Ace</a>
-          <a class="about__attribution" href="https://vuejs.org">Vue.js</a>
-          <a class="about__attribution" href="https://pinia.vuejs.org">Pinia</a>
-          <a class="about__attribution" href="https://axios-http.com">Axios</a>
+          <a class="about__attribution" href="https://ace.c9.io" target="_blank" rel="noopener noreferrer">Ace</a>
+          <a class="about__attribution" href="https://vuejs.org" target="_blank" rel="noopener noreferrer">Vue.js</a>
+          <a class="about__attribution" href="https://pinia.vuejs.org" target="_blank" rel="noopener noreferrer">Pinia</a>
+          <a class="about__attribution" href="https://axios-http.com" target="_blank" rel="noopener noreferrer">Axios</a>
         </div>
       </div>
     </div>
