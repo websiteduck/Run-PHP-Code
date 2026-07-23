@@ -71,6 +71,8 @@ export default {
   mounted() {
     this.editor = ace.edit(this.$refs.codeDiv);
     this.editor.getSession().setMode('ace/mode/php');
+    // Ace's PHP worker parser lags language releases and flags valid 8.x syntax as errors.
+    this.editor.getSession().setUseWorker(false);
     this.editor.setShowPrintMargin(false);
     this.editor.commands.addCommand({
       name: 'runCode',

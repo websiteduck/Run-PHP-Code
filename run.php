@@ -9,13 +9,43 @@
  * @license    MIT License (https://www.opensource.org/licenses/mit-license.php)
  */
 
-// This application is meant to be run locally and should not be made publicly accessible.
-if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1', '::ffff:127.0.0.1'))) die();
+// Serve PHP sources as plain text for the WebAssembly build (PHP servers execute .php on GET).
+if (isset($_GET['wasm_source'])) {
+  header('Content-Type: text/plain; charset=utf-8');
+  header('Cache-Control: no-store');
+  $key = (string) $_GET['wasm_source'];
 
-$originUrl = parse_url($_SERVER['HTTP_ORIGIN'] ?? $_SERVER['HTTP_REFERER'] ?? '') ?: [];
-$originHost = strtolower($originUrl['host'] ?? '');
-if (!empty($originUrl['port'])) $originHost .= ':' . $originUrl['port'];
-if ($originHost === '' || $originHost !== strtolower($_SERVER['HTTP_HOST'] ?? '')) die();
+  if ($key === 'sample') {
+    $name = basename((string) ($_GET['file'] ?? ''), '.php');
+    $path = __DIR__ . '/samples/' . $name . '.php';
+  } else {
+    $sources = [
+      '1' => __FILE__,
+      'run' => __FILE__,
+      'parsedown' => __DIR__ . '/lib/Parsedown.php',
+    ];
+    $path = $sources[$key] ?? null;
+  }
+
+  if ($path === null || !is_file($path)) {
+    http_response_code(404);
+    die('Not found');
+  }
+
+  readfile($path);
+  die();
+}
+
+// Skip local-only checks when driven by the WebAssembly build (GitHub Pages).
+if (empty($_SERVER['RUNPHP_WASM'])) {
+  // This application is meant to be run locally and should not be made publicly accessible.
+  if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1', '::ffff:127.0.0.1'))) die();
+
+  $originUrl = parse_url($_SERVER['HTTP_ORIGIN'] ?? $_SERVER['HTTP_REFERER'] ?? '') ?: [];
+  $originHost = strtolower($originUrl['host'] ?? '');
+  if (!empty($originUrl['port'])) $originHost .= ':' . $originUrl['port'];
+  if ($originHost === '' || $originHost !== strtolower($_SERVER['HTTP_HOST'] ?? '')) die();
+}
 
 define('NL', PHP_EOL);
 
@@ -84,7 +114,10 @@ if ($runPhp->action == 'run') {
         . '</style>'
         . $html;
     } elseif ($outputMode === 'markdown') {
+      $previousErrorReporting = error_reporting();
+      error_reporting($previousErrorReporting & ~E_DEPRECATED & ~E_USER_DEPRECATED);
       require_once __DIR__ . '/lib/Parsedown.php';
+      error_reporting($previousErrorReporting);
       $parsedown = new Parsedown();
       $parsedown->setSafeMode(true);
       $html = $parsedown->text($html);
@@ -139,7 +172,7 @@ if ($runPhp->action == 'run') {
       'html' => $buildHtml($html),
       'duration_ms' => round($durationMs, 3),
       'memory_bytes' => memory_get_peak_usage(true),
-      'php_version' => PHP_VERSION,
+      'php_version' => PHP_VERSION . (!empty($_SERVER['RUNPHP_WASM']) ? ' (WASM)' : ''),
       'output_mode' => $ctx['output_mode'] ?? 'html',
       'fatal_error' => $fatalError,
     ], JSON_INVALID_UTF8_SUBSTITUTE);

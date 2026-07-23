@@ -15,17 +15,15 @@ import ResizeBar from './components/ResizeBar.js';
 import Result from './components/Result.js';
 import TopBar from './components/TopBar.js';
 import { useStore } from './store.js';
+import { PhpWeb } from '../lib/php-wasm/PhpWeb.mjs';
 
-const utf8Decoder = new TextDecoder('utf-8');
+function eventText(detail) {
+  if (Array.isArray(detail)) {
+    return detail.join('');
+  }
 
-const errorReportingValues = {
-  fatal: 'E_ERROR | E_PARSE | E_COMPILE_ERROR',
-  warning: 'E_ERROR | E_PARSE | E_COMPILE_ERROR | E_WARNING',
-  deprecated: 'E_ERROR | E_PARSE | E_COMPILE_ERROR | E_WARNING | E_DEPRECATED | E_USER_DEPRECATED',
-  notice: 'E_ERROR | E_PARSE | E_COMPILE_ERROR | E_WARNING | E_DEPRECATED | E_USER_DEPRECATED | E_NOTICE',
-  all: '-1',
-  none: '0',
-};
+  return detail == null ? '' : String(detail);
+}
 
 Vue.createApp({
   components: {
@@ -41,50 +39,160 @@ Vue.createApp({
     return { store: useStore() }
   },
 
+  data() {
+    return {
+      php: null,
+      phpPromise: null,
+    };
+  },
+
   methods: {
-    runPhpWasm(code) {
-      if (!PHPLoader.loaded) {
-        throw new Error('PHP WebAssembly is still loading.');
+    async fetchPhpSource(path, marker, dumpKey) {
+      let response = await fetch(path);
+      let text = await response.text();
+
+      if (text.includes(marker)) {
+        return text;
       }
 
-      PHPLoader.ccall('wasm_set_php_code', null, ['string'], [code]);
-      PHPLoader.ccall('wasm_sapi_handle_request', 'number', [], []);
-      return utf8Decoder.decode(PHPLoader.FS.readFile('/tmp/stdout'));
+      // PHP servers execute .php on GET (often empty). Ask run.php to dump the source instead.
+      let dumpResponse = await fetch('./run.php?wasm_source=' + encodeURIComponent(dumpKey));
+      let dumpText = await dumpResponse.text();
+
+      if (!dumpResponse.ok || !dumpText.includes(marker)) {
+        throw new Error('Failed to load ' + path + ' for WebAssembly.');
+      }
+
+      return dumpText;
     },
 
-    buildResultHtml(html, settings) {
-      let outputMode = settings.outputMode || 'html';
-
-      if (outputMode === 'console') {
-        let escaped = html
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-
-        html = '<style id="runphpcode-console-style">'
-          + 'html { margin: 0; }'
-          + 'body { margin: 0; padding: 8px; overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.4; white-space: pre-wrap; }'
-          + '</style>'
-          + escaped;
+    async ensurePhp() {
+      if (this.php) {
+        return this.php;
       }
 
-      if (settings.colorize) {
-        let color = this.store.uiColors.color || '#000000';
-        let background = this.store.uiColors.backgroundColor || '#ffffff';
-
-        html += `
-      <style id="runphpcode-style" media="all">
-      html, body { background-color: ${background}; color: ${color}; }
-      </style>
-    `;
+      if (this.phpPromise) {
+        return this.phpPromise;
       }
 
-      if (!html.startsWith('<!DOCTYPE')) {
-        html = '<!DOCTYPE html>' + html;
+      this.phpPromise = (async () => {
+        let php = new PhpWeb({
+          version: '8.5',
+          autoTransaction: false,
+        });
+
+        await new Promise((resolve, reject) => {
+          let timeout = setTimeout(() => {
+            reject(new Error('PHP WebAssembly failed to load.'));
+          }, 60000);
+
+          php.addEventListener('ready', () => {
+            clearTimeout(timeout);
+            resolve();
+          }, { once: true });
+        });
+
+        let [runPhp, parsedown] = await Promise.all([
+          this.fetchPhpSource('./run.php', 'runphp_data', 'run'),
+          this.fetchPhpSource('./lib/Parsedown.php', 'class Parsedown', 'parsedown'),
+        ]);
+
+        for (let path of ['/lib', '/tmp']) {
+          let info = await php.analyzePath(path);
+          if (!info.exists) {
+            await php.mkdir(path);
+          }
+        }
+
+        await php.writeFile('/run.php', runPhp);
+        await php.writeFile('/lib/Parsedown.php', parsedown);
+        this.php = php;
+        return php;
+      })();
+
+      try {
+        return await this.phpPromise;
+      } catch (e) {
+        this.phpPromise = null;
+        throw e;
+      }
+    },
+
+    parseRunPhpOutput(raw) {
+      let text = String(raw || '').replace(/^\uFEFF/, '').trim();
+
+      if (!text) {
+        throw new Error('Empty response from run.php');
       }
 
-      return { html, outputMode };
+      let headerSep = text.indexOf('\r\n\r\n');
+      if (headerSep === -1) {
+        headerSep = text.indexOf('\n\n');
+      }
+
+      let body = headerSep !== -1 ? text.slice(headerSep).trim() : text;
+      let start = body.indexOf('{');
+      let end = body.lastIndexOf('}');
+
+      if (start === -1 || end === -1 || end < start) {
+        throw new Error('Invalid response from run.php');
+      }
+
+      let data = JSON.parse(body.slice(start, end + 1));
+
+      if (typeof data !== 'object' || data === null) {
+        throw new Error('Invalid response from run.php');
+      }
+
+      return data;
+    },
+
+    async runViaWasm(payload) {
+      let php = await this.ensurePhp();
+
+      await php.writeFile('/tmp/runphp_data.txt', JSON.stringify(payload));
+
+      let stdout = '';
+      let stderr = '';
+      let onOutput = (event) => {
+        stdout += eventText(event.detail);
+      };
+      let onError = (event) => {
+        stderr += eventText(event.detail);
+      };
+
+      php.addEventListener('output', onOutput);
+      php.addEventListener('error', onError);
+
+      try {
+        await php.run(`<?php
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+$_SERVER['RUNPHP_WASM'] = '1';
+$_POST['runphp_data'] = file_get_contents('/tmp/runphp_data.txt');
+include '/run.php';
+`);
+        php.flush();
+      } finally {
+        php.removeEventListener('output', onOutput);
+        php.removeEventListener('error', onError);
+
+        // run.php calls die(); refresh so the next run gets a live runtime.
+        try {
+          await php.refresh();
+        } catch (e) {
+          //
+        }
+      }
+
+      try {
+        return this.parseRunPhpOutput(stdout);
+      } catch (e) {
+        if (stderr.trim()) {
+          throw new Error(stderr.trim());
+        }
+
+        throw e;
+      }
     },
 
     async run(codeOverride = null, settingsOverride = null) {
@@ -103,38 +211,39 @@ Vue.createApp({
       this.store.runFatalError = null;
       this.store.showingPhpInfo = !!settingsOverride;
 
+      let payload = {
+        code: codeOverride != null ? codeOverride : this.$refs.code.editor.getValue(),
+        action: 'run',
+        settings,
+        color: this.store.uiColors.color,
+        background_color: this.store.uiColors.backgroundColor,
+      };
+
       try {
-        let userCode = codeOverride != null ? codeOverride : this.$refs.code.editor.getValue();
-        let reporting = errorReportingValues[settings.errorReporting] ?? errorReportingValues.none;
-        let code = 'error_reporting(' + reporting + '); ?>' + userCode;
-        let start = performance.now();
-        let rawHtml = this.runPhpWasm(code);
-        let durationMs = performance.now() - start;
+        let data = await this.runViaWasm(payload);
 
         if (token !== this.store.runToken) {
           return;
         }
 
-        let { html, outputMode } = this.buildResultHtml(rawHtml, settings);
-
-        this.store.runDurationMs = Math.round(durationMs * 1000) / 1000;
-        this.store.runMemoryBytes = null;
-        this.store.runPhpVersion = '8.2 (WASM)';
-        this.store.runOutputMode = outputMode;
+        this.store.runDurationMs = data.duration_ms;
+        this.store.runMemoryBytes = data.memory_bytes;
+        this.store.runPhpVersion = data.php_version || null;
+        this.store.runOutputMode = data.output_mode || null;
         this.store.runAt = new Date();
-        this.store.runFatalError = null;
-        this.store.runStatus = 'done';
+        this.store.runFatalError = data.fatal_error || null;
+        this.store.runStatus = data.fatal_error ? 'failed' : 'done';
 
         if (this.store.settings.runExternal) {
           let external = window.open('', 'result-external');
 
           if (external) {
             external.document.open();
-            external.document.write(html || '');
+            external.document.write(data.html || '');
             external.document.close();
           }
         } else if (this.$refs.result) {
-          this.$refs.result.setHtml(html || '');
+          this.$refs.result.setHtml(data.html || '');
         }
       } catch (e) {
         if (token !== this.store.runToken) {
@@ -332,16 +441,28 @@ Vue.createApp({
       }
 
       try {
-        let response = await axios.get(`./samples/${filename}.php`, {
+        let path = `./samples/${filename}.php`;
+        let response = await axios.get(path, {
           responseType: 'text',
           transformResponse: [(data) => data],
         });
+        let text = response.data;
 
-        if (typeof response.data !== 'string') {
+        // PHP servers execute samples on GET, stripping the <?php preamble (and markdown hint).
+        if (typeof text !== 'string' || !text.includes('@run-php-code')) {
+          let dump = await axios.get('./run.php', {
+            params: { wasm_source: 'sample', file: filename },
+            responseType: 'text',
+            transformResponse: [(data) => data],
+          });
+          text = dump.data;
+        }
+
+        if (typeof text !== 'string' || !text.includes('@run-php-code')) {
           throw new Error('Import failed.');
         }
 
-        this.$refs.code.editor.setValue(response.data, -1);
+        this.$refs.code.editor.setValue(text, -1);
         this.$refs.code.dismissAutosaveNotice();
       } catch (e) {
         alert('Failed to load sample.');
@@ -355,6 +476,9 @@ Vue.createApp({
     window.addEventListener('resize', this.windowResize);
     this.$refs.code.reset();
     this.$refs.code.offerAutosaveRestore();
+    this.ensurePhp().catch(() => {
+      // First run() will surface the error if preload fails.
+    });
   },
 
   unmounted() {
