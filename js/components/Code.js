@@ -71,6 +71,7 @@ export default {
   mounted() {
     this.editor = ace.edit(this.$refs.codeDiv);
     this.editor.getSession().setMode('ace/mode/php');
+    this.editor.getSession().setUseWorker(false);
     this.editor.setShowPrintMargin(false);
     this.editor.commands.addCommand({
       name: 'runCode',
