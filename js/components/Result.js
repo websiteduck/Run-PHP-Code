@@ -189,11 +189,6 @@ export default {
   template: `
     <div 
       class="result"
-      :style="{ 
-        left: (store.divideX + 4).toString() + 'px',
-        display: (store.settings.runExternal ? 'none' : 'flex'),
-        width: (store.screenWidth - store.divideX - 4).toString() + 'px',
-      }"
       @pointerdown="closeFlyoutMenus"
     >
       <div
@@ -210,14 +205,7 @@ export default {
         @load="applyColors(true)"
       >
       </iframe>
-      <div
-        class="result__status"
-        :style="{
-          color: store.uiColors.color,
-          backgroundColor: store.uiColors.menu.backgroundColor,
-          borderTopColor: store.uiColors.topBar.borderColor,
-        }"
-      >
+      <div class="result__status">
         <span class="result__status-state">{{ statusLabel }}</span>
         <span v-if="outputModeLabel" class="result__status-meta">{{ outputModeLabel }}</span>
         <span v-if="durationLabel" class="result__status-meta">{{ durationLabel }}</span>

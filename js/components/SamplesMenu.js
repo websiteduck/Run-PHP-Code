@@ -26,10 +26,6 @@ export default {
       <div 
         class="menu"
         v-show="store.samplesOpen"
-        :style="{
-          color: store.uiColors.menu.color,
-          backgroundColor: store.uiColors.menu.backgroundColor,
-        }"
       >
         <div class="menu__header">
           Samples

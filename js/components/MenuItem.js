@@ -1,5 +1,3 @@
-import { useStore } from '../store.js';
-
 export default {
   props: {
     label: String,
@@ -8,17 +6,6 @@ export default {
       default: 'button',
     },
     selected: Boolean,
-    highlightColor: String,
-  },
-
-  data() {
-    return {
-      active: false,
-    }
-  },
-
-  setup() {
-    return { store: useStore() }
   },
 
   template: `
@@ -28,9 +15,6 @@ export default {
         'menu__item_checkbox': type === 'checkbox',
         'menu__item_radio': type === 'radio',
       }"
-      :style="{ backgroundColor: (active ? store.uiColors.menu.hoverBackgroundColor : 'transparent') }"
-      @mouseover="active = true"
-      @mouseleave="active = false"
     >
       <template v-if="type === 'checkbox'">
         <template v-if="selected">

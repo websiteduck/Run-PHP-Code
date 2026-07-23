@@ -1,14 +1,9 @@
-import { useStore } from '../store.js';
-
 export default {
-  setup() {
-    return { store: useStore() }
-  },
-
   data() {
     return {
       search: '',
       open: false,
+      resultsLeft: 0,
       searchIndex: {},
       results: {
         functions: [],
@@ -38,16 +33,29 @@ export default {
 
       this.timeout = setTimeout(this.phpSearch, 100);
     },
+
+    open(isOpen) {
+      if (isOpen) {
+        this.positionResults();
+      }
+    },
   },
 
   methods: {
+    positionResults() {
+      if (!this.$refs.el) {
+        return;
+      }
+
+      this.resultsLeft = this.$refs.el.getBoundingClientRect().left;
+    },
+
     phpSearch() {
       for (let section in this.results) {
         this.results[section] = [];
 
         for (let key in this.searchIndex[section]) {
           let item = this.searchIndex[section][key];
-          let lowerSearch = this.search.toLowerCase();
           
           if (item.name.toLowerCase().includes(this.search.toLowerCase())) {
             this.results[section].push(item);
@@ -133,10 +141,12 @@ export default {
     }
 
     window.addEventListener('click', this.clickOutside);
+    window.addEventListener('resize', this.positionResults);
   },
 
   unmounted() {
     window.removeEventListener('click', this.clickOutside);
+    window.removeEventListener('resize', this.positionResults);
   },
 
   template: `
@@ -151,14 +161,13 @@ export default {
         type="text" 
         v-model="search"
         @focus="this.open = (this.search.length > 0)"
-        :style="{ 
-          color: store.uiColors.topBar.phpSearch.color,
-          backgroundColor: store.uiColors.topBar.phpSearch.backgroundColor,
-          outlineColor: store.uiColors.topBar.phpSearch.outlineColor,
-        }"
       />
       <Transition name="search">
-        <div class="php-search__results" v-show="open">
+        <div
+          class="php-search__results"
+          v-show="open"
+          :style="{ left: resultsLeft + 'px' }"
+        >
           <template v-for="section in Object.keys(results)">
             <div class="php-search__section" v-if="results[section].length > 0">
               <div class="php-search__header">{{ labels[section] }}</div>

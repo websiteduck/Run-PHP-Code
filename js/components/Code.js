@@ -121,6 +121,21 @@ export default {
       () => this.$nextTick(() => this.resize()),
     );
 
+    Vue.watch(
+      () => this.store.divideX,
+      () => this.$nextTick(() => this.resize()),
+    );
+
+    Vue.watch(
+      () => this.store.screenWidth,
+      () => this.$nextTick(() => this.resize()),
+    );
+
+    Vue.watch(
+      () => this.store.settings.runExternal,
+      () => this.$nextTick(() => this.resize()),
+    );
+
     window.addEventListener('pagehide', this.flushAutosave);
   },
 
@@ -240,6 +255,7 @@ export default {
 
         this.store.generateUiColors(color, backgroundColor);
         this.store.loadedTheme = theme;
+        this.resize();
       });
     },
   },
@@ -253,19 +269,11 @@ export default {
   template: `
     <div 
       class="code" 
-      :style="{
-        width: (store.settings.runExternal ? store.screenWidth.toString() : store.divideX.toString()) + 'px',
-      }"
       @click="store.menuOpen = false; store.samplesOpen = false"
     >
       <div
         v-if="showAutosaveNotice"
         class="code__autosave-notice"
-        :style="{
-          color: store.uiColors.color,
-          backgroundColor: store.uiColors.menu.backgroundColor,
-          borderBottomColor: store.uiColors.topBar.borderColor,
-        }"
         @click.stop
       >
         <span>
@@ -274,13 +282,11 @@ export default {
         <button
           type="button"
           class="code__autosave-notice-action"
-          :style="{ color: store.uiColors.color }"
           @click="loadAutosave"
         >Restore</button>
         <button
           type="button"
           class="code__autosave-notice-dismiss"
-          :style="{ color: store.uiColors.color }"
           title="Dismiss"
           @click="dismissAutosaveNotice"
         >&times;</button>

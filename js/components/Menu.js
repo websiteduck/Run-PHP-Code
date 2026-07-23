@@ -34,10 +34,6 @@ export default {
       <div 
         class="menu"
         v-show="store.menuOpen"
-        :style="{
-          color: store.uiColors.menu.color,
-          backgroundColor: store.uiColors.menu.backgroundColor,
-        }"
       >
         <div class="menu__section">
           <MenuItem label="phpinfo()" @click="$emit('menu', 'php_info'); closeMenu();" />

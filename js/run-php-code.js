@@ -385,21 +385,29 @@ Vue.createApp({
   },
 
   template: `
-    <TopBar
-      @open="open"
-      @save="save"
-      @clear="clear"
-      @run="run"
-    />
-    <Code
-      ref="code"
-      @run="run"
-    />
-    <ResizeBar />
-    <Result ref="result" />
-    <div v-if="store.resizing" class="resize-overlay"></div>
-    <SamplesMenu @load-sample="loadSample" />
-    <Menu @menu="menu" />
+    <div class="app">
+      <TopBar
+        @open="open"
+        @save="save"
+        @clear="clear"
+        @run="run"
+      />
+      <div
+        class="workspace"
+        :class="{ 'workspace_external': store.settings.runExternal }"
+        :style="{ '--divide-x': store.divideX + 'px' }"
+      >
+        <Code
+          ref="code"
+          @run="run"
+        />
+        <ResizeBar />
+        <Result ref="result" />
+      </div>
+      <div v-if="store.resizing" class="resize-overlay"></div>
+      <SamplesMenu @load-sample="loadSample" />
+      <Menu @menu="menu" />
+    </div>
   `
 })
   .use(Pinia.createPinia())

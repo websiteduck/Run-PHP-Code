@@ -152,27 +152,53 @@ export const useStore = Pinia.defineStore('store', {
   actions: {
     generateUiColors(color, backgroundColor) {
       let uiColors = this.uiColors;
+      let borderColor = adjustColor(backgroundColor, -10);
+      let iconHover = adjustColor(backgroundColor, (this.lightTheme ? -4 : 4));
+      let buttonHover = adjustColor(color, (this.lightTheme ? 20 : -20));
+      let searchBg = adjustColor(backgroundColor, (this.lightTheme ? -10 : 10));
+      let searchOutline = adjustColor(backgroundColor, (this.lightTheme ? -50 : 50));
+      let resizeBg = adjustColor(backgroundColor, -10);
+      let menuBg = adjustColor(backgroundColor, (this.lightTheme ? -10 : 10));
+      let menuHover = adjustColor(backgroundColor, (this.lightTheme ? -5 : 15));
+
       uiColors.color = color;
       uiColors.backgroundColor = backgroundColor;
 
       uiColors.topBar.color = color;
       uiColors.topBar.backgroundColor = backgroundColor;
-      uiColors.topBar.borderColor = adjustColor(backgroundColor, -10);
-      uiColors.topBar.iconHoverBackgroundColor = adjustColor(backgroundColor, (this.lightTheme ? -4 : 4));
+      uiColors.topBar.borderColor = borderColor;
+      uiColors.topBar.iconHoverBackgroundColor = iconHover;
 
       uiColors.topBar.button.backgroundColor = color;
-      uiColors.topBar.button.hoverBackgroundColor = adjustColor(color, (this.lightTheme ? 20 : -20));
+      uiColors.topBar.button.hoverBackgroundColor = buttonHover;
       uiColors.topBar.button.color = backgroundColor;
 
       uiColors.topBar.phpSearch.color = color;
-      uiColors.topBar.phpSearch.backgroundColor = adjustColor(backgroundColor, (this.lightTheme ? -10 : 10));
-      uiColors.topBar.phpSearch.outlineColor = adjustColor(backgroundColor, (this.lightTheme ? -50 : 50));
+      uiColors.topBar.phpSearch.backgroundColor = searchBg;
+      uiColors.topBar.phpSearch.outlineColor = searchOutline;
 
-      uiColors.resizeBar.backgroundColor = adjustColor(backgroundColor, -10);
+      uiColors.resizeBar.backgroundColor = resizeBg;
 
       uiColors.menu.color = color;
-      uiColors.menu.backgroundColor = adjustColor(backgroundColor, (this.lightTheme ? -10 : 10));
-      uiColors.menu.hoverBackgroundColor = adjustColor(backgroundColor, (this.lightTheme ? -5 : 15));
+      uiColors.menu.backgroundColor = menuBg;
+      uiColors.menu.hoverBackgroundColor = menuHover;
+
+      let root = document.documentElement;
+      root.style.setProperty('--ui-fg', color);
+      root.style.setProperty('--ui-bg', backgroundColor);
+      root.style.setProperty('--ui-border', borderColor);
+      root.style.setProperty('--ui-icon-hover', iconHover);
+      root.style.setProperty('--ui-btn-bg', color);
+      root.style.setProperty('--ui-btn-fg', backgroundColor);
+      root.style.setProperty('--ui-btn-hover', buttonHover);
+      root.style.setProperty('--ui-search-fg', color);
+      root.style.setProperty('--ui-search-bg', searchBg);
+      root.style.setProperty('--ui-search-outline', searchOutline);
+      root.style.setProperty('--ui-resize', resizeBg);
+      root.style.setProperty('--ui-menu-fg', color);
+      root.style.setProperty('--ui-menu-bg', menuBg);
+      root.style.setProperty('--ui-menu-hover', menuHover);
+      root.style.setProperty('--ui-surface', menuBg);
     },
 
     async loadContributors() {

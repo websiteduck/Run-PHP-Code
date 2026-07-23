@@ -36,25 +36,12 @@ export default {
   },
 
   template: `
-    <div 
-      class="top-bar"
-      :style="{ 
-        color: store.uiColors.topBar.color,
-        backgroundColor: store.uiColors.topBar.backgroundColor,
-        borderBottomColor: store.uiColors.topBar.borderColor,
-      }"
-    >
-      <div 
-        class="top-bar__title"
-        :style="{ 
-          borderRightColor: store.uiColors.topBar.borderColor,
-        }"
-      >
+    <div class="top-bar">
+      <div class="top-bar__title">
         Run PHP Code
       </div>
       <div class="top-bar__actions">
         <Button 
-          class="top-bar__button"
           title="Open"
           @click="$emit('open')"
         >
@@ -63,7 +50,6 @@ export default {
           </svg>
         </Button>
         <Button 
-          class="top-bar__button"
           title="Save"
           @click="$emit('save')"
         >
@@ -72,7 +58,7 @@ export default {
           </svg>
         </Button>
         <Button 
-          class="top-bar__button top-bar__button_icon-left"
+          class="top-bar__button_icon-left"
           title="Clear"
           @click="$emit('clear')"
         >
@@ -82,7 +68,7 @@ export default {
           Clear
         </Button>
         <Button 
-          class="top-bar__button top-bar__button_icon-right"
+          class="top-bar__button_icon-right"
           title="Run (Ctrl+Enter)"
           :disabled="store.runStatus === 'running'"
           @click="$emit('run')"
@@ -96,13 +82,7 @@ export default {
       <div class="flex-fill"></div>
       <PhpSearch />
       <div class="flex-fill"></div>
-      <div
-        class="top-bar__side-buttons"
-        :style="{
-          '--side-btn-hover': store.uiColors.topBar.iconHoverBackgroundColor,
-          '--side-btn-active': store.uiColors.menu.backgroundColor,
-        }"
-      >
+      <div class="top-bar__side-buttons">
         <div 
           class="top-bar__icon-button top-bar__samples-button"
           :class="{ 'top-bar__icon-button_active': store.samplesOpen }"

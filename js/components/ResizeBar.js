@@ -25,11 +25,6 @@ export default {
   template: `
     <div 
       class="resize-bar"
-      :style="{ 
-        left: store.divideX.toString() + 'px',
-        display: store.settings.runExternal ? 'none' : 'block',
-        backgroundColor: store.uiColors.resizeBar.backgroundColor,
-      }"
       @mousedown="startResize"
     ></div>
   `,
