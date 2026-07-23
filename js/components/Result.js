@@ -50,6 +50,26 @@ export default {
     return { store: useStore() }
   },
 
+  data() {
+    return {
+      boundIframeDocument: null,
+    };
+  },
+
+  mounted() {
+    Vue.watch(
+      () => this.store.loadedTheme,
+      () => this.applyColors(false),
+    );
+
+    Vue.watch(
+      () => this.store.settings.colorize,
+      () => this.applyColors(false),
+    );
+
+    this.$nextTick(() => this.bindIframeMenuClose());
+  },
+
   computed: {
     statusLabel() {
       switch (this.store.runStatus) {
@@ -77,25 +97,42 @@ export default {
       return this.store.runPhpVersion ? 'PHP ' + this.store.runPhpVersion : null;
     },
 
+    outputModeLabel() {
+      if (!this.store.runOutputMode) {
+        return null;
+      }
+
+      let mode = this.store.outputModes.find(
+        (item) => item.value === this.store.runOutputMode
+      );
+
+      return mode ? mode.label : this.store.runOutputMode;
+    },
+
     runAtLabel() {
       let value = formatRunAt(this.store.runAt);
       return value ? 'Ran ' + value : null;
     },
   },
 
-  mounted() {
-    Vue.watch(
-      () => this.store.loadedTheme,
-      () => this.applyColors(false),
-    );
-
-    Vue.watch(
-      () => this.store.settings.colorize,
-      () => this.applyColors(false),
-    );
-  },
-
   methods: {
+    closeFlyoutMenus() {
+      this.store.menuOpen = false;
+      this.store.samplesOpen = false;
+    },
+
+    bindIframeMenuClose() {
+      let iframe = this.$refs.iframe;
+      let doc = iframe?.contentDocument;
+
+      if (!doc || doc === this.boundIframeDocument) {
+        return;
+      }
+
+      this.boundIframeDocument = doc;
+      doc.addEventListener('pointerdown', this.closeFlyoutMenus);
+    },
+
     setHtml(html) {
       let iframe = this.$refs.iframe;
 
@@ -112,6 +149,8 @@ export default {
         let iframeDocument = iframe.contentWindow.document;
         let htmlElement = iframeDocument.getElementsByTagName('html')[0];
         let style = iframeDocument.getElementById('runphpcode-style');
+
+        this.bindIframeMenuClose();
 
         iframe.style.backgroundColor = (this.store.settings.colorize ? this.store.uiColors.backgroundColor : '#ffffff');
 
@@ -154,8 +193,8 @@ export default {
         left: (store.divideX + 4).toString() + 'px',
         display: (store.settings.runExternal ? 'none' : 'flex'),
         width: (store.screenWidth - store.divideX - 4).toString() + 'px',
-        pointerEvents: store.resizing ? 'none' : 'auto',
       }"
+      @pointerdown="closeFlyoutMenus"
     >
       <div
         v-if="store.runFatalError"
@@ -180,6 +219,7 @@ export default {
         }"
       >
         <span class="result__status-state">{{ statusLabel }}</span>
+        <span v-if="outputModeLabel" class="result__status-meta">{{ outputModeLabel }}</span>
         <span v-if="durationLabel" class="result__status-meta">{{ durationLabel }}</span>
         <span v-if="memoryLabel" class="result__status-meta">{{ memoryLabel }}</span>
         <span v-if="phpVersionLabel" class="result__status-meta">{{ phpVersionLabel }}</span>

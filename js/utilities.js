@@ -7,7 +7,7 @@ export function adjustColor(color, percent) {
 		if (!match) {
 			return color;
 		}
-		
+
 		color = `#${match.slice(1).map((n, i) => (i === 3 ? Math.round(parseFloat(n) * 255) : parseFloat(n)).toString(16).padStart(2, '0').replace('NaN', '')).join('')}`
 	}
 
@@ -27,7 +27,14 @@ export function useLocalStorage(key, defaults) {
 	try {
 		let stored = localStorage.getItem(key);
 		if (stored !== null) {
-			value = { ...defaults, ...JSON.parse(stored) };
+			let parsed = JSON.parse(stored);
+			value = { ...defaults, ...parsed };
+
+			if (parsed.outputMode == null && parsed.preWrap) {
+				value.outputMode = 'console';
+			}
+
+			delete value.preWrap;
 		}
 	} catch (e) {
 		//
@@ -36,7 +43,9 @@ export function useLocalStorage(key, defaults) {
 	let data = Vue.ref(value);
 
 	Vue.watch(data, (current) => {
-		localStorage.setItem(key, JSON.stringify(current));
+		let toStore = { ...current };
+		delete toStore.preWrap;
+		localStorage.setItem(key, JSON.stringify(toStore));
 	}, { deep: true });
 
 	return data;

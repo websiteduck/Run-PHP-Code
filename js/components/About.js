@@ -37,6 +37,7 @@ export default {
           <a class="about__attribution" href="https://vuejs.org" target="_blank" rel="noopener noreferrer">Vue.js</a>
           <a class="about__attribution" href="https://pinia.vuejs.org" target="_blank" rel="noopener noreferrer">Pinia</a>
           <a class="about__attribution" href="https://axios-http.com" target="_blank" rel="noopener noreferrer">Axios</a>
+          <a class="about__attribution" href="https://parsedown.org" target="_blank" rel="noopener noreferrer">Parsedown</a>
         </div>
       </div>
     </div>

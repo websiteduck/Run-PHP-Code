@@ -9,7 +9,7 @@ export const useStore = Pinia.defineStore('store', {
         dividePercent: 0.5,
         runExternal: false,
         theme: 'twilight',
-        preWrap: false,
+        outputMode: 'html',
         errorReporting: 'fatal',
         autosave: true,
       }
@@ -23,10 +23,12 @@ export const useStore = Pinia.defineStore('store', {
     divideX: visualViewport.width / 2,
     screenWidth: visualViewport.width,
     menuOpen: false,
+    samplesOpen: false,
     runStatus: 'idle',
     runDurationMs: null,
     runMemoryBytes: null,
     runPhpVersion: null,
+    runOutputMode: null,
     runAt: null,
     runFatalError: null,
     runToken: 0,
@@ -38,6 +40,7 @@ export const useStore = Pinia.defineStore('store', {
         color: null,
         backgroundColor: null,
         borderColor: null,
+        iconHoverBackgroundColor: null,
         button: {
           color: null,
           backgroundColor: null,
@@ -65,6 +68,20 @@ export const useStore = Pinia.defineStore('store', {
       { value: 'deprecated', label: 'Deprecated' },
       { value: 'notice', label: 'Notice' },
       { value: 'all', label: 'All' },
+    ],
+
+    outputModes: [
+      { value: 'html', label: 'HTML' },
+      { value: 'console', label: 'Console' },
+      { value: 'markdown', label: 'Markdown' },
+    ],
+
+    samples: [
+      { id: 'float-money', label: 'Floats & Money' },
+      { id: 'type-juggling', label: 'Type Juggling' },
+      { id: 'foreach-reference', label: 'Foreach References' },
+      { id: 'datetime-mutable', label: 'DateTime Mutability' },
+      { id: 'oop-quirks', label: 'OOP Quirks' },
     ],
 
     themes: {
@@ -141,6 +158,7 @@ export const useStore = Pinia.defineStore('store', {
       uiColors.topBar.color = color;
       uiColors.topBar.backgroundColor = backgroundColor;
       uiColors.topBar.borderColor = adjustColor(backgroundColor, -10);
+      uiColors.topBar.iconHoverBackgroundColor = adjustColor(backgroundColor, (this.lightTheme ? -4 : 4));
 
       uiColors.topBar.button.backgroundColor = color;
       uiColors.topBar.button.hoverBackgroundColor = adjustColor(color, (this.lightTheme ? 20 : -20));

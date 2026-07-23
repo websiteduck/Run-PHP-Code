@@ -53,6 +53,11 @@ if ($runPhp->action == 'run') {
     case 'none': default: error_reporting(0); break;
   }
 
+  $outputModeOverride = null;
+  if (preg_match('/@run-php-code\s+output\s*=\s*(html|console|markdown)\b/i', $runPhp->code, $match)) {
+    $outputModeOverride = strtolower($match[1]);
+  }
+
   $runPhp->code = '?>' . ltrim($runPhp->code);
 
   $ctx = [
@@ -61,13 +66,43 @@ if ($runPhp->action == 'run') {
     'settings' => $runPhp->settings,
     'color' => $runPhp->color ?? null,
     'background_color' => $runPhp->background_color ?? null,
+    'output_mode_override' => $outputModeOverride,
   ];
 
-  $buildHtml = function ($html) use ($ctx) {
+  $buildHtml = function ($html) use (&$ctx) {
     $settings = $ctx['settings'];
+    $outputMode = $ctx['output_mode_override']
+      ?? $settings->outputMode
+      ?? (!empty($settings->preWrap) ? 'console' : 'html');
+    $ctx['output_mode'] = $outputMode;
 
-    if (!empty($settings->preWrap)) {
-      $html = '<pre>' . $html . '</pre>';
+    if ($outputMode === 'console') {
+      $html = htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+      $html = '<style id="runphpcode-console-style">'
+        . 'html { margin: 0; }'
+        . 'body { margin: 0; padding: 8px; overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.4; white-space: pre-wrap; }'
+        . '</style>'
+        . $html;
+    } elseif ($outputMode === 'markdown') {
+      require_once __DIR__ . '/lib/Parsedown.php';
+      $parsedown = new Parsedown();
+      $parsedown->setSafeMode(true);
+      $html = $parsedown->text($html);
+      $html = '<style id="runphpcode-markdown-style">'
+        . 'html { margin: 0; }'
+        . 'body { margin: 0; padding: 12px 16px; overflow-wrap: anywhere; font-family: Georgia, "Times New Roman", serif; font-size: 15px; line-height: 1.5; }'
+        . 'body > :first-child { margin-top: 0; }'
+        . 'body > :last-child { margin-bottom: 0; }'
+        . 'h1, h2, h3, h4, h5, h6 { font-family: Verdana, sans-serif; line-height: 1.25; }'
+        . 'pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }'
+        . 'pre { padding: 10px 12px; overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; }'
+        . 'code { padding: 0.1em 0.3em; }'
+        . 'pre code { padding: 0; }'
+        . 'blockquote { margin-left: 0; padding-left: 1em; border-left: 3px solid currentColor; opacity: 0.9; }'
+        . 'table { border-collapse: collapse; max-width: 100%; }'
+        . 'th, td { border: 1px solid currentColor; padding: 4px 8px; }'
+        . '</style>'
+        . $html;
     }
 
     if (!empty($settings->colorize)) {
@@ -77,7 +112,7 @@ if ($runPhp->action == 'run') {
 
       $html = $html . '
       <style id="runphpcode-style" media="all">
-      html { width: 100%; background-color: ' . $background . '; color: ' . $color . '; }
+      html, body { background-color: ' . $background . '; color: ' . $color . '; }
       .xdebug-error th { background-color: ' . $background . '; font-weight: normal; font-family: sans-serif; }
       .xdebug-error td { color: ' . $color . '; }
       .xdebug-error th span { background-color: ' . $background . ' !important; }
@@ -105,6 +140,7 @@ if ($runPhp->action == 'run') {
       'duration_ms' => round($durationMs, 3),
       'memory_bytes' => memory_get_peak_usage(true),
       'php_version' => PHP_VERSION,
+      'output_mode' => $ctx['output_mode'] ?? 'html',
       'fatal_error' => $fatalError,
     ], JSON_INVALID_UTF8_SUBSTITUTE);
   };

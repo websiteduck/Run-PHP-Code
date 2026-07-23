@@ -64,10 +64,36 @@ body {
   align-items: center;
   cursor: pointer;
   padding: 0 .25rem;
+  background-color: transparent;
+}
+
+.top-bar__icon-button:hover {
+  background-color: var(--side-btn-hover);
+}
+
+.top-bar__icon-button_active,
+.top-bar__icon-button_active:hover {
+  background-color: var(--side-btn-active);
 }
 
 .top-bar__icon-button svg {
   height: 32px;
+}
+
+.top-bar__side-buttons {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  gap: 0;
+}
+
+.top-bar__samples-button {
+  justify-content: center;
+  padding: 0 0.6rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  user-select: none;
+  white-space: nowrap;
 }
 
 .flex-fill {
@@ -86,6 +112,14 @@ body {
 
 .resize-bar:hover { 
   background-color: #444444; 
+}
+
+.resize-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  cursor: e-resize;
+  user-select: none;
 }
 
 .code {

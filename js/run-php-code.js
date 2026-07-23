@@ -10,6 +10,7 @@
 
 import Code from './components/Code.js';
 import Menu from './components/Menu.js';
+import SamplesMenu from './components/SamplesMenu.js';
 import ResizeBar from './components/ResizeBar.js';
 import Result from './components/Result.js';
 import TopBar from './components/TopBar.js';
@@ -19,6 +20,7 @@ Vue.createApp({
   components: {
     Code,
     Menu,
+    SamplesMenu,
     ResizeBar,
     Result,
     TopBar,
@@ -40,6 +42,7 @@ Vue.createApp({
       this.store.runStatus = 'running';
       this.store.runDurationMs = null;
       this.store.runMemoryBytes = null;
+      this.store.runOutputMode = null;
       this.store.runAt = null;
       this.store.runFatalError = null;
       this.store.showingPhpInfo = !!settingsOverride;
@@ -74,6 +77,7 @@ Vue.createApp({
         this.store.runDurationMs = data.duration_ms;
         this.store.runMemoryBytes = data.memory_bytes;
         this.store.runPhpVersion = data.php_version || null;
+        this.store.runOutputMode = data.output_mode || null;
         this.store.runAt = new Date();
         this.store.runFatalError = data.fatal_error || null;
         this.store.runStatus = data.fatal_error ? 'failed' : 'done';
@@ -116,6 +120,7 @@ Vue.createApp({
       this.store.runDurationMs = null;
       this.store.runMemoryBytes = null;
       this.store.runPhpVersion = null;
+      this.store.runOutputMode = null;
       this.store.runAt = null;
       this.store.runFatalError = null;
       this.store.showingPhpInfo = false;
@@ -241,7 +246,7 @@ Vue.createApp({
           this.remoteImport();
           break;
         case 'load_sample':
-          this.loadSample(props);
+          this.loadSample(props[0]);
           break;
       }
     },
@@ -276,6 +281,7 @@ Vue.createApp({
     phpInfo() {
       let cloneSettings = { ...this.store.settings };
       cloneSettings.colorize = false;
+      cloneSettings.outputMode = 'html';
       this.store.showingPhpInfo = true;
       this.run('<' + '?php phpinfo();', cloneSettings);
     },
@@ -344,10 +350,24 @@ Vue.createApp({
     },
 
     async loadSample(filename) {
-      this.$refs.code.reset();
-      this.run();
-      let response = await axios.get('proxy.php', { params: { url: `./samples/${filename}.php` } });
-      this.$refs.code.editor.setValue(response.data);
+      if (!filename) {
+        return;
+      }
+
+      try {
+        let response = await axios.get('proxy.php', {
+          params: { url: `./samples/${filename}.php` },
+        });
+
+        if (typeof response.data !== 'string' || response.data === 'Import failed.') {
+          throw new Error('Import failed.');
+        }
+
+        this.$refs.code.editor.setValue(response.data, -1);
+        this.$refs.code.dismissAutosaveNotice();
+      } catch (e) {
+        alert('Failed to load sample.');
+      }
     },
   },
 
@@ -377,6 +397,8 @@ Vue.createApp({
     />
     <ResizeBar />
     <Result ref="result" />
+    <div v-if="store.resizing" class="resize-overlay"></div>
+    <SamplesMenu @load-sample="loadSample" />
     <Menu @menu="menu" />
   `
 })

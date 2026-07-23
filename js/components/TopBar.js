@@ -17,6 +17,24 @@ export default {
     return { store: useStore() }
   },
 
+  methods: {
+    toggleSamples() {
+      this.store.samplesOpen = !this.store.samplesOpen;
+
+      if (this.store.samplesOpen) {
+        this.store.menuOpen = false;
+      }
+    },
+
+    toggleMenu() {
+      this.store.menuOpen = !this.store.menuOpen;
+
+      if (this.store.menuOpen) {
+        this.store.samplesOpen = false;
+      }
+    },
+  },
+
   template: `
     <div 
       class="top-bar"
@@ -78,16 +96,31 @@ export default {
       <div class="flex-fill"></div>
       <PhpSearch />
       <div class="flex-fill"></div>
-      <div 
-        class="top-bar__icon-button"
+      <div
+        class="top-bar__side-buttons"
         :style="{
-          backgroundColor: (store.menuOpen ? store.uiColors.menu.backgroundColor : 'transparent'),
+          '--side-btn-hover': store.uiColors.topBar.iconHoverBackgroundColor,
+          '--side-btn-active': store.uiColors.menu.backgroundColor,
         }"
-        @click="store.menuOpen = !store.menuOpen"
       >
-        <svg viewBox="0 0 64 64">
-          <use href="#svg-menu" />
-        </svg>
+        <div 
+          class="top-bar__icon-button top-bar__samples-button"
+          :class="{ 'top-bar__icon-button_active': store.samplesOpen }"
+          title="Samples"
+          @click="toggleSamples"
+        >
+          Samples
+        </div>
+        <div 
+          class="top-bar__icon-button"
+          :class="{ 'top-bar__icon-button_active': store.menuOpen }"
+          title="Settings"
+          @click="toggleMenu"
+        >
+          <svg viewBox="0 0 64 64">
+            <use href="#svg-menu" />
+          </svg>
+        </div>
       </div>
     </div>
   `,

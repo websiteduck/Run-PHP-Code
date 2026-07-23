@@ -15,8 +15,10 @@ export default {
       const stopResize = () => {
         this.store.resizing = false;
         window.removeEventListener('mouseup', stopResize);
+        window.removeEventListener('pointerup', stopResize);
       };
       window.addEventListener('mouseup', stopResize);
+      window.addEventListener('pointerup', stopResize);
     },
   },
 

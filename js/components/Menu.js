@@ -65,11 +65,17 @@ export default {
             label="External Window"
             @click="store.settings.runExternal = !store.settings.runExternal" 
           />
+        </div>
+        <div class="menu__header">
+          Output Mode
+        </div>
+        <div class="menu__section">
           <MenuItem
-            type="checkbox"
-            :selected="store.settings.preWrap"
-            label="<pre> Wrap"
-            @click="store.settings.preWrap = !store.settings.preWrap" 
+            v-for="outputMode in store.outputModes"
+            type="radio"
+            :selected="store.settings.outputMode === outputMode.value"
+            :label="outputMode.label"
+            @click="store.settings.outputMode = outputMode.value"
           />
         </div>
         <div class="menu__header">

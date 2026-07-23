@@ -256,7 +256,7 @@ export default {
       :style="{
         width: (store.settings.runExternal ? store.screenWidth.toString() : store.divideX.toString()) + 'px',
       }"
-      @click="store.menuOpen = false"
+      @click="store.menuOpen = false; store.samplesOpen = false"
     >
       <div
         v-if="showAutosaveNotice"
